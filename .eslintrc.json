@@ -1,0 +1,174 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "jsx": true,
+      "experimentalObjectRestSpread": true,
+      "experimentalDecorators": true
+    }
+  },
+
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "env": {
+    "browser": true,
+    "jest": true,
+    "mocha": true,
+    "jasmine": true,
+    "phantomjs": true
+  },
+  "rules": {
+    "jsx-a11y/anchor-is-valid": 0,
+
+    //Строгий режим
+    "strict": ["error", "global"],
+
+    //Проверка на наличие неиспользуемых переменных
+    "no-unused-vars": [
+      "warn", {
+        "vars": "local",
+        "args": "after-used",
+        "caughtErrors": "none"
+      }
+    ],
+    // Запрет сравнения с -0
+    "no-compare-neg-zero": "error",
+    // http://eslint.org/docs/rules/no-shadow
+    "no-shadow": "off",
+    // http://eslint.org/docs/rules/prefer-const
+    "prefer-const": "warn",
+    //Проверка на наличии console.log в коде, allow - разрешить использовать следующие методы консоли
+    "no-console": "warn", //["warn", { "allow": ["log", "warn", "error"] }],
+    "no-debugger": "warn",
+    //Запрет на повторение аргументов
+    "no-dupe-args": "error",
+    "no-delete-var": "off",
+    //Запрет на повторение ключей в объекте
+    "no-dupe-keys": "error",
+    "no-duplicate-case": "error",
+    //Проверка отсутсвия пробела =>{
+    "arrow-spacing": "error",
+    //Проверка оборачивания аргументов стрелочных функций в скобки, если аргумент 1
+    "arrow-parens": ["off", "always"],
+    //Проверка отступов
+    "padded-blocks": "off",
+    "arrow-body-style": "off",
+    //Проверка наличия знака ";" после переменных и функций
+    "semi": ["warn", "always"],
+    "no-control-regex": "off",
+    "consistent-return": "off",
+    "no-case-declarations": "off",
+    //Перенос скобок в объектах
+    "object-curly-newline": "off",
+    "no-confusing-arrow": ["error", { "allowParens": false }],
+    //https://eslint.org/docs/rules/no-constant-condition
+    "no-constant-condition": "error",
+    "no-fallthrough": "error",
+    //Проверка label меток для циклов
+    "no-labels": "error",
+    //Запрет создания дубликатов переменных
+    "no-redeclare": "error",
+    //Преобразование number в string 1 + 07...
+    "no-octal": "error",
+    //Предупреждение о наличии в коде alert, confirm, prompt
+    "no-alert": "warn",
+    //Проверка наличия eval()
+    "no-eval": "error",
+    //Наличие пустых линий max - максимальный отступ по линиям
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
+    //Проверка пустых функций
+    "no-empty-function": "warn",
+    "no-empty": "error",
+    "no-else-return": "warn",
+    //Вызов фукнции объявленной переменной в месте до её объявления
+    "func-style": "warn",
+    //Проверка parseInt
+    "radix": "off",
+    //Перенос переменных при диструктуризации на новую строку
+    "no-trailing-spaces": "off",
+    //Проверка запятой после последнего свойства объекта
+    "comma-dangle": "off",
+    //Разные кавычи в пропах
+    "jsx-quotes": "warn",
+    "max-len": "off",
+    "no-nested-ternary": "off",
+    "quote-props": "off",
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"]}],
+    "jsx-a11y/label-has-for": "off",
+    "camelcase": "off",
+    /****Правила для import****/
+//    "import/no-unresolved": ["error", {"commonjs": true, "amd": true}],
+    "import/no-unresolved": 0,
+    "import/named": "error",
+    "import/namespace": "off",
+    "import/default": "error",
+    "import/export": "error",
+    "import/first": "off",
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
+    /****Правила для React****/
+    //Проверка наличия displayName
+    "react/display-name": "warn",
+    //Проверка key
+    "react/jsx-key": "warn",
+    //Проверка комментов в текстовых узлах
+    "react/jsx-no-comment-textnodes": "warn",
+    //Проверка на наличие дубликатов props,ов
+    "react/jsx-no-duplicate-props": "warn",
+    //??
+    "react/no-direct-mutation-state": "warn",
+
+    "react/forbid-prop-types": ["error", { "forbid": ["any"] }],
+    //Проверка ввода булевых значений в пропы <input disabled={true} />
+    "react/jsx-boolean-value": "warn",
+
+    "react/jsx-closing-bracket-location": "off",
+    "react/jsx-curly-spacing": "warn",
+    //Проверка на скобки в пропах className={""}
+    "react/jsx-curly-brace-presence": "off",
+    "react/jsx-indent-props": "off",
+    "react/jsx-indent": [2, 2],
+    //Проверка js и jsx файлов
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    //Проверка defaultProps
+    "react/require-default-props": "off",
+    "react/prop-types": "off",
+    "react/jsx-max-props-per-line": "off",
+    "react/jsx-no-bind": "off",
+    "react/jsx-no-literals": "off",
+    "react/jsx-pascal-case": "warn",
+    "react/jsx-sort-prop-types": "off",
+    "react/jsx-sort-props": "off",
+    "react/jsx-wrap-multilines": "error",
+    "react/no-multi-comp": "warn",
+    "react/prefer-es6-class": "warn",
+    "react/self-closing-comp": "warn",
+    "react/sort-comp": "warn",
+    "react/sort-prop-types": "off",
+    //Проверка не используемых пропов
+    "react/no-unused-prop-types": "off",
+    //Проверка не используемых стейтов
+    "react/no-unused-state": "off",
+    //Проверка на наличие в коде setState
+    "react/no-set-state": "off",
+    //Проверка на наличие return в render()
+    "react/require-render-return": "error",
+    "react/prefer-stateless-function": 0
+  }
+}
+//Go to Preferences -> Tools -> External tools and click + to add a new tool. Let’s name it ESLint Fix.
+//Programm: ./node_modules/.bin/eslint
+//Parametres: --fix "$FilePathRelativeToProjectRoot$"
+//Working directory: $ProjectFileDir$
+//Ctrl + Shift + A -> Eslint Fix
