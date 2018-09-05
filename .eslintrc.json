@@ -108,10 +108,11 @@
     "jsx-a11y/label-has-for": "off",
     "camelcase": "off",
     /****Правила для import****/
-//    "import/no-unresolved": ["error", {"commonjs": true, "amd": true}],
+    //    "import/no-unresolved": ["error", {"commonjs": true, "amd": true}],
     "import/no-unresolved": 0,
     "import/named": "error",
     "import/namespace": "off",
+    "import/order": "off",
     "import/default": "error",
     "import/export": "error",
     "import/first": "off",

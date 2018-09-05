@@ -4,8 +4,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store/createStore';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import 'react-datepicker/dist/react-datepicker.css';
+import {
+  createMuiTheme,
+  MuiThemeProvider
+} from '@material-ui/core/styles';
 import App from './App';
 
 const ROOT_ID = document.getElementById('app');
