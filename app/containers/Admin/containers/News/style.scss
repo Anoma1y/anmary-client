@@ -1,0 +1,220 @@
+@import "lib/style/vars.scss";
+
+.dashboard-form_tags-suggest {
+
+}
+.react-autosuggest__suggestions-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  li {
+    border-bottom: 1px solid lighten($lightgray-color, 23%);
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+.react-autosuggest__container {
+  position: relative !important;
+}
+
+.tags-suggest {
+  &_form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  &_paper {
+    position: absolute !important;
+    left: 0;
+    width: 100%;
+    z-index: 99999;
+  }
+}
+
+.operations-list {
+  &_add {
+    margin-bottom: 1rem !important;
+  }
+  &_row {
+    a {
+      color: $lightblue-color;
+      text-decoration: none;
+    }
+  }
+}
+
+.operations-filter {
+  margin-bottom: 4rem !important;
+  &_tags-list {
+    padding: 1rem 0 0;
+  }
+  &_toggle-panel {
+    box-shadow: none !important;
+
+  }
+  &_toggle-icon {
+    svg {
+      color: $black-color;
+      transition: color 0.3s linear;
+    }
+    &:hover {
+      color: $lightblue-color;
+    }
+  }
+}
+
+.filter_shift-id {
+  font-family: $font-regular-serif;
+  color: darken($gray-color, 10%);
+}
+
+.operations-filter_tags {
+  margin-top: 1.5rem !important;
+}
+.image-attach {
+  display: flex;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  &_item {
+    max-width: 25%;
+  }
+  &_img {
+    width: 100%;
+    img {
+      width: 100%;
+    }
+  }
+  &_link {
+    padding: 1rem 1rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: $white-color;
+    text-decoration: none;
+    color: $lightblue-color;
+    &:hover {
+      background: lighten($lightblue-color, 40%);
+    }
+  }
+  &_icon {
+    color: $black-color;
+  }
+  &_btn {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.operation-single {
+  input, textarea {
+    font-family: $font-regular;
+    color: $black-color !important;
+    cursor: text;
+  }
+}
+
+.imgUpload {
+  display: block;
+  clear: both;
+  width: 100%;
+  height: 12.5rem;
+  position: relative;
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+  &_error {
+    position: absolute;
+    color: $notification-error;
+    font-family: $font-regular-serif;
+    font-size: 0.9rem;
+    top: calc(100% + 0.9rem);
+    left: 1rem;
+  }
+  &-wrap {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 1.5rem 1.5rem 2rem;
+    border: dashed 2px $lightblue-color;
+    border-radius: 0.4rem;
+    &__disabled {
+      border-color: $lightgray-color;
+      opacity: 0.5;
+      .imgUpload-wrap_text {
+        color: $lightgray-color;
+      }
+      svg path {
+        fill: $lightgray-color !important;
+      }
+      .imgUpload_btn {
+        color: $lightgray-color !important;
+      }
+    }
+    &_icon {
+      svg {
+        font-size: 2.5rem;
+      }
+      svg path {
+        fill: $lightblue-color;
+      }
+    }
+    &_text {
+      padding-top: 0.8rem;
+      padding-bottom: calc(0.8rem + 0.3rem);
+      font-size: 1.5rem;
+      font-family: $font-semibold-serif;
+      color: #3A4351;
+      z-index: 100;
+    }
+  }
+  &_btn {
+    font-family: $font-semibold-serif !important;
+    font-size: 1rem !important;
+    background-color: #F1FAFF !important;
+    z-index: -1;
+  }
+  &_img {
+    display: block;
+    position: absolute;
+    width: auto;
+    height: auto;
+    max-width: 230px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    &__hidden {
+      display: none;
+    }
+  }
+
+  &_input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    outline: none;
+    opacity: 0;
+    text-align: center;
+    background: $white-color;
+    transition: all 0.4s ease;
+    user-select: none;
+    z-index: 0;
+    &:not(&__disabled) {
+      cursor: pointer;
+    }
+    &:hover {
+      background-color: lighten($lightblue-color, 43%);
+    }
+    &.hover {
+      border: 3px solid red;
+      box-shadow: inset 0 0 0 6px #eee;
+    }
+  }
+
+}

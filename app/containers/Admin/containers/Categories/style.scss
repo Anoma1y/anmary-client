@@ -1,0 +1,41 @@
+@import 'lib/style/vars.scss';
+
+.category {
+
+  &-add {
+    padding-bottom: 2rem !important;
+  }
+
+  &-list {
+    padding-top: 2rem !important;
+    font-family: $font-regular-serif;
+    font-size: 1rem;
+    &_item {
+      &-content {
+        display: flex !important;
+        align-items: center !important;
+        padding-left: 2rem !important;
+      }
+      input {
+        font-family: $font-regular-serif !important;
+      }
+
+      &:nth-child(even) {
+        background-color: lighten($lightblue-color, 43%);
+      }
+    }
+  }
+  .control_edit {
+    display: flex;
+    justify-content: space-around;
+    &__rename {
+      color: $lightblue-color;
+    }
+    &__apply {
+      color: $green-color;
+    }
+    &__close {
+      color: $red-color;
+    }
+  }
+}
