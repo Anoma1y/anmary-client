@@ -1,0 +1,3 @@
+export const SEND_NOTIFICATION = 'Notification/SEND_NOTIFICATION';
+export const REMOVE_NOTIFICATION = 'Notification/REMOVE_NOTIFICATION';
+export const CLEAR_ALL_NOTIFICATION = 'Notification/CLEAR_ALL_NOTIFICATION';

@@ -7,10 +7,6 @@ import { replace } from 'react-router-redux';
 import {
   Grid,
   Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   Divider,
   CircularProgress,
   TextField,
@@ -32,10 +28,9 @@ import {
   resetCategoryInfo,
 } from './store/actions';
 import Storage from 'lib/storage';
-import _ from 'lodash';
 import './style.scss';
 
-@connect(({ Dashboard, Dashboard_Category }) => ({ Dashboard, Dashboard_Category }), ({
+@connect(({ Admin_Categories }) => ({ Admin_Categories }), ({
   pullCategories,
   addNewCategory,
   setCategoryInfo,
@@ -46,7 +41,7 @@ import './style.scss';
   resetCategoryInfo,
   replace
 }))
-export default class Category extends Component {
+export default class Categories extends Component {
 
   state = {
     ready: false,
@@ -66,7 +61,7 @@ export default class Category extends Component {
   }
 
   handleOpenControl = (index) => {
-    if (this.props.Dashboard_Category.isLoading) return;
+    if (this.props.Admin_Categories.isLoading) return;
 
     this.props.setCategoryInfo(index);
     this.setState({ edit: { index, isEdit: true } });
@@ -78,7 +73,7 @@ export default class Category extends Component {
   };
 
   handleApplyControl = () => {
-    if (this.props.Dashboard_Category.isLoading) return;
+    if (this.props.Admin_Categories.isLoading) return;
 
     this.props.applyCategoryName(this.state.edit.index);
     this.handleCloseControl();
@@ -89,7 +84,7 @@ export default class Category extends Component {
   handleAddCategoryChange = (value, key) => this.props.changeAddCategory(key, value);
 
   renderControl = (index) => {
-    const { isLoading } = this.props.Dashboard_Category;
+    const { isLoading } = this.props.Admin_Categories;
 
     return (
       <div className={'control_edit'}>
@@ -127,7 +122,7 @@ export default class Category extends Component {
     );
   };
 
-  renderInfo = (index, name, description, type) => {
+  renderInfo = (index, name, description) => {
     return (
       <React.Fragment>
         {
@@ -137,23 +132,17 @@ export default class Category extends Component {
                 <TextField
                   fullWidth
                   onChange={(event) => this.handleChangeCategoryInfo(event.target.value, 'name')}
-                  value={this.props.Dashboard_Category.categoryInfo.name}
+                  value={this.props.Admin_Categories.categoryInfo.name}
                 />
               </Grid>
               <Grid item xs={12} md={3} className={'category-list_edit-select'}>
-                <Select
-                  fullWidth
-                  onChange={(event) => this.handleChangeCategoryInfo(event.target.value, 'type')}
-                  value={this.props.Dashboard_Category.categoryInfo.type}
-                >
-                  {this.props.Dashboard.operation_type.map((type) => <MenuItem key={type.id} value={type.id}>{type.label}</MenuItem>)}
-                </Select>
+
               </Grid>
               <Grid item xs={12} md={6} className={'category-list_edit-input'}>
                 <TextField
                   fullWidth
                   onChange={(event) => this.handleChangeCategoryInfo(event.target.value, 'description')}
-                  value={this.props.Dashboard_Category.categoryInfo.description}
+                  value={this.props.Admin_Categories.categoryInfo.description}
                 />
               </Grid>
             </Grid>
@@ -161,9 +150,6 @@ export default class Category extends Component {
             <Grid container spacing={24}>
               <Grid item xs={12} md={3} className={'category-list_item-input'}>
                 {name}
-              </Grid>
-              <Grid item xs={12} md={3} className={'category-list_item-input'}>
-                {_.find(this.props.Dashboard.operation_type, { id: type }).label || ''}
               </Grid>
               <Grid item xs={12} md={6} className={'category-list_item-input'}>
                 {description}
@@ -187,32 +173,20 @@ export default class Category extends Component {
             permissions.includes('categories-create') && (
               <Fragment>
                 <Grid container spacing={40} className={'category-add'}>
-                  <Grid item xs={12} md={3} className={'category-add_item category-add_input'}>
+                  <Grid item xs={12} md={4} className={'category-add_item category-add_input'}>
                     <TextField
                       fullWidth
                       label={'Название'}
-                      value={this.props.Dashboard_Category.addCategory.name}
+                      value={this.props.Admin_Categories.addCategory.name}
                       onChange={(event) => this.handleAddCategoryChange(event.target.value, 'name')}
                     />
                   </Grid>
 
-                  <Grid item xs={12} md={3} className={'category-add_item category-add_select'}>
-                    <FormControl fullWidth>
-                      <InputLabel>Тип</InputLabel>
-                      <Select
-                          value={this.props.Dashboard_Category.addCategory.type}
-                          onChange={(event) => this.handleAddCategoryChange(event.target.value, 'type')}
-                        >
-                        {this.props.Dashboard.operation_type.map((type) => <MenuItem key={type.id} value={type.id}>{type.label}</MenuItem>)}
-                      </Select>
-                    </FormControl>
-                  </Grid>
-
-                  <Grid item xs={12} md={4} className={'category-add_item category-add_input'}>
+                  <Grid item xs={12} md={6} className={'category-add_item category-add_input'}>
                     <TextField
                       fullWidth
                       label={'Описание'}
-                      value={this.props.Dashboard_Category.addCategory.description}
+                      value={this.props.Admin_Categories.addCategory.description}
                       onChange={(event) => this.handleAddCategoryChange(event.target.value, 'description')}
                     />
                   </Grid>
@@ -222,7 +196,7 @@ export default class Category extends Component {
                       fullWidth
                       variant={'raised'}
                       color={'primary'}
-                      disabled={this.props.Dashboard_Category.isLoading}
+                      disabled={this.props.Admin_Categories.isLoading}
                       onClick={this.props.addNewCategory}
                     >
                       <AddIcon />
@@ -240,18 +214,18 @@ export default class Category extends Component {
           }
           <Grid container className={'category-list'}>
             {
-              this.props.Dashboard_Category.categories.length === 0 ? (
+              this.props.Admin_Categories.categories.length === 0 ? (
                 <span className={'category-list_empty'}>Нет категорий</span>
               ) : (
-                this.props.Dashboard_Category.categories.map((category, index) => {
+                this.props.Admin_Categories.categories.map((category, index) => {
 
-                  const { id, name, description, type } = category;
+                  const { id, name, description } = category;
 
                   return (
                     <Grid item xs={12} className={'category-list_item'} key={id}>
                       <Grid container justify={'space-between'} spacing={24}>
                         <Grid item xs={12} md={9} className={'category-list_item-content'}>
-                          {this.renderInfo(index, name, description, type)}
+                          {this.renderInfo(index, name, description)}
                         </Grid>
                         <Grid item xs={12} md={3}>
                           {permissions.includes('categories-edit') && this.renderControl(index)}

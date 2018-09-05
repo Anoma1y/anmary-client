@@ -1,0 +1,105 @@
+@import 'lib/style/vars.scss';
+
+$notification-right: 3rem;
+
+.notification {
+  position: fixed;
+  right: 3rem;
+  top: 1rem;
+  z-index: 99999999999999;
+  width: 500px;
+
+  @media screen and (max-width: $break-lg) {
+    width: 450px;
+  }
+
+  @media screen and (max-width: $break-md) {
+    width: 350px;
+  }
+
+  @media screen and (max-width: $break-sm) {
+    max-width: calc(100% - 4rem);
+    width: 100%;
+  }
+
+  &-container {
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1.1rem;
+    position: relative;
+    border-radius: 5px;
+    &:first-child {
+      margin-top: 0;
+    }
+    &:hover &_close {
+      opacity: 1;
+    }
+    &_close {
+      position: absolute;
+      top: 0.2rem;
+      right: 0.2rem;
+      width: 2rem;
+      height: 2rem;
+      opacity: 0;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.1);
+      transition: opacity 0.35s ease-out;
+      svg path {
+        fill: $white-color;
+      }
+      button {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+        padding: 0;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  &-item {
+    position: relative;
+    padding-left: 3.5rem;
+    &_icon {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      & > svg {
+        font-size: 2.5rem;
+      }
+    }
+    &_title {
+      margin: 0;
+      font-family: $font-semibold;
+      font-size: 1.1rem;
+    }
+    &_message {
+      display: block;
+      margin-top: 0.5rem;
+      font-family: $font-regular;
+    }
+  }
+
+  &__warning {
+    background: linear-gradient(90.10851460417894deg, rgba(203, 175, 4,1) 11.333333333333334%,rgba(209, 185, 31,1) 93.83333333333331%);
+    color: $white-color;
+  }
+  &__error {
+    background: linear-gradient(90.10851460417894deg, rgba(250, 69, 77,1) 11.333333333333334%,rgba(250, 95, 103,1) 93.83333333333331%);
+    color: $white-color;
+  }
+  &__success {
+    background: linear-gradient(90.3644720526712deg, rgba(56, 182, 86,1) 19.096354166666668%,rgba(120, 199, 117,1) 60.03385416666666%);
+    color: $white-color;
+  }
+  &__info {
+    background: linear-gradient(90.10851460417894deg, rgba(28, 140, 227,1) 11.333333333333334%,rgba(28, 140, 226,1) 11.333333333333334%,rgba(65, 155, 224,1) 93.83333333333331%);
+    color: $white-color;
+  }
+
+}

@@ -76,7 +76,7 @@ export const pullCategories = () => (dispatch) => new Promise((resolve, reject) 
 })
 
 export const addNewCategory = () => (dispatch, getState) => {
-  const { name, description, type } = getState().Dashboard_Category.addCategory;
+  const { name, description, type } = getState().Admin_Categories.addCategory;
 
   if (name.length === 0) {
     dispatch(send({ id: uuid(), status: 'warning', title: 'Предупреждение', message: 'Заполните имя категории', timeout: 1000 }));
@@ -103,7 +103,7 @@ export const applyCategoryName = (index) => (dispatch, getState) => {
       type
     },
     categories
-  } = getState().Dashboard_Category;
+  } = getState().Admin_Categories;
   const category = categories[index];
 
   const editCategory = {

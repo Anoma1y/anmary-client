@@ -1,6 +1,7 @@
 import axios from 'axios';
 import config from './config';
 import AuthApiModule from './Auth';
+import CategoryApiModule from './Category';
 
 class Api {
 
@@ -19,6 +20,7 @@ class Api {
     this.registerAfterInterceptor();
 
     this.auth = new AuthApiModule(this.http);
+    this.category = new CategoryApiModule(this.http);
   }
 
   /**
