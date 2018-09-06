@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from './config';
 import AuthApiModule from './Auth';
 import CategoryApiModule from './Category';
+import SeasonApiModule from './Season';
 import ImagesApiModule from './Images';
 import UsersApiModule from './Users';
 import RolesApiModule from './Roles';
@@ -29,6 +30,7 @@ class Api {
     this.users = new UsersApiModule(this.http);
     this.roles = new RolesApiModule(this.http);
     this.compounds = new CompoundsApiModule(this.http);
+    this.season = new SeasonApiModule(this.http);
   }
 
   /**

@@ -1,88 +1,85 @@
 import {
-  SET_CATEGORIES,
-  APPEND_CATEGORY,
-  CHANGE_ADD_CATEGORY,
-  SET_CATEGORY,
+  SET_SEASONS,
+  APPEND_SEASON,
+  CHANGE_ADD_SEASON,
+  SET_SEASON,
   SET_IS_LOADING,
-  SET_CATEGORY_INFO,
-  CHANGE_CATEGORY_INFO,
-  RESET_CATEGORY_ADD,
-  RESET_CATEGORY_INFO,
+  SET_SEASON_INFO,
+  CHANGE_SEASON_INFO,
+  RESET_SEASON_ADD,
+  RESET_SEASON_INFO,
   RESET
 } from './types';
 
 const INITIAL_STATE = {
-  categories: [],
-  categoryInfo: {
+  seasons: [],
+  seasonInfo: {
     name: '',
-    type: '',
     description: ''
   },
-  addCategory: {
+  addSeason: {
     name: '',
-    type: '',
     description: ''
   },
   isLoading: false
 };
 
 const HANDLERS = {
-  [SET_CATEGORIES]: (state, { payload }) => ({
+  [SET_SEASONS]: (state, { payload }) => ({
     ...state,
-    categories: payload
+    seasons: payload
   }),
-  [APPEND_CATEGORY]: (state, { payload }) => ({
+  [APPEND_SEASON]: (state, { payload }) => ({
     ...state,
-    categories: [...state.categories, payload]
+    seasons: [...state.seasons, payload]
   }),
-  [SET_CATEGORY_INFO]: (state, { payload }) => {
-    const { name, type, description } = state.categories[payload];
+  [SET_SEASON_INFO]: (state, { payload }) => {
+    const { name, description } = state.seasons[payload];
 
     return {
       ...state,
-      categoryInfo: {
+      seasonInfo: {
         name,
-        type,
         description
       }
     };
   },
-  [CHANGE_ADD_CATEGORY]: (state, { payload }) => ({
+  [CHANGE_ADD_SEASON]: (state, { payload }) => ({
     ...state,
-    addCategory: {
-      ...state.addCategory,
+    addSeason: {
+      ...state.addSeason,
       [payload.key]: payload.value
     }
   }),
-  [SET_CATEGORY]: (state, { payload }) => {
-    let oldCategories = [...state.categories];
-    const newCategories = payload.data;
+  [SET_SEASON]: (state, { payload }) => {
+    let oldSeasons = [...state.seasons];
+    const newSeasons = payload.data;
 
-    oldCategories[payload.index] = newCategories;
+    oldSeasons[payload.index] = newSeasons;
 
     return {
       ...state,
-      categories: oldCategories
+      seasons: oldSeasons
     }
   },
   [SET_IS_LOADING]: (state, { payload }) => ({
     ...state,
     isLoading: payload
   }),
-  [CHANGE_CATEGORY_INFO]: (state, { payload }) => ({
+  [CHANGE_SEASON_INFO]: (state, { payload }) => ({
     ...state,
-    categoryInfo: {
-      ...state.categoryInfo,
+    seasonInfo: {
+      ...state.seasonInfo,
       [payload.key]: payload.value
     }
   }),
-  [RESET_CATEGORY_ADD]: (state) => ({
+  [RESET_SEASON_ADD]: (state) => ({
     ...state,
-    addCategory: INITIAL_STATE.addCategory
+    addSeason: INITIAL_STATE.addSeason
   }),
-  [RESET_CATEGORY_INFO]: (state) => ({
+  [RESET_SEASON_INFO]: (state) => ({
     ...state,
-    categoryInfo: INITIAL_STATE.categoryInfo
+    seasonInfo: INITIAL_STATE.seasonInfo
   }),
   [RESET]: () => ({
     ...INITIAL_STATE
