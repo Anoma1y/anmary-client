@@ -2,6 +2,10 @@ import axios from 'axios';
 import config from './config';
 import AuthApiModule from './Auth';
 import CategoryApiModule from './Category';
+import ImagesApiModule from './Images';
+import UsersApiModule from './Users';
+import RolesApiModule from './Roles';
+import CompoundsApiModule from './Compounds';
 
 class Api {
 
@@ -21,6 +25,10 @@ class Api {
 
     this.auth = new AuthApiModule(this.http);
     this.category = new CategoryApiModule(this.http);
+    this.images = new ImagesApiModule(this.http);
+    this.users = new UsersApiModule(this.http);
+    this.roles = new RolesApiModule(this.http);
+    this.compounds = new CompoundsApiModule(this.http);
   }
 
   /**

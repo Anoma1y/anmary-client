@@ -1,0 +1,23 @@
+/**
+Стиль для лоадеров в button'ах
+ */
+.mui-btn {
+  position: relative;
+  &_progress {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    &__16 {
+      margin-top: -8px;
+      margin-left: -8px;
+    }
+    &__24 {
+      margin-top: -12px;
+      margin-left: -12px;
+    }
+    &__30 {
+      margin-top: -15px;
+      margin-left: -15px;
+    }
+  }
+}

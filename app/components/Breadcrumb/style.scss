@@ -1,0 +1,68 @@
+@import "lib/style/vars.scss";
+$breadcrumb-link-color:             #4183C4;
+$breadcrumb-link-color-hover:       #1e70bf;
+
+$breadcrumb: breadcrumb;
+
+.#{$breadcrumb} {
+
+  &, *, *:before, *:after {
+    box-sizing: border-box;
+  }
+
+  line-height: 1;
+  display: inline-block;
+  margin: 0;
+  vertical-align: middle;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  & a {
+    color: $breadcrumb-link-color;
+    font-family: $font-regular-serif;
+    a:hover {
+      color: $breadcrumb-link-color-hover;
+    }
+  }
+
+
+  &_divider {
+    display: inline-block;
+    opacity: 0.7;
+    margin: 0 0.21428571rem 0;
+    font-size: 1em;
+    color: rgba(0, 0, 0, 0.4);
+    vertical-align: baseline;
+  }
+
+  & a {
+    text-decoration: none;
+  }
+
+  a.#{$breadcrumb}_section {
+    cursor: pointer;
+
+
+  }
+
+  &_section {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    &__active {
+      font-weight: bold;
+      & a {
+        cursor: default;
+        &:after {
+          content: none;
+        }
+      }
+    }
+  }
+}

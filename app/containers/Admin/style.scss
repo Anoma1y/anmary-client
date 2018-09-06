@@ -1,2 +1,170 @@
 @import "lib/style/vars.scss";
+@import "lib/style/mixin.scss";
+//$break-420:                420px; // Дополнительный брейкпоинт, переход в мобильную версию
+//$break-490:                490px; // Дополнительный брейкпоинт
+//$break-575:                575px; // Дополнительный брейкпоинт
+//$break-sm:                 768px; // 48em;  // 768px
+//$break-991:                991px; // Дополнительный брейкпоинт
+//$break-md:                 1024px; //64em;  // 1024px
+//$break-lg:                 1200px; // 75em;  // 1200px
+//$break-1337:               1337px; // Дополнительный брейкпоинт
+
+.page {
+  &, *, *:before, *:after {
+    box-sizing: border-box;
+  }
+  width: 100%;
+}
+
+.content-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  flex: 1 1 auto;
+  position: relative;
+}
+
+.header-wrapper {
+  width: 100%;
+  flex: none;
+}
+
+.footer-wrapper {
+  width: 100%;
+  flex: none;
+}
+
+.page-main {
+  width: 100%;
+  padding-left: 260px;
+
+  @media screen and (max-width: $break-lg - 1) {
+    padding: 0;
+  }
+
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: column nowrap;
+  min-height: 100vh;
+  transition: padding-left 0.2s ease;
+
+}
+
+/**
+Основной стиль для контейнеров
+ */
+.main-container {
+  margin: 0 auto;
+  padding: 3rem 2.5rem 2rem;
+  position: relative;
+}
+
+.admin {
+  margin: 0 auto;
+  padding: 2rem 4rem 2rem;
+  position: relative;
+  @media screen and (max-width: $break-md) {
+    padding: 2rem 1.2rem 5rem;
+  }
+  &-table {
+    overflow-x: auto !important;
+  }
+}
+
+.card {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  &-actions {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+// Затемнение фона
+.blackout {
+  position: fixed;
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  transition: background-color 0.4s ease;
+  background-color: rgba(0,0,0,0);
+  &__active {
+    width: 100%;
+    background-color: rgba(0,0,0,.75);
+  }
+}
+
+.btn-icon {
+  &__left {
+    margin-right: 0.5rem !important;
+  }
+  &__right {
+    margin-left: 0.5rem !important;
+  }
+}
+
+.admin-form {
+  &_label {
+    margin-bottom: 3rem;
+    color: $black-color !important;
+  }
+  &_files {
+    position: relative !important;
+  }
+  &_row {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+    &:first-child {
+      margin-top: 0 !important;
+    }
+    &:last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+  &_btn {
+    margin-top: 0.5rem !important;
+  }
+}
+
+/**
+Стили для лоадера посреди экрана (по горизонтали и вертикали)
+ */
+.page_loading {
+  position: absolute;
+  top: calc(50% - #{$loading-size});
+  left: calc(50% - #{$loading-size});
+}
+
+.table-loading {
+  &_wrapper {
+    position: relative !important;
+  }
+  &_spinner {
+    position: absolute;
+    top: 1rem;
+    left: calc(50% - #{$loading-size});
+  }
+}
+
+/**
+Стили для лоадера посреди экрана (по горизонтали)
+ */
+.admin_loading {
+  position: absolute;
+  top: 5rem;
+  left: calc(50% - #{$loading-size});
+}
+/**
+Стили для лоадера, для  картинок
+ */
+.image_loading {
+  position: absolute;
+  top: calc(50% - #{$loading-size / 2});
+  left: calc(50% - #{$loading-size / 2});
+}
+
+input, select, label, span, p, legend, button {
+  font-family: $font-regular !important;
+}
 

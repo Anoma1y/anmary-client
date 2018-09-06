@@ -1,0 +1,44 @@
+@import 'lib/style/vars.scss';
+
+.header {
+  *, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  height: 70px;
+  width: 100%;
+  background-color: $white-color;
+  position: relative;
+  border-bottom: 1px solid rgba(147, 147, 147, 0.2);
+
+  @media screen and (max-width: $break-lg - 1) {
+    width: calc(100% - 5rem) !important;
+    float: right;
+  }
+
+  &_item {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  &_logout {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+}
+.logout {
+  font-family: $font-regular;
+  font-weight: 500;
+  color: $lightblue-color;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  background: none;
+  &:focus {
+    outline: none;
+  }
+}

@@ -1,0 +1,40 @@
+@import 'lib/style/vars.scss';
+
+.roles-form {
+  &-permissions {
+    span {
+      font-family: $font-regular-serif !important;
+    }
+    padding-left: 1rem !important;
+    padding-bottom: 1rem;
+    &_item {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+  }
+}
+
+.roles-list {
+  &_header {
+    margin-bottom: 1rem !important;
+  }
+  &_control {
+    margin-top: 1rem !important;
+    margin-bottom: 2rem !important;
+  }
+  &_divider {
+    margin-top: 1rem !important;
+  }
+  &_item {
+    margin-bottom: 1.5rem !important;
+    span {
+      line-height: 0;
+    }
+    p {
+      margin: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

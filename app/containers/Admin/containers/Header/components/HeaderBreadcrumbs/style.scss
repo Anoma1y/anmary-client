@@ -1,0 +1,56 @@
+@import 'lib/style/vars.scss';
+
+$breadcrumb-font-size: 1.4rem;
+$breadcrumb-divider-size: 3px;
+
+.breadcrumb-area {
+
+  & a {
+    font-size: $breadcrumb-font-size;
+    color: $blue-color;
+    @media screen and (max-width: $break-575) {
+      font-size: $breadcrumb-font-size / 1.5;
+    }
+  }
+
+  a.header-breadcrumb__active, div {
+    color: $lightgray-color;
+  }
+
+  & > div {
+    margin-right: 4px;
+  }
+
+  div.breadcrumb_section {
+    a {
+      &:after {
+        content: '/';
+        margin-left: 7px;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  div.breadcrumb_section__last {
+    a {
+      &:after {
+        color: $lightgray-color;
+      }
+    }
+  }
+
+  div {
+    font-size: $breadcrumb-font-size;
+    @media screen and (max-width: $break-575) {
+      font-size: 15px;
+    }
+  }
+
+  font-family: $font-bold-serif;
+  cursor: default;
+
+}
+
+
+
+

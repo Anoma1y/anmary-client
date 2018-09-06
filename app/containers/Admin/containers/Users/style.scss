@@ -1,0 +1,38 @@
+@import 'lib/style/vars.scss';
+
+.users-list {
+  &-table {
+    &_item {
+      td {
+        font-family: $font-regular-serif;
+        font-size: 0.9rem !important;
+      }
+      &__link {
+        color: $lightblue-color !important;
+        cursor: pointer;
+      }
+      &:hover {
+        background-color: lighten($lightblue-color, 44%);
+      }
+
+    }
+  }
+}
+
+.user-single {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-family: $font-regular-serif !important;
+  &_header {
+    span {
+      font-family: $font-regular-serif !important;
+    }
+  }
+  svg {
+    font-size: 2rem;
+    color: $lightblue-color;
+  }
+  &_btn {
+    margin-top: 2rem !important;
+  }
+}

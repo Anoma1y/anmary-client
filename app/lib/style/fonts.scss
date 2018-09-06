@@ -1,0 +1,55 @@
+@font-face {
+  font-family: 'Proxima Nova Regular';
+  src: url('/static/Fonts/ProximaNova-Regular.eot');
+  src: local('Proxima Nova Regular'), local('ProximaNova-Regular'),
+  url('/static/Fonts/ProximaNova-Regular.eot?#iefix') format('embedded-opentype'),
+  url('/static/Fonts/ProximaNova-Regular.woff') format('woff'),
+  url('/static/Fonts/ProximaNova-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Semibold';
+  src: url('/static/Fonts/ProximaNova-Semibold.eot');
+  src: local('Proxima Nova Semibold'), local('ProximaNova-Semibold'),
+  url('/static/Fonts/ProximaNova-Semibold.eot?#iefix') format('embedded-opentype'),
+  url('/static/Fonts/ProximaNova-Semibold.woff') format('woff'),
+  url('/static/Fonts/ProximaNova-Semibold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Bold';
+  src: url('/static/Fonts/ProximaNova-Bold.eot');
+  src: local('Proxima Nova Bold'), local('ProximaNova-Bold'),
+  url('/static/Fonts/ProximaNova-Bold.eot?#iefix') format('embedded-opentype'),
+  url('/static/Fonts/ProximaNova-Bold.woff') format('woff'),
+  url('/static/Fonts/ProximaNova-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Thin';
+  src: url('/static/Fonts/ProximaNovaT-Thin.eot');
+  src: local('Proxima Nova Thin'), local('ProximaNovaT-Thin'),
+  url('/static/Fonts/ProximaNovaT-Thin.eot?#iefix') format('embedded-opentype'),
+  url('/static/Fonts/ProximaNovaT-Thin.woff') format('woff'),
+  url('/static/Fonts/ProximaNovaT-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Proxima Nova Lt';
+  src: url('/static/Fonts/ProximaNova-Light.eot');
+  src: local('Proxima Nova Light'), local('ProximaNova-Light'),
+  url('/static/Fonts/ProximaNova-Light.eot?#iefix') format('embedded-opentype'),
+  url('/static/Fonts/ProximaNova-Light.woff') format('woff'),
+  url('/static/Fonts/ProximaNova-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
