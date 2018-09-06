@@ -1,88 +1,88 @@
 import {
-  SET_CATEGORIES,
-  APPEND_CATEGORY,
-  CHANGE_ADD_CATEGORY,
-  SET_CATEGORY,
+  SET_BRANDS,
+  APPEND_BRAND,
+  CHANGE_ADD_BRAND,
+  SET_BRAND,
   SET_IS_LOADING,
-  SET_CATEGORY_INFO,
-  CHANGE_CATEGORY_INFO,
-  RESET_CATEGORY_ADD,
-  RESET_CATEGORY_INFO,
+  SET_BRAND_INFO,
+  CHANGE_BRAND_INFO,
+  RESET_BRAND_ADD,
+  RESET_BRAND_INFO,
   RESET
 } from './types';
 
 const INITIAL_STATE = {
-  categories: [],
-  categoryInfo: {
+  brands: [],
+  brandInfo: {
     name: '',
-    type: '',
+    country: '',
     description: ''
   },
-  addCategory: {
+  addBrand: {
     name: '',
-    type: '',
+    country: '',
     description: ''
   },
   isLoading: false
 };
 
 const HANDLERS = {
-  [SET_CATEGORIES]: (state, { payload }) => ({
+  [SET_BRANDS]: (state, { payload }) => ({
     ...state,
-    categories: payload
+    brands: payload
   }),
-  [APPEND_CATEGORY]: (state, { payload }) => ({
+  [APPEND_BRAND]: (state, { payload }) => ({
     ...state,
-    categories: [...state.categories, payload]
+    brands: [...state.brands, payload]
   }),
-  [SET_CATEGORY_INFO]: (state, { payload }) => {
-    const { name, type, description } = state.categories[payload];
+  [SET_BRAND_INFO]: (state, { payload }) => {
+    const { name, country, description } = state.brands[payload];
 
     return {
       ...state,
-      categoryInfo: {
+      brandInfo: {
         name,
-        type,
+        country,
         description
       }
     };
   },
-  [CHANGE_ADD_CATEGORY]: (state, { payload }) => ({
+  [CHANGE_ADD_BRAND]: (state, { payload }) => ({
     ...state,
-    addCategory: {
-      ...state.addCategory,
+    addBrand: {
+      ...state.addBrand,
       [payload.key]: payload.value
     }
   }),
-  [SET_CATEGORY]: (state, { payload }) => {
-    let oldCategories = [...state.categories];
-    const newCategories = payload.data;
+  [SET_BRAND]: (state, { payload }) => {
+    let oldBrands = [...state.brands];
+    const newBrands = payload.data;
 
-    oldCategories[payload.index] = newCategories;
+    oldBrands[payload.index] = newBrands;
 
     return {
       ...state,
-      categories: oldCategories
+      brands: oldBrands
     }
   },
   [SET_IS_LOADING]: (state, { payload }) => ({
     ...state,
     isLoading: payload
   }),
-  [CHANGE_CATEGORY_INFO]: (state, { payload }) => ({
+  [CHANGE_BRAND_INFO]: (state, { payload }) => ({
     ...state,
-    categoryInfo: {
-      ...state.categoryInfo,
+    brandInfo: {
+      ...state.brandInfo,
       [payload.key]: payload.value
     }
   }),
-  [RESET_CATEGORY_ADD]: (state) => ({
+  [RESET_BRAND_ADD]: (state) => ({
     ...state,
-    addCategory: INITIAL_STATE.addCategory
+    addBrand: INITIAL_STATE.addBrand
   }),
-  [RESET_CATEGORY_INFO]: (state) => ({
+  [RESET_BRAND_INFO]: (state) => ({
     ...state,
-    categoryInfo: INITIAL_STATE.categoryInfo
+    brandInfo: INITIAL_STATE.brandInfo
   }),
   [RESET]: () => ({
     ...INITIAL_STATE

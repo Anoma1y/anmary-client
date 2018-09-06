@@ -3,6 +3,7 @@ import config from './config';
 import AuthApiModule from './Auth';
 import CategoryApiModule from './Category';
 import SeasonApiModule from './Season';
+import BrandApiModule from './Brand';
 import ImagesApiModule from './Images';
 import UsersApiModule from './Users';
 import RolesApiModule from './Roles';
@@ -31,6 +32,7 @@ class Api {
     this.roles = new RolesApiModule(this.http);
     this.compounds = new CompoundsApiModule(this.http);
     this.season = new SeasonApiModule(this.http);
+    this.brand = new BrandApiModule(this.http);
   }
 
   /**
