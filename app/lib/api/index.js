@@ -6,6 +6,8 @@ import SeasonApiModule from './Season';
 import BrandApiModule from './Brand';
 import ImagesApiModule from './Images';
 import UsersApiModule from './Users';
+import SizeApiModule from './Size';
+import CompositionApiModule from './Composition';
 import RolesApiModule from './Roles';
 import CompoundsApiModule from './Compounds';
 
@@ -33,6 +35,8 @@ class Api {
     this.compounds = new CompoundsApiModule(this.http);
     this.season = new SeasonApiModule(this.http);
     this.brand = new BrandApiModule(this.http);
+    this.composition = new CompositionApiModule(this.http);
+    this.size = new SizeApiModule(this.http);
   }
 
   /**

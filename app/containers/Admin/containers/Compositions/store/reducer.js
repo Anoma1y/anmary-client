@@ -1,88 +1,85 @@
 import {
-  SET_CATEGORIES,
-  APPEND_CATEGORY,
-  CHANGE_ADD_CATEGORY,
-  SET_CATEGORY,
+  SET_COMPOSITIONS,
+  APPEND_COMPOSITION,
+  CHANGE_ADD_COMPOSITION,
+  SET_COMPOSITION,
   SET_IS_LOADING,
-  SET_CATEGORY_INFO,
-  CHANGE_CATEGORY_INFO,
-  RESET_CATEGORY_ADD,
-  RESET_CATEGORY_INFO,
+  SET_COMPOSITION_INFO,
+  CHANGE_COMPOSITION_INFO,
+  RESET_COMPOSITION_ADD,
+  RESET_COMPOSITION_INFO,
   RESET
 } from './types';
 
 const INITIAL_STATE = {
-  categories: [],
-  categoryInfo: {
+  compositions: [],
+  compositionInfo: {
     name: '',
-    type: '',
     description: ''
   },
-  addCategory: {
+  addComposition: {
     name: '',
-    type: '',
     description: ''
   },
   isLoading: false
 };
 
 const HANDLERS = {
-  [SET_CATEGORIES]: (state, { payload }) => ({
+  [SET_COMPOSITIONS]: (state, { payload }) => ({
     ...state,
-    categories: payload
+    compositions: payload
   }),
-  [APPEND_CATEGORY]: (state, { payload }) => ({
+  [APPEND_COMPOSITION]: (state, { payload }) => ({
     ...state,
-    categories: [...state.categories, payload]
+    compositions: [...state.compositions, payload]
   }),
-  [SET_CATEGORY_INFO]: (state, { payload }) => {
-    const { name, type, description } = state.categories[payload];
+  [SET_COMPOSITION_INFO]: (state, { payload }) => {
+    const { name, description } = state.compositions[payload];
 
     return {
       ...state,
-      categoryInfo: {
+      compositionInfo: {
         name,
-        type,
         description
       }
     };
   },
-  [CHANGE_ADD_CATEGORY]: (state, { payload }) => ({
+  [CHANGE_ADD_COMPOSITION]: (state, { payload }) => ({
     ...state,
-    addCategory: {
-      ...state.addCategory,
+    addComposition: {
+      ...state.addComposition,
       [payload.key]: payload.value
     }
   }),
-  [SET_CATEGORY]: (state, { payload }) => {
-    let oldCategories = [...state.categories];
-    const newCategories = payload.data;
+  [SET_COMPOSITION]: (state, { payload }) => {
+    let oldCompositions = [...state.compositions];
+    const newCompositions = payload.data;
 
-    oldCategories[payload.index] = newCategories;
+    oldCompositions[payload.index] = newCompositions;
 
     return {
       ...state,
-      categories: oldCategories
+      compositions: oldCompositions
     }
   },
   [SET_IS_LOADING]: (state, { payload }) => ({
     ...state,
     isLoading: payload
   }),
-  [CHANGE_CATEGORY_INFO]: (state, { payload }) => ({
+  [CHANGE_COMPOSITION_INFO]: (state, { payload }) => ({
     ...state,
-    categoryInfo: {
-      ...state.categoryInfo,
+    compositionInfo: {
+      ...state.compositionInfo,
       [payload.key]: payload.value
     }
   }),
-  [RESET_CATEGORY_ADD]: (state) => ({
+  [RESET_COMPOSITION_ADD]: (state) => ({
     ...state,
-    addCategory: INITIAL_STATE.addCategory
+    addComposition: INITIAL_STATE.addComposition
   }),
-  [RESET_CATEGORY_INFO]: (state) => ({
+  [RESET_COMPOSITION_INFO]: (state) => ({
     ...state,
-    categoryInfo: INITIAL_STATE.categoryInfo
+    compositionInfo: INITIAL_STATE.compositionInfo
   }),
   [RESET]: () => ({
     ...INITIAL_STATE

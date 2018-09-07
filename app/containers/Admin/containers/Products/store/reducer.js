@@ -1,22 +1,39 @@
 import {
-  SET_CURRENCY,
-  SET_CATEGORY
+  SET_BRANDS,
+  SET_CATEGORIES,
+  SET_SEASONS,
+  SET_SIZES,
+  SET_COMPOSITIONS,
 } from './types';
 
 const INITIAL_STATE = {
-  currency: [],
-  category: [],
-  shift_id: null,
+  brands: [],
+  seasons: [],
+  categories: [],
+  sizes: [],
+  compositions: []
 };
 
 const HANDLERS = {
-  [SET_CURRENCY]: (state, { payload }) => ({
+  [SET_BRANDS]: (state, { payload }) => ({
     ...state,
-    currency: payload
+    brands: payload
   }),
-  [SET_CATEGORY]: (state, { payload }) => ({
+  [SET_CATEGORIES]: (state, { payload }) => ({
     ...state,
-    category: payload
+    categories: payload
+  }),
+  [SET_SIZES]: (state, { payload }) => ({
+    ...state,
+    sizes: payload
+  }),
+  [SET_SEASONS]: (state, { payload }) => ({
+    ...state,
+    seasons: payload
+  }),
+  [SET_COMPOSITIONS]: (state, { payload }) => ({
+    ...state,
+    compositions: payload
   }),
 };
 

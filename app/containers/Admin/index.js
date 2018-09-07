@@ -8,6 +8,8 @@ import Header from './containers/Header';
 import Categories from './containers/Categories';
 import Seasons from './containers/Seasons';
 import Brands from './containers/Brands';
+import Compositions from './containers/Compositions';
+import Products from './containers/Products';
 import './style.scss';
 
 export default class Admin extends Component {
@@ -38,6 +40,8 @@ export default class Admin extends Component {
             <Route path={`${this.props.match.url}/users`} component={Users} />
             <Route path={`${this.props.match.url}/seasons`} component={Seasons} />
             <Route path={`${this.props.match.url}/brands`} component={Brands} />
+            <Route path={`${this.props.match.url}/products`} component={Products} />
+            <Route path={`${this.props.match.url}/compositions`} component={Compositions} />
           </Switch>
         </div>
       </div>

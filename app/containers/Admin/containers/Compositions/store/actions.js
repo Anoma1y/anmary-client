@@ -1,12 +1,12 @@
 import {
-  SET_CATEGORY,
-  SET_CATEGORIES,
-  APPEND_CATEGORY,
-  CHANGE_ADD_CATEGORY,
-  CHANGE_CATEGORY_INFO,
-  SET_CATEGORY_INFO,
-  RESET_CATEGORY_INFO,
-  RESET_CATEGORY_ADD,
+  SET_COMPOSITION,
+  SET_COMPOSITIONS,
+  APPEND_COMPOSITION,
+  CHANGE_ADD_COMPOSITION,
+  CHANGE_COMPOSITION_INFO,
+  SET_COMPOSITION_INFO,
+  RESET_COMPOSITION_INFO,
+  RESET_COMPOSITION_ADD,
   SET_IS_LOADING,
   RESET,
 } from './types';
@@ -14,13 +14,13 @@ import { send } from 'containers/Notification/store/actions';
 import { api } from 'lib/api';
 import uuid from 'uuid/v1';
 
-export const setCategories = (value) => ({
-  type: SET_CATEGORIES,
+export const setCompositions = (value) => ({
+  type: SET_COMPOSITIONS,
   payload: value,
 });
 
-export const setCategory = (index, data) => ({
-  type: SET_CATEGORY,
+export const setComposition = (index, data) => ({
+  type: SET_COMPOSITION,
   payload: {
     index,
     data
@@ -32,100 +32,98 @@ export const setIsLoading = (value) => ({
   payload: value,
 });
 
-export const changeCategoryInfo = (key, value) => ({
-  type: CHANGE_CATEGORY_INFO,
+export const changeCompositionInfo = (key, value) => ({
+  type: CHANGE_COMPOSITION_INFO,
   payload: {
     key,
     value
   },
 });
 
-export const appendCategory = (value) => ({
-  type: APPEND_CATEGORY,
+export const appendComposition = (value) => ({
+  type: APPEND_COMPOSITION,
   payload: value,
 });
 
-export const changeAddCategory = (key, value) => ({
-  type: CHANGE_ADD_CATEGORY,
+export const changeAddComposition = (key, value) => ({
+  type: CHANGE_ADD_COMPOSITION,
   payload: {
     key,
     value
   },
 });
 
-export const setCategoryInfo = (value) => ({
-  type: SET_CATEGORY_INFO,
+export const setCompositionInfo = (value) => ({
+  type: SET_COMPOSITION_INFO,
   payload: value,
 });
 
-export const resetCategoriesList = () => ({ type: RESET });
+export const resetCompositionsList = () => ({ type: RESET });
 
-export const resetCategoryInfo = () => ({ type: RESET_CATEGORY_INFO });
+export const resetCompositionInfo = () => ({ type: RESET_COMPOSITION_INFO });
 
-export const resetCategoryAdd = () => ({ type: RESET_CATEGORY_ADD });
+export const resetCompositionAdd = () => ({ type: RESET_COMPOSITION_ADD });
 
-export const pullCategories = () => (dispatch) => new Promise((resolve, reject) => {
-  api.category.getList()
+export const pullCompositions = () => (dispatch) => new Promise((resolve, reject) => {
+  api.composition.getList()
     .then((data) => {
       if (data.status !== api.code.OK) reject();
 
-      dispatch(setCategories(data.data));
+      dispatch(setCompositions(data.data));
       resolve();
     })
     .catch(() => reject());
 })
 
-export const addNewCategory = () => (dispatch, getState) => {
-  const { name, description, type } = getState().Dashboard_Category.addCategory;
+export const addNewComposition = () => (dispatch, getState) => {
+  const { name, description, type } = getState().Admin_Compositions.addComposition;
 
   if (name.length === 0) {
-    dispatch(send({ id: uuid(), status: 'warning', title: 'Предупреждение', message: 'Заполните имя категории', timeout: 1000 }));
+    dispatch(send({ id: uuid(), status: 'warning', title: 'Предупреждение', message: 'Заполните имя состава', timeout: 1000 }));
     return;
   }
 
   dispatch(setIsLoading(true));
-  api.category.add(name, description, type)
+  api.composition.add(name, description, type)
     .then((data) => {
       if (data.status !== api.code.CREATED) return;
 
-      dispatch(resetCategoryAdd());
-      dispatch(appendCategory(data.data));
-      dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: `Категория ${name} была добавлена`, timeout: 1000 }));
+      dispatch(resetCompositionAdd());
+      dispatch(appendComposition(data.data));
+      dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: `Состав ${name} была добавлена`, timeout: 1000 }));
     })
     .finally(() => dispatch(setIsLoading(false)));
 };
 
-export const applyCategoryName = (index) => (dispatch, getState) => {
+export const applyCompositionName = (index) => (dispatch, getState) => {
   const {
-    categoryInfo: {
+    compositionInfo: {
       name,
-      description,
-      type
+      description
     },
-    categories
-  } = getState().Dashboard_Category;
-  const category = categories[index];
+    compositions
+  } = getState().Admin_Compositions;
+  const composition = compositions[index];
 
-  const editCategory = {
-    name: name === '' ? category.name : name,
-    type,
-    description: description === category.description ? category.description : description,
+  const editComposition = {
+    name: name === '' ? composition.name : name,
+    description: description === composition.description ? composition.description : description,
   };
 
-  if (editCategory.name === category.name && editCategory.description === category.description && editCategory.type === category.type) return;
+  if (editComposition.name === composition.name && editComposition.description === composition.description) return;
 
-  if (editCategory.name.length === 0) {
-    dispatch(send({ id: uuid(), status: 'warning', title: 'Предупреждение', message: 'Заполните имя категории', timeout: 1000 }));
+  if (editComposition.name.length === 0) {
+    dispatch(send({ id: uuid(), status: 'warning', title: 'Предупреждение', message: 'Заполните имя состава', timeout: 1000 }));
     return;
   }
 
   dispatch(setIsLoading(true));
-  api.category.edit(category.id, editCategory.name, editCategory.description, editCategory.type)
+  api.composition.edit(composition.id, editComposition.name, editComposition.description)
     .then((data) => {
       if (data.status !== api.code.OK) return;
 
-      dispatch(setCategory(index, data.data));
-      dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: `Категория ${category.name} была изменена`, timeout: 1000 }));
+      dispatch(setComposition(index, data.data));
+      dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: `Категория ${composition.name} была изменена`, timeout: 1000 }));
     })
     .finally(() => dispatch(setIsLoading(false)));
 };

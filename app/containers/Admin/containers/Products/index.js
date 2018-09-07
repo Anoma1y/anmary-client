@@ -5,18 +5,24 @@ import {
   Grid,
   CircularProgress
 } from '@material-ui/core';
-import Form from './containers/Form';
-import List from './containers/List';
-import Single from './containers/Single';
+// import Form from './containers/Form';
+// import List from './containers/List';
+// import Single from './containers/Single';
 import {
-  pullCategory,
-  pullCurrency
+  pullBrands,
+  pullCategories,
+  pullCompositions,
+  pullSeasons,
+  pullSizes
 } from './store/actions';
 import './style.scss';
 
 @connect(({ routing }) => ({ routing }), ({
-  pullCategory,
-  pullCurrency,
+  pullBrands,
+  pullCategories,
+  pullCompositions,
+  pullSeasons,
+  pullSizes
 }))
 export default class Operations extends Component {
 
@@ -35,20 +41,26 @@ export default class Operations extends Component {
   }
 
   initialData = () => {
-    Promise.all([this.props.pullCategory(), this.props.pullCurrency()])
+    Promise.all([
+      this.props.pullBrands(),
+      this.props.pullCategories(),
+      this.props.pullCompositions(),
+      this.props.pullSeasons(),
+      this.props.pullSizes(),
+    ])
       .then(() => this.setState({ ready: true }));
   };
 
   renderLoader = () => <CircularProgress size={24} className={'dashboard_loading'} />;
 
   renderContent = () => (
-    <Grid container className={'dashboard users'}>
-      <Switch>
-        <Route exact path={`${this.props.match.url}`} component={List} />
-        <Route exact path={`${this.props.match.url}/new`} component={Form} />
-        <Route exact path={`${this.props.match.url}/:id/edit`} component={Form} />
-        <Route exact path={`${this.props.match.url}/:id`} component={Single} />
-      </Switch>
+    <Grid container className={'admin product'}>
+      {/*<Switch>*/}
+        {/*<Route exact path={`${this.props.match.url}`} component={List} />*/}
+        {/*<Route exact path={`${this.props.match.url}/new`} component={Form} />*/}
+        {/*<Route exact path={`${this.props.match.url}/:id/edit`} component={Form} />*/}
+        {/*<Route exact path={`${this.props.match.url}/:id`} component={Single} />*/}
+      {/*</Switch>*/}
     </Grid>
   );
 
