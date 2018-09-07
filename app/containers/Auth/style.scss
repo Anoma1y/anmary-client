@@ -1,0 +1,30 @@
+@import "lib/style/vars.scss";
+
+.auth {
+  padding: 5rem 0 2rem;
+  &_title {
+    margin-bottom: 2rem !important;
+    text-align: center;
+  }
+  &-form {
+    &_item {
+      position: relative !important;
+      margin-top: 0.8rem !important;
+      margin-bottom: 0.8rem !important;
+      &:first-child {
+        margin-top: 0 !important;
+      }
+      &:last-child {
+        margin-bottom: 0 !important;
+      }
+    }
+  }
+  &-error {
+    position: absolute;
+    color: #f44336;
+    font-size: 0.75rem;
+    font-family: $font-regular;
+    top: 4rem;
+    right: 0;
+  }
+}

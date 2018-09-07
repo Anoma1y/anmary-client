@@ -9,6 +9,7 @@ import UsersApiModule from './Users';
 import SizeApiModule from './Size';
 import CompositionApiModule from './Composition';
 import RolesApiModule from './Roles';
+import ProfileApiModule from './Profile';
 import CompoundsApiModule from './Compounds';
 
 class Api {
@@ -37,6 +38,7 @@ class Api {
     this.brand = new BrandApiModule(this.http);
     this.composition = new CompositionApiModule(this.http);
     this.size = new SizeApiModule(this.http);
+    this.profile = new ProfileApiModule(this.http);
   }
 
   /**
