@@ -10,6 +10,7 @@ import SizeApiModule from './Size';
 import CompositionApiModule from './Composition';
 import RolesApiModule from './Roles';
 import ProfileApiModule from './Profile';
+import ProductsApiModule from './Products';
 import CompoundsApiModule from './Compounds';
 
 class Api {
@@ -39,6 +40,7 @@ class Api {
     this.composition = new CompositionApiModule(this.http);
     this.size = new SizeApiModule(this.http);
     this.profile = new ProfileApiModule(this.http);
+    this.product = new ProductsApiModule(this.http);
   }
 
   /**

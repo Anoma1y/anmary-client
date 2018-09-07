@@ -6,7 +6,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 // import Form from './containers/Form';
-// import List from './containers/List';
+import List from './containers/List';
 // import Single from './containers/Single';
 import {
   pullBrands,
@@ -55,12 +55,12 @@ export default class Operations extends Component {
 
   renderContent = () => (
     <Grid container className={'admin product'}>
-      {/*<Switch>*/}
-        {/*<Route exact path={`${this.props.match.url}`} component={List} />*/}
+      <Switch>
+        <Route exact path={`${this.props.match.url}`} component={List} />
         {/*<Route exact path={`${this.props.match.url}/new`} component={Form} />*/}
         {/*<Route exact path={`${this.props.match.url}/:id/edit`} component={Form} />*/}
         {/*<Route exact path={`${this.props.match.url}/:id`} component={Single} />*/}
-      {/*</Switch>*/}
+      </Switch>
     </Grid>
   );
 
