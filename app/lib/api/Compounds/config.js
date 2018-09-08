@@ -1,4 +1,3 @@
 export default {
-  ADD: '/tag',
-  GET: '/tag',
+  ADD: '/compound'
 }

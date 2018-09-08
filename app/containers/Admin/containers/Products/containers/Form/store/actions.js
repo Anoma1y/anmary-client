@@ -15,6 +15,11 @@ import {
   SET_SIZES_USED,
   SET_SIZES_AVAILABLE,
   CHANGE_CURRENT_SIZE,
+
+  SET_COMPOSITIONS_USED,
+  SET_COMPOSITIONS_AVAILABLE,
+  CHANGE_CURRENT_COMPOSITION,
+  CHANGE_COMPOSITION_vALUE,
 } from './types';
 import { replace } from 'react-router-redux';
 import { send } from 'containers/Notification/store/actions';
@@ -48,6 +53,26 @@ export const appendComposition = (value) => ({
 
 export const removeComposition = (value) => ({
   type: REMOVE_COMPOSITION,
+  payload: value,
+});
+
+export const changeCurrentComposition = (value) => ({
+  type: CHANGE_CURRENT_COMPOSITION,
+  payload: value,
+});
+
+export const setCompositionsUsed = (value) => ({
+  type: SET_COMPOSITIONS_USED,
+  payload: value,
+});
+
+export const setCompositionsAvailable = (value) => ({
+  type: SET_COMPOSITIONS_AVAILABLE,
+  payload: value,
+});
+
+export const changeCompositionValue = (value) => ({
+  type: CHANGE_COMPOSITION_vALUE,
   payload: value,
 });
 
@@ -153,10 +178,49 @@ export const pullCompositions = () => (dispatch) => new Promise((resolve, reject
       if (data.status !== api.code.OK) reject();
 
       dispatch(setCompositions(data.data));
+      dispatch(setCompositionsAvailable(data.data.map((it) => it.id)));
       resolve();
     })
     .catch(() => reject());
 });
+
+export const addCompositionProduct = () => (dispatch, getState) => {
+  const { compositions, compositionsUsed, currentComposition, currentComposition_Value } = getState().Products_Form;
+
+  if (currentComposition === '' || !/^\d+$/.test(currentComposition_Value)) return;
+
+  api.compound.add(Number(currentComposition), currentComposition_Value)
+    .then((data) => {
+      if (data.status !== api.code.CREATED) return;
+
+      const getId = compositions.map((it) => it.id);
+
+      const newCompositionsUsed = [...compositionsUsed, Number(currentComposition)];
+      const newCompositionsAvailable = _.difference(getId, newCompositionsUsed);
+
+      dispatch(changeCurrentComposition(''));
+      dispatch(changeCompositionValue(0));
+      dispatch(setCompositionsUsed(newCompositionsUsed));
+      dispatch(setCompositionsAvailable(newCompositionsAvailable));
+      dispatch(appendComposition(data.data));
+
+    })
+    .catch(() => console.log('err'));
+};
+
+export const removeCompositionProduct = (index) => (dispatch, getState) => {
+  const { compositionsProduct, compositionsUsed, compositionsAvailable } = getState().Products_Form;
+
+  const { composition_id } = compositionsProduct[index];
+
+  const newCompositionUsed = compositionsUsed.filter((item) => item !== composition_id);
+  const newCompositionAvailable = [...compositionsAvailable, composition_id].sort((a, b) => a - b);
+
+  dispatch(changeCurrentComposition(''));
+  dispatch(setCompositionsUsed(newCompositionUsed));
+  dispatch(setCompositionsAvailable(newCompositionAvailable));
+  dispatch(removeComposition(composition_id));
+};
 
 export const pullProduct = (product_id) => (dispatch) => new Promise((resolve, reject) => {
   api.product.getSingle(product_id)

@@ -22,6 +22,7 @@ import {
   Select,
   FormControl,
   MenuItem,
+  TextField,
   FormHelperText,
   FormLabel,
 } from '@material-ui/core';
@@ -44,6 +45,11 @@ import {
   addSizeProduct,
   changeCurrentSize,
   removeSizeProduct,
+
+  changeCurrentComposition,
+  changeCompositionValue,
+  addCompositionProduct,
+  removeCompositionProduct,
 } from './store/actions';
 import { getValuesDeep } from 'lib/utils';
 import _ from 'lodash';
@@ -84,6 +90,11 @@ const validate = values => {
     addSizeProduct,
     changeCurrentSize,
     removeSizeProduct,
+
+    changeCurrentComposition,
+    changeCompositionValue,
+    addCompositionProduct,
+    removeCompositionProduct,
   }))
 @reduxForm({ form: 'Products_Form', validate, enableReinitialize: true })
 export default class Form extends Component {
@@ -125,8 +136,24 @@ export default class Form extends Component {
 
   handleChangeCurrentSize = (e) => this.props.changeCurrentSize(e.target.value)
 
+  handleChangeCurrentComposition = (e) => this.props.changeCurrentComposition(e.target.value)
+
+  handleChangeValueComposition = (e) => {
+    const { value } = e.target;
+
+    if (value < 0 || value > 100) {
+      return;
+    }
+
+    this.props.changeCompositionValue(value);
+  };
+
   handleAddProductSize = () => {
-    this.props.addSizeProduct()
+    this.props.addSizeProduct();
+  };
+
+  handleAddProductComposition = () => {
+    this.props.addCompositionProduct()
   }
 
   removeSizeProduct = (index) => this.props.removeSizeProduct(index);
@@ -144,6 +171,18 @@ export default class Form extends Component {
 
     return sizesArray;
   };
+
+  renderOptionComposition = () => {
+    const { compositions, compositionsAvailable } = this.props.Products_Form;
+    const compositionsArray = [];
+
+    compositionsAvailable.forEach((compositions_id) => {
+      const compositionsFind = _.find(compositions, { id: compositions_id });
+      compositionsArray.push(<option key={compositions_id} value={compositions_id}>{compositionsFind.name}</option>);
+    });
+
+    return compositionsArray;
+  }
 
   renderSizeForm = () => {
     return (
@@ -181,7 +220,7 @@ export default class Form extends Component {
                   </div>
                   <div className={'size-form-list_btn'}>
                     <button
-                      onClick={() => this.removeSizeProduct(index)}
+                      onClick={() => this.props.removeSizeProduct(index)}
                     >
                       <CloseIcon />
                     </button>
@@ -195,6 +234,59 @@ export default class Form extends Component {
     );
   };
 
+  renderCompositionForm =() => {
+    return (
+      <div className={'shift-form'}>
+        <div className={'shift-form-control'}>
+          <FormControl className={'shift-form-control_select'}>
+            <InputLabel>Состав</InputLabel>
+            <Select
+              native
+              value={this.props.Products_Form.currentComposition}
+              onChange={this.handleChangeCurrentComposition}
+            >
+              <option value={''} disabled hidden />
+              {
+                this.renderOptionComposition()
+              }
+            </Select>
+          </FormControl>
+          <TextField
+            value={this.props.Products_Form.currentComposition_Value}
+            onChange={this.handleChangeValueComposition}
+          />
+          <div className={'shift-form-control_btn'}>
+            <button
+              onClick={this.handleAddProductComposition}
+            >
+              <AddIcon />
+            </button>
+          </div>
+        </div>
+        <div className={'shift-form-list'}>
+          {
+            this.props.Products_Form.compositionsProduct.length !== 0 &&
+            this.props.Products_Form.compositionsProduct.map((composition, index) => {
+              return (
+                <div key={composition.id} className={'composition-form-list_item'}>
+                  <div className={'composition-form-list_input'}>
+                    {`${composition.id} ${composition.composition_id}`}
+                  </div>
+                  <div className={'composition-form-list_btn'}>
+                    <button
+                      onClick={() => this.props.removeCompositionProduct(index)}
+                    >
+                      <CloseIcon />
+                    </button>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+    )
+  }
 
   renderContent = () => {
     return (
@@ -307,7 +399,7 @@ export default class Form extends Component {
                 </Grid>
 
                 <Grid item xs={12} md={6} className={'product-form_item'}>
-                  Size
+                  {this.renderCompositionForm()}
                 </Grid>
 
               </Grid>

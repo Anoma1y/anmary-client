@@ -35,7 +35,7 @@ class Api {
     this.images = new ImagesApiModule(this.http);
     this.users = new UsersApiModule(this.http);
     this.roles = new RolesApiModule(this.http);
-    this.compounds = new CompoundsApiModule(this.http);
+    this.compound = new CompoundsApiModule(this.http);
     this.season = new SeasonApiModule(this.http);
     this.brand = new BrandApiModule(this.http);
     this.composition = new CompositionApiModule(this.http);

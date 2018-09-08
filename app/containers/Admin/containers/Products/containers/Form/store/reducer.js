@@ -14,13 +14,17 @@ import {
 
   SET_SIZES_AVAILABLE,
   SET_SIZES_USED,
-  CHANGE_CURRENT_SIZE
+  CHANGE_CURRENT_SIZE,
+
+  SET_COMPOSITIONS_USED,
+  SET_COMPOSITIONS_AVAILABLE,
+  CHANGE_CURRENT_COMPOSITION,
+  CHANGE_COMPOSITION_vALUE,
 } from './types';
 import _ from 'lodash';
 
 const INITIAL_STATE = {
   images: [],
-  compositions: [],
   isLoading: false,
   product: {},
   sizes: [],
@@ -28,6 +32,13 @@ const INITIAL_STATE = {
   sizesUsed: [],
   sizesAvailable: [],
   currentSize: '',
+
+  compositions: [],
+  compositionsProduct: [],
+  compositionsUsed: [],
+  compositionsAvailable: [],
+  currentcomposition: '',
+  currentComposition_Value: 0,
 };
 
 const HANDLERS = {
@@ -57,6 +68,36 @@ const HANDLERS = {
     sizesProduct: [...state.sizesProduct].filter((it) => it.size_id !== payload)
   }),
 
+  [CHANGE_COMPOSITION_vALUE]: (state, { payload }) => ({
+    ...state,
+    currentComposition_Value: payload
+  }),
+  [SET_COMPOSITIONS_AVAILABLE]: (state, { payload }) => ({
+    ...state,
+    compositionsAvailable: payload
+  }),
+  [SET_COMPOSITIONS_USED]: (state, { payload }) => ({
+    ...state,
+    compositionsUsed: payload
+  }),
+  [CHANGE_CURRENT_COMPOSITION]: (state, { payload }) => ({
+    ...state,
+    currentComposition: payload
+  }),
+  [APPEND_COMPOSITION]: (state, { payload }) => {
+    const compositionsProduct = [...state.compositionsProduct, payload];
+    const newCompositions = _.uniqBy(compositionsProduct, 'id');
+
+    return {
+      ...state,
+      compositionsProduct: newCompositions
+    };
+  },
+  [REMOVE_COMPOSITION]: (state, { payload }) => ({
+    ...state,
+    compositionsProduct: [...state.compositionsProduct].filter((it) => it.composition_id !== payload)
+  }),
+
   [SET_COMPOSITIONS]: (state, { payload }) => ({
     ...state,
     compositions: payload
@@ -65,20 +106,6 @@ const HANDLERS = {
     ...state,
     sizes: payload
   }),
-  [APPEND_COMPOSITION]: (state, { payload }) => {
-    const compositions = [...state.compositions, payload];
-    const newCompositions = _.uniqBy(compositions, 'id');
-
-    return {
-      ...state,
-      compositions: newCompositions
-    };
-  },
-  [REMOVE_COMPOSITION]: (state, { payload }) => ({
-    ...state,
-    compositions: [...state.compositions].filter((it) => it.id !== payload)
-  }),
-
   [SET_PRODUCT]: (state, { payload }) => ({
     ...state,
     product: payload

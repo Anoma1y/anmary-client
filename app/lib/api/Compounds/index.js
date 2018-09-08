@@ -1,19 +1,16 @@
 import config from './config';
 
-export default class Tags {
+export default class Compounds {
 
   constructor(http) {
     this.http = http;
   }
 
-  add(name) {
+  add(composition_id, value) {
     return this.http.post(config.ADD, {
-      name
+      composition_id,
+      value
     });
-  }
-
-  get(name, limit = 10) {
-    return this.http.get(`${config.GET}?name=${name}&limit=${limit}`);
   }
 
 }
