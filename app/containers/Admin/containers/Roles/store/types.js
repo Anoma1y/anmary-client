@@ -1,1 +1,1 @@
-export const SET_SCHEMA = 'Admin_Users/SET_SCHEMA';
+export const SET_SCHEMA = 'Admin_Roles/SET_SCHEMA';

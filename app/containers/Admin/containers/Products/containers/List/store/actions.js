@@ -99,10 +99,9 @@ export const applyFilter = (pageParam, numOnPageParam) => (dispatch, getState) =
 
   const filter = {
     ...values,
-    // category: (values && values.category) ? values.category : undefined,
+    has_discount: (values && values.has_discount !== undefined) ? values.has_discount : undefined,
     sum_from: (values && values.sum_from) ? amountInput(values.sum_from.replace(/,/g, '')) : undefined,
     sum_to: (values && values.sum_to) ? amountInput(values.sum_to.replace(/,/g, '')) : undefined,
-    // has_files: (values && values.has_files !== undefined) ? values.has_files : undefined,
   };
 
   if (filter.sum_from > filter.sum_to) {
