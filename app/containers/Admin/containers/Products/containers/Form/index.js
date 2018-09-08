@@ -31,7 +31,7 @@ import FieldAmount from 'containers/Admin/components/FieldAmount';
 import FieldSelectNew from 'containers/Admin/components/FieldSelectNew';
 import NumberFormatNegative from 'containers/Admin/components/NumberFormatNegative';
 import MuiButton from 'components/MuiButton';
-import Files from './components/Files';
+import Images from './components/Images';
 import {
   uploadImage,
   removeImage,
@@ -459,12 +459,12 @@ export default class Form extends Component {
             </Grid>
 
             <Grid item xs={12} className={'product-form_row'} >
-              {/*<Files*/}
-                {/*onFileSelected={this.handleImageChange}*/}
-                {/*disabled={false}*/}
-                {/*isLoading={false}*/}
-                {/*isMultiply*/}
-              {/*/>*/}
+              <Images
+                onFileSelected={this.handleImageChange}
+                disabled={false}
+                isLoading={false}
+                isMultiply
+              />
               <Grid item xs={12} className={'image-attach'}>
                 {
                   this.props.Products_Form.images.length !== 0 &&
@@ -476,11 +476,11 @@ export default class Form extends Component {
 
                     return (
                       <div className={'image-attach_item'} key={file.id}>
-                        <a href={`${HOST}/${file.original_uri}`} target={'_blank'} className={'image-attach_link'}>
+                        <a href={`${HOST}${file.original_uri}`} target={'_blank'} className={'image-attach_link'}>
                           {
                             UPLOAD_FILE_FORMATS.includes(file.extension) ? (
                               <div className={'image-attach_img'}>
-                                <img src={`${HOST}/${file.original_uri}`} alt={'Preview photo'} />
+                                <img src={`${HOST}${file.original_uri}`} alt={'Preview photo'} />
                               </div>
                             ) : (
                               <div className={'image-attach_icon'}>

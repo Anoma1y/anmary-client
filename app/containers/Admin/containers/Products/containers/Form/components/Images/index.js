@@ -11,13 +11,13 @@ import {
   CloudUpload as CloudUploadIcon,
 } from '@material-ui/icons';
 
-const UPLOAD_FILE_SIZE = 10;
+const UPLOAD_IMAGE_SIZE = 10;
 
 /**
  * onFileSelected - обзяательный пропс, колбэк возвращающий file
  * disabled - дизейбл
  */
-export default class Files extends Component {
+export default class Images extends Component {
 
   state = {
     fileUploadError: null,
@@ -31,14 +31,14 @@ export default class Files extends Component {
     this.setState({ fileUploadError: null });
 
     const reader = new FileReader();
-    const file = event.target.files[0];
+    const image = event.target.files[0];
 
-    if ((file.size / 1024 / 1024) <= UPLOAD_FILE_SIZE) {
+    if ((image.size / 1024 / 1024) <= UPLOAD_IMAGE_SIZE) {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('image', image);
 
       this.props.onFileSelected(formData);
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(image);
 
     } else {
       this.setState({ fileUploadError: 'Больше 5 МБ' });
@@ -92,7 +92,7 @@ export default class Files extends Component {
 
     return (
       <Grid container spacing={40} >
-        <Grid item xs={12} className={'dashboard-form_item dashboard-form_files'}>
+        <Grid item xs={12} className={'admin-form_item admin-form_files'}>
           {this.renderUploadImage(disabled)}
           {fileUploadError && <span className={'imgUpload_error'}>{this.state.fileUploadError}</span>}
         </Grid>

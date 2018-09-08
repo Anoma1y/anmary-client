@@ -1,4 +1,4 @@
 export default {
-  ADD: '/file',
-  GET: '/file',
+  ADD: '/image',
+  GET: '/image',
 }
