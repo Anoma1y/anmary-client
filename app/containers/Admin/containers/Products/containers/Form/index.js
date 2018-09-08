@@ -19,60 +19,73 @@ import {
   Button,
   InputLabel,
   CircularProgress,
+  Select,
   FormControl,
   MenuItem,
   FormHelperText,
   FormLabel,
 } from '@material-ui/core';
-import FieldText from 'containers/Dashboard/components/FieldText';
-import FieldAmount from 'containers/Dashboard/components/FieldAmount';
-import FieldSelectNew from 'containers/Dashboard/components/FieldSelectNew';
+import FieldText from 'containers/Admin/components/FieldText';
+import FieldAmount from 'containers/Admin/components/FieldAmount';
+import FieldSelectNew from 'containers/Admin/components/FieldSelectNew';
+import NumberFormatNegative from 'containers/Admin/components/NumberFormatNegative';
 import MuiButton from 'components/MuiButton';
-import Tags from './components/Tags';
 import Files from './components/Files';
 import {
-  uploadFile,
-  removeFile,
-  pullOperation,
-  addOperation,
-  editOperation,
-  resetFormOperation,
-  setOperationType,
+  uploadImage,
+  removeImage,
+  pullProduct,
+  pullSizes,
+  pullCompositions,
+  addProduct,
+  editProduct,
+  resetFormProduct,
+
+  addSizeProduct,
+  changeCurrentSize,
+  removeSizeProduct,
 } from './store/actions';
 import { getValuesDeep } from 'lib/utils';
+import _ from 'lodash';
 
 const validate = values => {
   const errors = {};
 
-  if (!values.sum) {
-    errors.sum = 'Обязательное поле';
-  } else if (values.sum <= 0) {
-    errors.sum = 'Сумма не может быть меньше или равна нулю';
+  if (!values.price) {
+    errors.price = 'Обязательное поле';
+  } else if (values.price <= 0) {
+    errors.price = 'Сумма не может быть меньше или равна нулю';
   }
 
-  if (values.comments && values.comments.length > 250) {
-    errors.comments = `Максимальная длина 250 символов (${values.comments.length})`;
+  if (values.description && values.description.length > 250) {
+    errors.description = `Максимальная длина 250 символов (${values.description.length})`;
   }
 
   return getValuesDeep(errors).every((item) => item === '') ? {} : errors;
 };
 
-@connect(({ Dashboard, Dashboard_Operations, Operations_Form }) => ({
-  Dashboard,
-  Dashboard_Operations,
-  Operations_Form,
-  initialValues: window.location.pathname.split('/').some((it) => it === 'new') ? null : Operations_Form.operation
+@connect(({ Admin, Admin_Products, Products_Form }) => ({
+  Admin,
+  Admin_Products,
+  Products_Form,
+  initialValues: window.location.pathname.split('/').some((it) => it === 'new') ? null : Products_Form.product
 }), ({
-    uploadFile,
-    pullOperation,
-    removeFile,
-    addOperation,
-    editOperation,
-    resetFormOperation,
-    setOperationType,
+    uploadImage,
+    pullProduct,
+    pullSizes,
+    pullCompositions,
+    removeImage,
+    addProduct,
+
+    editProduct,
+    resetFormProduct,
     changeReduxForm,
+
+    addSizeProduct,
+    changeCurrentSize,
+    removeSizeProduct,
   }))
-@reduxForm({ form: 'Operations_Form', validate, enableReinitialize: true })
+@reduxForm({ form: 'Products_Form', validate, enableReinitialize: true })
 export default class Form extends Component {
 
   state = {
@@ -84,81 +97,148 @@ export default class Form extends Component {
     if ('id' in this.props.match.params) {
       const { id } = this.props.match.params;
 
-      this.props.pullOperation(id)
+      Promise.all([
+        this.props.pullProduct(id),
+        this.props.pullSizes(),
+        this.props.pullCompositions()
+      ])
         .then(() => this.setState({ ready: true, pageType: 'edit' }));
 
     } else {
-      this.setState({ ready: true });
+      Promise.all([
+        this.props.pullSizes(),
+        this.props.pullCompositions()
+      ])
+        .then(() => this.setState({ ready: true }));
     }
   }
 
   componentWillUnmount() {
-    this.props.resetFormOperation();
+    this.props.resetFormProduct();
   }
 
-  handleImageChange = (file) => this.props.uploadFile(file);
+  handleImageChange = (file) => this.props.uploadImage(file);
 
-  handleAddOperation = () => this.props.addOperation();
+  handleAddProduct = () => this.props.addProduct();
 
-  handleEditOperation = () => this.props.editOperation();
+  handleEditProduct = () => this.props.editProduct();
 
-  renderLoader = () => <CircularProgress size={24} className={'dashboard_loading'} />;
+  handleChangeCurrentSize = (e) => this.props.changeCurrentSize(e.target.value)
+
+  handleAddProductSize = () => {
+    this.props.addSizeProduct()
+  }
+
+  removeSizeProduct = (index) => this.props.removeSizeProduct(index);
+
+  renderLoader = () => <CircularProgress size={24} className={'product_loading'} />;
+
+  renderOptionSize = () => {
+    const { sizes, sizesAvailable } = this.props.Products_Form;
+    const sizesArray = [];
+
+    sizesAvailable.forEach((id_sizes) => {
+      const sizesFind = _.find(sizes, { id: id_sizes });
+      sizesArray.push(<option key={id_sizes} value={id_sizes}>{`${sizesFind.ru} (${sizesFind.international})`}</option>);
+    });
+
+    return sizesArray;
+  };
+
+  renderSizeForm = () => {
+    return (
+      <div className={'shift-form'}>
+        <div className={'shift-form-control'}>
+          <FormControl className={'shift-form-control_select'}>
+            <InputLabel>Размер</InputLabel>
+            <Select
+              native
+              value={this.props.Products_Form.currentSize}
+              onChange={this.handleChangeCurrentSize}
+            >
+              <option value={''} disabled hidden />
+              {
+                this.renderOptionSize()
+              }
+            </Select>
+          </FormControl>
+          <div className={'shift-form-control_btn'}>
+            <button
+              onClick={this.handleAddProductSize}
+            >
+              <AddIcon />
+            </button>
+          </div>
+        </div>
+        <div className={'shift-form-list'}>
+          {
+            this.props.Products_Form.sizesProduct.length !== 0 &&
+            this.props.Products_Form.sizesProduct.map((size, index) => {
+              return (
+                <div key={size.id} className={'size-form-list_item'}>
+                  <div className={'size-form-list_input'}>
+                    {`${size.id} ${size.size_id}`}
+                  </div>
+                  <div className={'size-form-list_btn'}>
+                    <button
+                      onClick={() => this.removeSizeProduct(index)}
+                    >
+                      <CloseIcon />
+                    </button>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+    );
+  };
+
 
   renderContent = () => {
     return (
-      <Grid item xs={12} lg={7} className={'dashboard-form'}>
-        <FormControl fullWidth className={'dashboard-form_control'}>
-          <FormLabel component={'legend'} className={'dashboard-form_label'}>
-            Добавление операции
+      <Grid item xs={12} lg={7} className={'product-form'}>
+        <FormControl fullWidth className={'product-form_control'}>
+          <FormLabel component={'legend'} className={'product-form_label'}>
+            Добавление товара
           </FormLabel>
           <Grid container justify={'flex-start'}>
 
-            <Grid item xs={12} className={'dashboard-form_row'} >
+            <Grid item xs={12} className={'product-form_row'} >
               <Grid container spacing={40}>
-                <Grid item xs={12} md={3} className={'dashboard-form_item'}>
 
-                  <FormControl fullWidth>
-                    <InputLabel>Тип</InputLabel>
-                    <Field
-                      name={'type'}
-                      component={FieldSelectNew}
-                      onChange={(e, value) => {
-                        this.props.setOperationType(value)
-                        this.props.changeReduxForm('Operations_Form', 'category', null);
-                      }}
-                    >
-                      {this.props.Dashboard.operation_type.map((item) => <MenuItem key={item.id} value={item.id}>{item.label}</MenuItem>)}
-                    </Field>
-                    <FormHelperText>Обязательное поле</FormHelperText>
-                  </FormControl>
+                <Grid item xs={12} md={4} className={'product-form_item'}>
+                  <Field
+                    name={'price'}
+                    component={FieldAmount}
+                    label={'Цена'}
+                  />
                 </Grid>
 
-                <Grid item xs={12} md={3} className={'dashboard-form_item'}>
+                <Grid item xs={12} md={4} className={'product-form_item'}>
                   <Field
-                    name={'sum'}
+                    name={'discount'}
                     component={FieldAmount}
+                    label={'Скидка'}
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={4} className={'product-form_item'}>
+                  <Field
+                    name={'total_price'}
+                    component={FieldAmount}
+                    disabled
                     label={'Сумма'}
                   />
                 </Grid>
 
-                <Grid item xs={12} md={6} className={'dashboard-form_item'}>
-                  <FormControl fullWidth>
-                    <InputLabel>Валюта</InputLabel>
-                    <Field
-                      name={'currency'}
-                      component={FieldSelectNew}
-                    >
-                      {this.props.Dashboard_Operations.currency.map((item) => <MenuItem key={item.id} value={item.id}>{`${item.name} (${item.symbol})`}</MenuItem>)}
-                    </Field>
-                    <FormHelperText>Обязательное поле</FormHelperText>
-                  </FormControl>
-                </Grid>
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'dashboard-form_row'} >
+            <Grid item xs={12} className={'product-form_row'} >
               <Grid container spacing={40}>
-                <Grid item xs={12} className={'dashboard-form_item'}>
+                <Grid item xs={12} md={4} className={'product-form_item'}>
                   <FormControl fullWidth>
                     <InputLabel>Категория</InputLabel>
                     <Field
@@ -166,11 +246,37 @@ export default class Form extends Component {
                       component={FieldSelectNew}
                     >
                       {
-                        this.props.Dashboard_Operations.category.map((item) => {
-                          if (this.props.Operations_Form.operation_type === item.type) {
-                            return <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>;
-                          }
-                        })
+                        this.props.Admin_Products.categories.map((item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
+                      }
+                    </Field>
+                    <FormHelperText>Обязательное поле</FormHelperText>
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12} md={4} className={'product-form_item'}>
+                  <FormControl fullWidth>
+                    <InputLabel>Бренд</InputLabel>
+                    <Field
+                      name={'brand'}
+                      component={FieldSelectNew}
+                    >
+                      {
+                        this.props.Admin_Products.brands.map((item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
+                      }
+                    </Field>
+                    <FormHelperText>Обязательное поле</FormHelperText>
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12} md={4} className={'product-form_item'}>
+                  <FormControl fullWidth>
+                    <InputLabel>Сезон</InputLabel>
+                    <Field
+                      name={'season'}
+                      component={FieldSelectNew}
+                    >
+                      {
+                        this.props.Admin_Products.seasons.map((item) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
                       }
                     </Field>
                     <FormHelperText>Обязательное поле</FormHelperText>
@@ -180,34 +286,44 @@ export default class Form extends Component {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'dashboard-form_row'} >
+            <Grid item xs={12} className={'product-form_row'} >
               <Grid container spacing={40}>
-                <Grid item xs={12} className={'dashboard-form_item'}>
+                <Grid item xs={12} className={'product-form_item'}>
                   <Field
-                    name={'comments'}
+                    name={'description'}
                     component={FieldText}
-                    label={'Комментарий'}
+                    label={'Описание'}
                     helperText={'Необязательно поле'}
                   />
                 </Grid>
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'dashboard-form_row'} >
-              <Tags />
+            <Grid item xs={12} className={'product-form_row'} >
+              <Grid container spacing={40}>
+
+                <Grid item xs={12} md={6} className={'product-form_item'}>
+                  {this.renderSizeForm()}
+                </Grid>
+
+                <Grid item xs={12} md={6} className={'product-form_item'}>
+                  Size
+                </Grid>
+
+              </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'dashboard-form_row'} >
-              <Files
-                onFileSelected={this.handleImageChange}
-                disabled={false}
-                isLoading={false}
-                isMultiply
-              />
+            <Grid item xs={12} className={'product-form_row'} >
+              {/*<Files*/}
+                {/*onFileSelected={this.handleImageChange}*/}
+                {/*disabled={false}*/}
+                {/*isLoading={false}*/}
+                {/*isMultiply*/}
+              {/*/>*/}
               <Grid item xs={12} className={'image-attach'}>
                 {
-                  this.props.Operations_Form.files.length !== 0 &&
-                  this.props.Operations_Form.files.map((file) => {
+                  this.props.Products_Form.images.length !== 0 &&
+                  this.props.Products_Form.images.map((file) => {
                     const HOST = process.env.API_HOST;
                     const FILE_URI = file.original_uri.split('/');
                     const FILE_NAME = FILE_URI[FILE_URI.length - 1].slice(-15);
@@ -231,7 +347,7 @@ export default class Form extends Component {
                         </a>
                         <div className={'image-attach_btn'}>
                           <Button
-                            onClick={() => this.props.removeFile(file.id)}
+                            onClick={() => this.props.removeImage(file.id)}
                           >
                             <CloseIcon /> Удалить
                           </Button>
@@ -243,15 +359,15 @@ export default class Form extends Component {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'dashboard-form_row'}>
-              <MuiButton isLoading={this.props.Operations_Form.isLoading}>
+            <Grid item xs={12} className={'product-form_row'}>
+              <MuiButton isLoading={this.props.Products_Form.isLoading}>
                 <Button
                   fullWidth
                   variant={'raised'}
                   color={'primary'}
-                  className={'dashboard-form_btn'}
-                  disabled={this.props.Operations_Form.isLoading}
-                  onClick={() => this.state.pageType === 'add' ? this.handleAddOperation() : this.handleEditOperation()}
+                  className={'product-form_btn'}
+                  disabled={this.props.Products_Form.isLoading}
+                  onClick={() => this.state.pageType === 'add' ? this.handleAddProduct() : this.handleEditProduct()}
                 >
                   {
                     this.state.pageType === 'add' ? (

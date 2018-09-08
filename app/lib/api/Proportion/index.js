@@ -1,6 +1,6 @@
 import config from './config';
 
-export default class Size {
+export default class Proportion {
 
   constructor(http) {
     this.http = http;
@@ -11,9 +11,4 @@ export default class Size {
       size_id,
     });
   }
-
-  getList() {
-    return this.http.get(config.GET_LIST);
-  }
-
 }

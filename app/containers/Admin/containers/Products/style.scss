@@ -1,38 +1,6 @@
 @import "lib/style/vars.scss";
 
-.dashboard-form_tags-suggest {
-
-}
-.react-autosuggest__suggestions-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  li {
-    border-bottom: 1px solid lighten($lightgray-color, 23%);
-    &:last-child {
-      border-bottom: none;
-    }
-  }
-}
-.react-autosuggest__container {
-  position: relative !important;
-}
-
-.tags-suggest {
-  &_form {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-  &_paper {
-    position: absolute !important;
-    left: 0;
-    width: 100%;
-    z-index: 99999;
-  }
-}
-
-.operations-list {
+.product-list {
   &_add {
     margin-bottom: 1rem !important;
   }
@@ -44,7 +12,7 @@
   }
 }
 
-.operations-filter {
+.product-filter {
   margin-bottom: 4rem !important;
   &_tags-list {
     padding: 1rem 0 0;
@@ -69,7 +37,7 @@
   color: darken($gray-color, 10%);
 }
 
-.operations-filter_tags {
+.product-filter_tags {
   margin-top: 1.5rem !important;
 }
 .image-attach {
@@ -107,7 +75,7 @@
   }
 }
 
-.operation-single {
+.product-single {
   input, textarea {
     font-family: $font-regular;
     color: $black-color !important;

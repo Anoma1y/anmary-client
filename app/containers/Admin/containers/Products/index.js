@@ -5,9 +5,9 @@ import {
   Grid,
   CircularProgress
 } from '@material-ui/core';
-// import Form from './containers/Form';
+import Form from './containers/Form';
 import List from './containers/List';
-// import Single from './containers/Single';
+import Single from './containers/Single';
 import {
   pullBrands,
   pullCategories,
@@ -44,9 +44,9 @@ export default class Operations extends Component {
     Promise.all([
       this.props.pullBrands(),
       this.props.pullCategories(),
-      this.props.pullCompositions(),
+      // this.props.pullCompositions(),  todo: добавить для сингла
       this.props.pullSeasons(),
-      this.props.pullSizes(),
+      // this.props.pullSizes(),
     ])
       .then(() => this.setState({ ready: true }));
   };
@@ -57,9 +57,9 @@ export default class Operations extends Component {
     <Grid container className={'admin product'}>
       <Switch>
         <Route exact path={`${this.props.match.url}`} component={List} />
-        {/*<Route exact path={`${this.props.match.url}/new`} component={Form} />*/}
-        {/*<Route exact path={`${this.props.match.url}/:id/edit`} component={Form} />*/}
-        {/*<Route exact path={`${this.props.match.url}/:id`} component={Single} />*/}
+        <Route exact path={`${this.props.match.url}/new`} component={Form} />
+        <Route exact path={`${this.props.match.url}/:id/edit`} component={Form} />
+        <Route exact path={`${this.props.match.url}/:id`} component={Single} />
       </Switch>
     </Grid>
   );

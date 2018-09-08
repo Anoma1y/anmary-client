@@ -1,22 +1,22 @@
 import {
-  SET_OPERATION,
+  SET_PRODUCT,
   RESET,
 } from './types';
 import { api } from 'lib/api';
 
-export const setOperation = (value) => ({
-  type: SET_OPERATION,
+export const setProduct = (value) => ({
+  type: SET_PRODUCT,
   payload: value,
 });
 
-export const resetOperationSingle = () => ({ type: RESET });
+export const resetProductSingle = () => ({ type: RESET });
 
-export const pullOperation = (operation_id) => (dispatch) => new Promise((resolve, reject) => {
-  api.operations.getSingle(operation_id)
+export const pullProduct = (product_id) => (dispatch) => new Promise((resolve, reject) => {
+  api.product.getSingle(product_id)
     .then((data) => {
       if (data.status !== 200) reject();
 
-      dispatch(setOperation(data.data));
+      dispatch(setProduct(data.data));
       resolve();
     })
     .catch(() => reject());

@@ -1,17 +1,20 @@
 import {
-  SET_TAGS,
-  APPEND_TAG,
-  REMOVE_TAG,
-  CHANGE_CURRENT_TAG,
-  SET_IS_LOADING_TAG,
-  SET_OPERATION,
-  SET_OPERATION_TYPE,
-  SET_FILTER_TAG,
+  APPEND_COMPOSITION,
+  APPEND_SIZE,
+  REMOVE_SIZE,
+  REMOVE_COMPOSITION,
+  SET_SIZES,
+  SET_COMPOSITIONS,
+  SET_PRODUCT,
   SET_IS_LOADING,
-  SET_FILES,
-  APPEND_FILE,
-  REMOVE_FILE,
+  SET_IMAGES,
+  APPEND_IMAGE,
+  REMOVE_IMAGE,
   RESET,
+
+  SET_SIZES_USED,
+  SET_SIZES_AVAILABLE,
+  CHANGE_CURRENT_SIZE,
 } from './types';
 import { replace } from 'react-router-redux';
 import { send } from 'containers/Notification/store/actions';
@@ -23,48 +26,68 @@ import {
 import uuid from 'uuid/v1';
 import _ from 'lodash';
 
-export const setTags = (value) => ({
-  type: SET_TAGS,
+export const setProduct = (value) => ({
+  type: SET_PRODUCT,
   payload: value,
 });
 
-export const appendTag = (value) => ({
-  type: APPEND_TAG,
+export const setImages = (value) => ({
+  type: SET_IMAGES,
   payload: value,
 });
 
-export const removeTag = (value) => ({
-  type: REMOVE_TAG,
+export const setCompositions = (value) => ({
+  type: SET_COMPOSITIONS,
   payload: value,
 });
 
-export const setOperation = (value) => ({
-  type: SET_OPERATION,
+export const appendComposition = (value) => ({
+  type: APPEND_COMPOSITION,
   payload: value,
 });
 
-export const changeCurrentTag = (value) => ({
-  type: CHANGE_CURRENT_TAG,
+export const removeComposition = (value) => ({
+  type: REMOVE_COMPOSITION,
   payload: value,
 });
 
-export const setFilterTag = (value) => ({
-  type: SET_FILTER_TAG,
+export const setSizes = (value) => ({
+  type: SET_SIZES,
   payload: value,
 });
 
-export const setFiles = (value) => ({
-  type: SET_FILES,
+export const appendSize = (value) => ({
+  type: APPEND_SIZE,
   payload: value,
 });
 
-export const appendFile = (value) => ({
-  type: APPEND_FILE,
+export const removeSize = (value) => ({
+  type: REMOVE_SIZE,
   payload: value,
 });
 
-export const removeFile = (value) => ({
-  type: REMOVE_FILE,
+export const changeCurrentSize = (value) => ({
+  type: CHANGE_CURRENT_SIZE,
+  payload: value,
+});
+
+export const setSizesUsed = (value) => ({
+  type: SET_SIZES_USED,
+  payload: value,
+});
+
+export const setSizesAvailable = (value) => ({
+  type: SET_SIZES_AVAILABLE,
+  payload: value,
+});
+
+export const appendImage = (value) => ({
+  type: APPEND_IMAGE,
+  payload: value,
+});
+
+export const removeImage = (value) => ({
+  type: REMOVE_IMAGE,
   payload: value,
 });
 
@@ -73,135 +96,113 @@ export const setIsLoading = (value) => ({
   payload: value,
 });
 
-export const setIsLoadingTag = (value) => ({
-  type: SET_IS_LOADING_TAG,
-  payload: value,
-});
+export const resetFormProduct = () => ({ type: RESET });
 
-export const setOperationType = (value) => ({
-  type: SET_OPERATION_TYPE,
-  payload: value,
-});
-
-export const resetFormOperation = () => ({ type: RESET });
-
-export const pullOperation = (operation_id) => (dispatch) => new Promise((resolve, reject) => {
-  api.operations.getSingle(operation_id)
+export const pullSizes = () => (dispatch) => new Promise((resolve, reject) => {
+  api.size.getList()
     .then((data) => {
       if (data.status !== api.code.OK) reject();
 
-      const operation = {
-        id: data.data.id,
-        type: data.data.type,
-        comments: data.data.comments,
-        category: data.data.category.id,
-        currency: data.data.currency.id,
-        sum: String(amountOutput(data.data.sum).value),
-      };
-
-      dispatch(setOperationType(data.data.type));
-      dispatch(setFiles(data.data.files));
-      dispatch(setTags(data.data.tags));
-      dispatch(setOperation(operation));
+      dispatch(setSizes(data.data));
+      dispatch(setSizesAvailable(data.data.map((it) => it.id)));
       resolve();
     })
     .catch(() => reject());
 });
 
-export const pullTags = () => (dispatch, getState) => {
-  const { tagName } = getState().Operations_Form;
+export const addSizeProduct = () => (dispatch, getState) => {
+  const { sizes, sizesUsed, currentSize } = getState().Products_Form;
 
-  if (tagName.length <= 0) return;
+  if (currentSize === '') return;
 
-  dispatch(setIsLoadingTag(true));
-  api.tags.get(tagName.toLowerCase(), 5)
-    .then((data) => {
-      if (data.status !== api.code.OK) return;
-
-      dispatch(setFilterTag(data.data));
-    })
-    .finally(() => dispatch(setIsLoadingTag(false)));
-};
-
-export const addNewTag = () => (dispatch, getState) => {
-  const { tagName, tags } = getState().Operations_Form;
-
-  if (tagName.length <= 0) return;
-
-  dispatch(setIsLoadingTag(true));
-  api.tags.add(tagName)
-    .then((data) => {
-      if (data.status !== api.code.CREATED) return  ;
-
-      const newTags = _.uniqBy([...tags, data.data], 'id');
-
-      dispatch(setTags(newTags));
-    })
-    .finally(() => dispatch(setIsLoadingTag(false)));
-};
-
-export const uploadFile = (formData) => (dispatch) => {
-
-  dispatch(setIsLoading(true));
-  api.files.add(formData)
+  api.proportion.add(Number(currentSize))
     .then((data) => {
       if (data.status !== api.code.CREATED) return;
 
-      dispatch(appendFile(data.data));
+      const getId = sizes.map((it) => it.id);
+
+      const newSizesUsed = [...sizesUsed, Number(currentSize)];
+      const newSizesAvailable = _.difference(getId, newSizesUsed);
+
+      dispatch(changeCurrentSize(''));
+      dispatch(setSizesUsed(newSizesUsed));
+      dispatch(setSizesAvailable(newSizesAvailable));
+      dispatch(appendSize(data.data));
+
     })
-    .catch(() => dispatch(send({ id: uuid(), status: 'error', title: 'Ошибка', message: 'Ошибка загрузки файла', timeout: 2500 })))
+    .catch(() => console.log('err'));
+};
+
+export const removeSizeProduct = (index) => (dispatch, getState) => {
+  const { sizesProduct, sizesUsed, sizesAvailable } = getState().Products_Form;
+
+  const { size_id } = sizesProduct[index];
+
+  const newSizeUsed = sizesUsed.filter((item) => item !== size_id);
+  const newSizeAvailable = [...sizesAvailable, size_id].sort((a, b) => a - b);
+
+  dispatch(changeCurrentSize(''));
+  dispatch(setSizesUsed(newSizeUsed));
+  dispatch(setSizesAvailable(newSizeAvailable));
+  dispatch(removeSize(size_id));
+};
+
+export const pullCompositions = () => (dispatch) => new Promise((resolve, reject) => {
+  api.composition.getList()
+    .then((data) => {
+      if (data.status !== api.code.OK) reject();
+
+      dispatch(setCompositions(data.data));
+      resolve();
+    })
+    .catch(() => reject());
+});
+
+export const pullProduct = (product_id) => (dispatch) => new Promise((resolve, reject) => {
+  api.product.getSingle(product_id)
+    .then((data) => {
+      if (data.status !== api.code.OK) reject();
+
+      const product = {
+        id: data.data.id,
+        name: data.data.name,
+        description: data.data.description,
+        category: data.data.category.id,
+        brand: data.data.brand.id,
+        season: data.data.season.id,
+        price: String(amountOutput(data.data.price).value),
+        total_price: String(amountOutput(data.data.total_price).value),
+      };
+
+      dispatch(setImages(data.data.image));
+      dispatch(setProduct(product));
+      resolve();
+    })
+    .catch(() => reject());
+});
+
+export const uploadImage = (formData) => (dispatch) => {
+
+  dispatch(setIsLoading(true));
+  api.images.add(formData)
+    .then((data) => {
+      if (data.status !== api.code.CREATED) return;
+
+      dispatch(appendImage(data.data));
+    })
+    .catch(() => dispatch(send({ id: uuid(), status: 'error', title: 'Ошибка', message: 'Ошибка загрузки изображения', timeout: 2500 })))
     .finally(() => dispatch(setIsLoading(false)));
 };
 
-//                       o
-//                    ooo$
-//                 oo$$$$$                 $$
-//                $$$$$$$$oo             o$$$
-//            oo$$$$$$$$$$$$$$$$ooo    o$$$$$                               oooo
-//         o$$$$$$$$$$$$$$$$$$$$$$$$$o$$$$"$$                           o$$$$$$$
-//      o$$$$$$$$$o$$$$$$$$$$$$$$$$$$$$$$$ $$o                       o$$$$$$$$$$
-//      o$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" $$$                      o$$$$$$$$$$
-//   o$$$$$$$$$$$$$o"""$$$$$$$$$$$$$$$$$$  $$$                    o$$$$$$$$$"
-//   $$$$$$$$$$$$$$$$$$o  o$$$$$$$$$$$$$$  "$$$                  $$$$$$$$"
-//  $$"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  $$$                 o$$$$$$"
-//   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$oo$$o                 $$$$$$$
-//   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$                 $$$$$$"
-//   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$                 $$$$$$
-//   "$$$$$$$$$o$$$$$$$$$$$$$$$$oo$$$$$$$$$$$$"                 $$$$$$
-//    "$$$$$$$$$"$ $$$$$$$$$$$o$$"$$$$$$$$$$$$                  $$$$$$
-//      "$$$$$$"   $ $  """   $"$$  $"$""$$$$$                  $$$$$$o
-//        """"$$o  $$$        $o$$  "$$$o$$$$    oo             "$$$$$$
-//            "o$ "$$" oo     $$$$   $$o$$$$ o$$$$$$$$ooo        $$$$$$o
-//              $      oo     """  o$$$$$$$$$$$$$""""$$$$$        $$$$$$$o
-//          ooo "$o    $$o      o$$$$$$$$$$$$$""    $$$$$$         "$$$$$$$
-//       o$$$$$$$$$$oo "" oooo$""$$$$$$$$$$""      $$$$$$$          "$$$$$$$o
-//     o$$$$$$$$$$$$o$""$$"       $$$o            """$$"""            $$$$$$$
-//    o$$$$$$$$$$$$$$$ $$$      o$$" ""$o                              $$$$$$$
-//    $$$$$$$$$$$$$$$$ $$$"$$$$"""       "$                             $$$$$$
-//   $$$$$$$$$$$$$$$$" "$$$$"              $                            $$$$$$
-//   $$$$$$$$"$"   $               o$$$$$o  $                          $$$$$$$
-//  $$$$$$$$$$"  o$$oo   o""  oooo$$$$$$$$$o$                         $$$$$$$$
-// o$$$$$$$$$"  o$$$$$$oo$o$$$$$$$$$$$$$$$$$$  oooooooooooo       ooo$$$$$$$$
-// $$$$$$$$$$o  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"""$$$$ooo$$$$$$$$$$$$"
-// $$$$$$$$$$$  $$$$$$$$$$$$$$$$""$$$$$$$$$$$$$$$$"        """$$$$$$$$$$""
-// $$$$$$$$$$$  "$$$$$$$$$$$$$$     "$$$$$$$$$$$$              "$$$""""
-// $$$$$$$$$$$  o$""$$$$$$$$$$        $$$$$$$$$$$                "o
-//  $$$$$$$" "o$"       "$$$$        o$$$$$$$$$$$                 "o
-//  "o"""""  $"           $$        $$$$$$$$$$$$$$$                $
-//   "o   oo$"            $       o$$$$$$$$$$$$$$$$                $
-//     """"              $       $$$$$$$$$$$$$$$$$$                $            o
-//                      o"      $""$$$$$$$$$$$$$$$ooooooo         $"     ooo$$$$$
-//                     o"      o"         $     o$$$$$$$$$$$ooo   $   oo$$oo$oooo
-
-export const addOperation = () => (dispatch, getState) => {
+export const addProduct = () => (dispatch, getState) => {
   const {
     form: {
-      Operations_Form: {
+      Products_Form: {
         values,
         syncError
       }
     },
-    Operations_Form: {
+    Products_Form: {
       tags,
       files
     }
@@ -212,40 +213,40 @@ export const addOperation = () => (dispatch, getState) => {
     return;
   }
 
-  const operationTags = tags.length !== 0 ? tags.map((tag) => tag.id) : [];
-  const operationFiles = files.length !== 0 ? files.map((file) => file.id) : [];
+  const productTags = tags.length !== 0 ? tags.map((tag) => tag.id) : [];
+  const productImages = files.length !== 0 ? files.map((file) => file.id) : [];
 
-  const operation = {
+  const product = {
     ...values,
     sum: amountInput(values.sum.replace(/,/g, '')),
-    tags: operationTags,
-    files: operationFiles
+    tags: productTags,
+    files: productImages
   };
 
   dispatch(setIsLoading(true));
-  api.operations.add(operation)
+  api.products.add(product)
     .then((data) => {
       if (data.status !== api.code.CREATED) return;
 
-      dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: 'Операция была успешно добавлена', timeout: 2500 }));
-      dispatch(replace('/dashboard/operations/'));
+      dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: 'Товар был успешно добавлен', timeout: 2500 }));
+      dispatch(replace('/products/products/'));
     })
-    .catch(() => dispatch(send({ id: uuid(), status: 'error', title: 'Ошибка', message: 'Ошибка добавления новой операции', timeout: 2500 })))
+    .catch(() => dispatch(send({ id: uuid(), status: 'error', title: 'Ошибка', message: 'Ошибка добавления новой товара', timeout: 2500 })))
     .finally(() => dispatch(setIsLoading(false)));
 };
 
-export const editOperation = () => (dispatch, getState) => {
+export const editProduct = () => (dispatch, getState) => {
   const {
     form: {
-      Operations_Form: {
+      Products_Form: {
         values,
         syncError
       }
     },
-    Operations_Form: {
+    Products_Form: {
       tags,
       files,
-      operation: editOperation
+      product: editProduct
     }
   } = getState();
 
@@ -254,24 +255,24 @@ export const editOperation = () => (dispatch, getState) => {
     return;
   }
 
-  const operationTags = tags.length !== 0 ? tags.map((tag) => tag.id) : [];
-  const operationFiles = files.length !== 0 ? files.map((file) => file.id) : [];
+  const productTags = tags.length !== 0 ? tags.map((tag) => tag.id) : [];
+  const productImages = files.length !== 0 ? files.map((file) => file.id) : [];
 
-  const operation = {
+  const product = {
     ...values,
     sum: amountInput(values.sum.replace(/,/g, '')),
-    tags: operationTags,
-    files: operationFiles
+    tags: productTags,
+    files: productImages
   };
 
   dispatch(setIsLoading(true));
-  api.operations.edit(editOperation.id, operation)
+  api.products.edit(editProduct.id, product)
     .then((data) => {
       if (data.status !== api.code.OK) return;
 
-      dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: `Операция ${editOperation.id} была успешно изменена`, timeout: 2500 }));
-      dispatch(replace(`/dashboard/operations/${editOperation.id}`));
+      dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: `Товар ${editProduct.id} был успешно изменен`, timeout: 2500 }));
+      dispatch(replace(`/products/products/${editProduct.id}`));
     })
-    .catch(() => dispatch(send({ id: uuid(), status: 'error', title: 'Ошибка', message: 'Ошибка изменения операции', timeout: 2500 })))
+    .catch(() => dispatch(send({ id: uuid(), status: 'error', title: 'Ошибка', message: 'Ошибка изменения товара', timeout: 2500 })))
     .finally(() => dispatch(setIsLoading(false)));
 };

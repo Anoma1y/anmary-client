@@ -1,2 +1,2 @@
-export const SET_OPERATION = 'Operations_Single/SET_OPERATION';
-export const RESET = 'Operations_Single/RESET';
+export const SET_PRODUCT = 'Products_Single/SET_PRODUCT';
+export const RESET = 'Products_Single/RESET';

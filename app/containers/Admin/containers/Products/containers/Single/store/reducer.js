@@ -1,16 +1,16 @@
 import {
-  SET_OPERATION,
+  SET_PRODUCT,
   RESET
 } from './types';
 
 const INITIAL_STATE = {
-  operation: {}
+  product: {}
 };
 
 const HANDLERS = {
-  [SET_OPERATION]: (state, { payload }) => ({
+  [SET_PRODUCT]: (state, { payload }) => ({
     ...state,
-    operation: payload
+    product: payload
   }),
   [RESET]: () => ({
     ...INITIAL_STATE,
