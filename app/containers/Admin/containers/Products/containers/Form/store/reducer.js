@@ -37,7 +37,7 @@ const INITIAL_STATE = {
   compositionsProduct: [],
   compositionsUsed: [],
   compositionsAvailable: [],
-  currentcomposition: '',
+  currentComposition: '',
   currentComposition_Value: 0,
 };
 

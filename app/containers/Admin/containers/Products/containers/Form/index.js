@@ -63,6 +63,12 @@ const validate = values => {
     errors.price = 'Сумма не может быть меньше или равна нулю';
   }
 
+  if (!values.discount) {
+    errors.discount = 'Обязательное поле';
+  } else if (values.discount < 0 || values.discount > 100) {
+    errors.discount = 'Скидка может быть от 0 до 100%';
+  }
+
   if (values.description && values.description.length > 250) {
     errors.description = `Максимальная длина 250 символов (${values.description.length})`;
   }
@@ -101,7 +107,9 @@ export default class Form extends Component {
 
   state = {
     ready: false,
-    pageType: 'add'
+    pageType: 'add',
+    discount: 0,
+    price: 0
   };
 
   componentDidMount() {
@@ -126,6 +134,16 @@ export default class Form extends Component {
 
   componentWillUnmount() {
     this.props.resetFormProduct();
+  }
+
+  calculateTotalPrice = () => {
+    const { price, discount } = this.state;
+
+    if (discount === 0) {
+      return price;
+    }
+
+    return price - (price * (discount / 100));
   }
 
   handleImageChange = (file) => this.props.uploadImage(file);
@@ -186,39 +204,49 @@ export default class Form extends Component {
 
   renderSizeForm = () => {
     return (
-      <div className={'shift-form'}>
-        <div className={'shift-form-control'}>
-          <FormControl className={'shift-form-control_select'}>
-            <InputLabel>Размер</InputLabel>
-            <Select
-              native
-              value={this.props.Products_Form.currentSize}
-              onChange={this.handleChangeCurrentSize}
-            >
-              <option value={''} disabled hidden />
-              {
-                this.renderOptionSize()
-              }
-            </Select>
-          </FormControl>
-          <div className={'shift-form-control_btn'}>
-            <button
-              onClick={this.handleAddProductSize}
-            >
-              <AddIcon />
-            </button>
-          </div>
+      <div className={'product-select-form'}>
+        <div className={'product-select-form-control'}>
+          <Grid container spacing={24}>
+            <Grid item xs={10}>
+              <FormControl className={'product-select-form-control_select'} fullWidth>
+                <InputLabel>Размер</InputLabel>
+                <Select
+                  fullWidth
+                  native
+                  value={this.props.Products_Form.currentSize}
+                  onChange={this.handleChangeCurrentSize}
+                >
+                  <option value={''} disabled hidden />
+                  {
+                    this.renderOptionSize()
+                  }
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={2} className={'product-select-form_row'}>
+              <div className={'product-select-form-control_btn'}>
+                <button
+                  onClick={this.handleAddProductSize}
+                >
+                  <AddIcon />
+                </button>
+              </div>
+            </Grid>
+          </Grid>
         </div>
-        <div className={'shift-form-list'}>
+        <div className={'product-select-form-list'}>
           {
             this.props.Products_Form.sizesProduct.length !== 0 &&
-            this.props.Products_Form.sizesProduct.map((size, index) => {
+            this.props.Products_Form.sizesProduct.map((item, index) => {
+
+              const size = _.find(this.props.Products_Form.sizes, { id: item.size_id });
+
               return (
-                <div key={size.id} className={'size-form-list_item'}>
-                  <div className={'size-form-list_input'}>
-                    {`${size.id} ${size.size_id}`}
+                <div key={item.id} className={'product-select-form-list_item'}>
+                  <div className={'product-select-form-list_input'}>
+                    {size.ru} ({size.international})
                   </div>
-                  <div className={'size-form-list_btn'}>
+                  <div className={'product-select-form-control_btn'}>
                     <button
                       onClick={() => this.props.removeSizeProduct(index)}
                     >
@@ -236,43 +264,60 @@ export default class Form extends Component {
 
   renderCompositionForm =() => {
     return (
-      <div className={'shift-form'}>
-        <div className={'shift-form-control'}>
-          <FormControl className={'shift-form-control_select'}>
-            <InputLabel>Состав</InputLabel>
-            <Select
-              native
-              value={this.props.Products_Form.currentComposition}
-              onChange={this.handleChangeCurrentComposition}
-            >
-              <option value={''} disabled hidden />
-              {
-                this.renderOptionComposition()
-              }
-            </Select>
-          </FormControl>
-          <TextField
-            value={this.props.Products_Form.currentComposition_Value}
-            onChange={this.handleChangeValueComposition}
-          />
-          <div className={'shift-form-control_btn'}>
-            <button
-              onClick={this.handleAddProductComposition}
-            >
-              <AddIcon />
-            </button>
-          </div>
+      <div className={'product-select-form'}>
+        <div className={'product-select-form-control'}>
+          <Grid container spacing={24}>
+
+            <Grid item xs={7}>
+              <FormControl className={'product-select-form-control_select'} fullWidth>
+                <InputLabel>Состав</InputLabel>
+                <Select
+                  fullWidth
+                  native
+                  value={this.props.Products_Form.currentComposition}
+                  onChange={this.handleChangeCurrentComposition}
+                >
+                  <option value={''} disabled hidden />
+                  {
+                    this.renderOptionComposition()
+                  }
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={3}>
+              <TextField
+                fullWidth
+                label={' '}
+                value={this.props.Products_Form.currentComposition_Value}
+                onChange={this.handleChangeValueComposition}
+              />
+            </Grid>
+            <Grid item xs={2} className={'product-select-form_row'}>
+              <div className={'product-select-form-control_btn'}>
+                <button
+                  onClick={this.handleAddProductComposition}
+                >
+                  <AddIcon />
+                </button>
+              </div>
+            </Grid>
+          </Grid>
+
         </div>
-        <div className={'shift-form-list'}>
+        <div className={'product-select-form-list'}>
           {
             this.props.Products_Form.compositionsProduct.length !== 0 &&
-            this.props.Products_Form.compositionsProduct.map((composition, index) => {
+            this.props.Products_Form.compositionsProduct.map((item, index) => {
+              const composition = _.find(this.props.Products_Form.compositions, { id: item.composition_id });
+
               return (
-                <div key={composition.id} className={'composition-form-list_item'}>
-                  <div className={'composition-form-list_input'}>
-                    {`${composition.id} ${composition.composition_id}`}
+                <div key={item.id} className={'product-select-form-list_item'}>
+                  <div className={'product-select-form-list_input'}>
+                    {
+                      `${composition.name} - ${item.value} %`
+                    }
                   </div>
-                  <div className={'composition-form-list_btn'}>
+                  <div className={'product-select-form-control_btn'}>
                     <button
                       onClick={() => this.props.removeCompositionProduct(index)}
                     >
@@ -305,26 +350,34 @@ export default class Form extends Component {
                     name={'price'}
                     component={FieldAmount}
                     label={'Цена'}
+                    onChange={(e, value) => {
+                      this.setState({
+                        price: value
+                      })
+                    }}
                   />
                 </Grid>
-
                 <Grid item xs={12} md={4} className={'product-form_item'}>
                   <Field
                     name={'discount'}
                     component={FieldAmount}
                     label={'Скидка'}
+                    onChange={(e, value) => {
+                      this.setState({
+                        discount: value
+                      })
+                    }}
                   />
                 </Grid>
 
                 <Grid item xs={12} md={4} className={'product-form_item'}>
-                  <Field
-                    name={'total_price'}
-                    component={FieldAmount}
+                  <TextField
+                    fullWidth
                     disabled
                     label={'Сумма'}
+                    value={this.calculateTotalPrice()}
                   />
                 </Grid>
-
               </Grid>
             </Grid>
 
