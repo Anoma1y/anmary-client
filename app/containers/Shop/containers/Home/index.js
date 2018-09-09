@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Carousel from 'nuka-carousel';
-import { Grid } from '@material-ui/core';
+import {
+  Grid,
+  Button
+} from '@material-ui/core';
 import {
   Favorite as FavoriteIcon,
   ShoppingCart as ShoppingCartIcon
@@ -39,7 +42,12 @@ export default class Home extends Component {
                     <h2>2017/2018</h2>
                     <p>Новое поступление</p>
                   </div>
-                  <a href={'#'}>Смотреть коллекцию</a>
+                  <Button
+                    variant={'raised'}
+                    color={'primary'}
+                  >
+                    Смотреть коллекцию
+                  </Button>
                 </div>
                 <div className="overlay" />
               </div>
@@ -53,7 +61,12 @@ export default class Home extends Component {
                 <div className="overlay" />
                 <div className="arrivals_info">
                   <h1>Последнее поступление</h1>
-                  <a href={'#'}>Смотреть</a>
+                  <Button
+                    variant={'raised'}
+                    color={'primary'}
+                  >
+                    Смотреть
+                  </Button>
                 </div>
               </div>
               <div className="block subscribe">
@@ -74,9 +87,12 @@ type="text" placeholder="Введите E-Mail" id="get_subscribe_email"
                 <div className="catalog_info">
                   <h2>Большой выбор женской одежды</h2>
                 </div>
-                <a href={'#'} className="get_catalog">
+                <Button
+                  variant={'raised'}
+                  color={'primary'}
+                >
                   Перейти в каталог
-                </a>
+                </Button>
               </div>
             </div>
           </section>
