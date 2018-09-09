@@ -79,16 +79,16 @@ export default class Admin extends Component {
     this.props.replace('/auth/signin');
   };
 
-  renderLoader = () => <CircularProgress size={70} className={'page_loading'} />;
+  renderLoader = () => <CircularProgress size={70} className={'admin-page_loading'} />;
 
   renderContent = () => (
-    <div className={'page'}>
+    <div className={'admin-page'}>
 
-      <div className={'page-sidebar'}>
+      <div className={'admin-page-sidebar'}>
         <Sidebar />
       </div>
 
-      <div className={'page-main'}>
+      <div className={'admin-page-main'}>
 
         <div className={'header-wrapper'}>
           <Header />

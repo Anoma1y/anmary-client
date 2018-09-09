@@ -9,7 +9,12 @@
 //$break-lg:                 1200px; // 75em;  // 1200px
 //$break-1337:               1337px; // Дополнительный брейкпоинт
 
-.page {
+.admin-page {
+
+  &, *, *:before, *:after {
+    box-sizing: border-box;
+  }
+
   width: 100%;
 }
 
@@ -30,7 +35,7 @@
   flex: none;
 }
 
-.page-main {
+.admin-page-main {
   width: 100%;
   padding-left: 260px;
 
@@ -127,7 +132,7 @@
 /**
 Стили для лоадера посреди экрана (по горизонтали и вертикали)
  */
-.page_loading {
+.admin-page_loading {
   position: absolute;
   top: calc(50% - #{$loading-size});
   left: calc(50% - #{$loading-size});

@@ -10,7 +10,7 @@ export default () => (
   <Fragment>
     <Notification />
     <Switch>
-      <Route path={'/'} component={Shop} />
+      <Route exact path={'/'} component={Shop} />
       <Route path={'/admin'} component={Admin} />
       <Route path={'/auth'} component={Auth} />
     </Switch>
