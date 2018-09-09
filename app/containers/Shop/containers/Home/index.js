@@ -42,12 +42,7 @@ export default class Home extends Component {
                     <h2>2017/2018</h2>
                     <p>Новое поступление</p>
                   </div>
-                  <Button
-                    variant={'raised'}
-                    color={'primary'}
-                  >
-                    Смотреть коллекцию
-                  </Button>
+                  <a href={''} className={'block_link'}>Смотреть коллекцию</a>
                 </div>
                 <div className="overlay" />
               </div>
@@ -61,12 +56,7 @@ export default class Home extends Component {
                 <div className="overlay" />
                 <div className="arrivals_info">
                   <h1>Последнее поступление</h1>
-                  <Button
-                    variant={'raised'}
-                    color={'primary'}
-                  >
-                    Смотреть
-                  </Button>
+                  <a href={'#'} className={'block_link'}>Смотреть</a>
                 </div>
               </div>
               <div className="block subscribe">
@@ -87,12 +77,7 @@ type="text" placeholder="Введите E-Mail" id="get_subscribe_email"
                 <div className="catalog_info">
                   <h2>Большой выбор женской одежды</h2>
                 </div>
-                <Button
-                  variant={'raised'}
-                  color={'primary'}
-                >
-                  Перейти в каталог
-                </Button>
+                <a href={'#'} className={'block_link'}>Перейти в каталог</a>
               </div>
             </div>
           </section>
