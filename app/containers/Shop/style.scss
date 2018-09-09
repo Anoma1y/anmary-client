@@ -36,6 +36,21 @@
   transition: padding-left 0.2s ease;
 }
 
+.container {
+  margin: 0 auto;
+  padding: 2rem 4rem 2rem;
+  position: relative;
+  @media screen and (max-width: $break-md) {
+    padding: 2rem 1.2rem 5rem;
+  }
+  @media screen and (max-width: $break-lg){
+    padding: 2rem 0.7rem 2rem;
+  }
+  &-table {
+    overflow-x: auto !important;
+  }
+}
+
 @mixin overlay($opacity) {
   .overlay {
     background-color: rgba(0,0,0,$opacity);
@@ -382,11 +397,16 @@
   border-bottom: 1px solid $lightblue-color;
   display: inline-block;
 }
+.new-products_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .product-item {
   margin-top: 10px;
   position: relative;
-  width: 262px;
-  height: 385px;
+  width: 100%;
+  height: 539px;
   overflow: hidden;
   &_image {
     width: 100%;
@@ -395,7 +415,7 @@
   &:hover {
     box-shadow: 0px 5px 31px -1px rgba(0, 0, 0, 0.15);
     & .product-info {
-      top: 180px;
+      top: 330px;
     }
     & .image_overlay {
       opacity: .7;
@@ -403,10 +423,6 @@
     & .product_opacity {
       opacity: 1;
     }
-  }
-  img {
-    width: 100%;
-    height: 315px;
   }
   .item-sale-percent {
     position: absolute;
@@ -446,8 +462,8 @@
     position: absolute;
     left: 50%;
     font-family: $font-bold-serif;
-    width: 162px;
-    font-size: 0.65rem;
+    width: 282px;
+    font-size: 0.8rem;
     transform: translateX(-50%);
     border: 1px solid rgba(255, 255, 255, .5);
     color: $white-color;
@@ -472,17 +488,17 @@
     }
   }
   .add_to_cart {
-    top: 40px;
+    top: 70px;
   }
   .add_to_compare {
-    top: 100px;
+    top: 130px;
   }
   .product-info {
     background-color: $white-color;
     position: absolute;
-    top: 315px;
+    top: 472px;
     left: 0;
-    width: 262px;
+    width: 100%;
     height: 210px;
     padding: 0.5rem 0.3rem 2rem 0.3rem;
     transition: top .3s ease;
@@ -501,12 +517,13 @@
           }
           .product-title {
             font-family: $font-regular-serif !important;
-            color: $gray-color;
-            font-size: 1rem;
+            letter-spacing: 0.05rem;
+            color: lighten($black-color, 5%);
+            font-size: 1.1rem;
           }
           .product-brand {
-            color: lighten(#3d3d3d, 40%);
-            font-size: 12px;
+            color: lighten($black-color, 15%);
+            font-size: 0.8rem;
             font-family: $font-regular-serif !important;
             padding: 2px 0 2rem 0;
           }
@@ -514,13 +531,15 @@
         .product-price {
           width: 30%;
           text-align: right;
-          color: $black-color;
-
+          color: $lightblue-color;
           font-size: 1rem;
-          font-weight: bold;
           cursor: default;
+          letter-spacing: 0.03rem;
           p, span {
-            font-family: $font-thin-serif !important;
+            font-family: $font-bold-serif !important;
+          }
+          &__current {
+            font-size: 1.1rem;
           }
           &__old {
             text-decoration: line-through;

@@ -83,7 +83,7 @@ type="text" placeholder="Введите E-Mail" id="get_subscribe_email"
 
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} className={'container'}>
 
           <Grid container className={'new-products'}>
             <Grid item xs={12}>
@@ -94,11 +94,11 @@ type="text" placeholder="Введите E-Mail" id="get_subscribe_email"
             </Grid>
             <Grid item xs={12} className={'new-products_list'}>
 
-              <Grid container spacing={40}>
-                <Grid item xs={3} className={'new-products_item'}>
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={6} md={3} className={'new-products_item'}>
                   <div className="product-item">
                     <div className="shadow" />
-                    <div className={'product-item_image'} style={{ background: 'url(https://i.pinimg.com/originals/32/d8/fe/32d8fea5ce212f8c76f894c60a909487.jpg) no-repeat 100% 100%', backgroundSize: 'cover' }}></div>
+                    <div className={'product-item_image'} style={{ background: 'url(https://i.pinimg.com/originals/32/d8/fe/32d8fea5ce212f8c76f894c60a909487.jpg) no-repeat 50% 100%', backgroundSize: 'cover' }}></div>
                     <div className="image_overlay" />
                     <div className="add_to_cart product_opacity product-add-to-cart">
                       Добавить в карзину
@@ -132,11 +132,11 @@ type="text" placeholder="Введите E-Mail" id="get_subscribe_email"
                     </div>
                   </div>
                 </Grid>
-                <Grid item xs={3} className={'new-products_item'}>
+                <Grid item xs={12} sm={6} md={3} className={'new-products_item'}>
 
                   <div className="product-item">
                     <div className="shadow" />
-                    <div className={'product-item_image'} style={{ background: 'url(https://cdn.shopify.com/s/files/1/0932/7274/products/linen_dresses_fantasylinen2.jpg?v=1520755946) no-repeat 100% 100%', backgroundSize: 'cover' }}></div>
+                    <div className={'product-item_image'} style={{ background: 'url(https://cdn.shopify.com/s/files/1/0932/7274/products/linen_dresses_fantasylinen2.jpg?v=1520755946) no-repeat 50% 100%', backgroundSize: 'cover' }}></div>
                     <div className="image_overlay" />
                     <div className="add_to_cart product_opacity product-add-to-cart">
                         Добавить в карзину
@@ -172,10 +172,10 @@ type="text" placeholder="Введите E-Mail" id="get_subscribe_email"
                   </div>
 
                 </Grid>
-                <Grid item xs={3} className={'new-products_item'} >
+                <Grid item xs={12} sm={6} md={3} className={'new-products_item'} >
                   <div className="product-item">
                     <div className="shadow" />
-                    <div className={'product-item_image'} style={{ background: 'url(http://www.mode-beaute.info/wp-content/uploads/2017/03/v%C3%AAtements-grande-taille-femme.jpg) no-repeat 100% 100%', backgroundSize: 'cover' }}></div>
+                    <div className={'product-item_image'} style={{ background: 'url(http://www.mode-beaute.info/wp-content/uploads/2017/03/v%C3%AAtements-grande-taille-femme.jpg) no-repeat 50% 100%', backgroundSize: 'cover' }}></div>
                     <div className="image_overlay" />
                     <div className="add_to_cart product_opacity product-add-to-cart">
                       Добавить в карзину
@@ -209,10 +209,10 @@ type="text" placeholder="Введите E-Mail" id="get_subscribe_email"
                     </div>
                   </div>
                 </Grid>
-                <Grid item xs={3} className={'new-products_item'} >
+                <Grid item xs={12} sm={6} md={3} className={'new-products_item'} >
                   <div className="product-item">
                     <div className="shadow" />
-                    <div className={'product-item_image'} style={{ background: 'url(https://i.pinimg.com/originals/32/d8/fe/32d8fea5ce212f8c76f894c60a909487.jpg) no-repeat 100% 100%', backgroundSize: 'cover' }}></div>
+                    <div className={'product-item_image'} style={{ background: 'url(https://i.pinimg.com/originals/32/d8/fe/32d8fea5ce212f8c76f894c60a909487.jpg) no-repeat 50% 100%', backgroundSize: 'cover' }}></div>
                     <div className="image_overlay" />
                     <div className="add_to_cart product_opacity product-add-to-cart">
                       Добавить в карзину
