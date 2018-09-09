@@ -7,11 +7,11 @@ import './style.scss';
 export default class Header extends Component {
   render() {
     return (
-      <Grid container className={'header'} justify={'space-between'}>
-        <Grid item xs={6} className={'header_item header_breadcrumbs'}>
+      <Grid container className={'admin-header'} justify={'space-between'}>
+        <Grid item xs={6} className={'admin-header_item admin-header_breadcrumbs'}>
           <HeaderBreadcrumbs />
         </Grid>
-        <Grid item xs={2} className={'header_item header_logout'}>
+        <Grid item xs={2} className={'admin-header_item admin-header_logout'}>
           <Logout />
         </Grid>
       </Grid>

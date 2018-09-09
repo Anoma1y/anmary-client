@@ -1,0 +1,139 @@
+@import "lib/style/vars.scss";
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 7.5rem;
+  background: #FFFFFF;
+  z-index: 100;
+  &_inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+  &_logo {
+    a {
+      text-decoration: none;
+      font-family: $font-bold;
+      font-size: 2rem;
+      color: $gray-color;
+    }
+  }
+  &-search {
+    display: inline-block;
+    width: 230px;
+    margin-right: 7rem;
+    position: relative;
+    &_icon {
+      position: absolute;
+      top: 50%;
+      right: 0.5rem;
+      transform: translateY(-45%);
+      svg {
+        color: $gray-color;
+      }
+    }
+    &_input {
+      width: 100%;
+      height: 43px;
+      background: #f9f5f5;
+      padding-left: 1rem;
+      padding-right: 2.5rem;
+      border: none;
+      outline: none;
+      font-family: $font-regular-serif !important;
+      color: $gray-color;
+    }
+    &_btn {
+      position: absolute;
+      top: 45%;
+      right: 10px;
+      width: 19px;
+      height: 19px;
+      background: transparent;
+      border: none;
+      outline: none;
+      &:focus {
+        outline: none !important;
+      }
+    }
+  }
+  &-content {
+    display: flex;
+    align-items: center;
+  }
+  &-shopping {
+    display: flex;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    &_item {
+      position: relative;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+      cursor: pointer;
+      svg {
+        color: $gray-color;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      &:first-child {
+        margin-left: 0;
+      }
+      &:hover .header-shopping_count{
+        opacity: 1;
+      }
+    }
+    &_count {
+      display: block;
+      width: 1.2rem;
+      height: 1.2rem;
+      line-height: 1.2rem;
+      font-family: $font-regular-serif;
+      font-size: 0.8rem;
+      text-align: center;
+      border-radius: 50%;
+      background-color: $lightblue-color;
+      opacity: 0.5;
+      position: absolute;
+      bottom: -0.4rem;
+      right: -0.4rem;
+      color: $white-color;
+      transition: opacity 0.2s linear;
+    }
+  }
+}
+
+
+.main_nav {
+  ul {
+    list-style-type: none;
+    font-family: $font-regular-serif;
+    li {
+      display: inline-block;
+      margin-right: 50px;
+      &:last-child {
+        margin-right: 0;
+      }
+      a {
+        font-size: 12px;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: $gray-color;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        transition: color 0.2s ease;
+        &:hover {
+          color: $lightgray-color;
+        }
+      }
+    }
+  }
+}
+

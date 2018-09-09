@@ -10,9 +10,6 @@
 //$break-1337:               1337px; // Дополнительный брейкпоинт
 
 .page {
-  &, *, *:before, *:after {
-    box-sizing: border-box;
-  }
   width: 100%;
 }
 

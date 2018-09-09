@@ -14,7 +14,7 @@ export const resetProductSingle = () => ({ type: RESET });
 export const pullProduct = (product_id) => (dispatch) => new Promise((resolve, reject) => {
   api.product.getSingle(product_id)
     .then((data) => {
-      if (data.status !== 200) reject();
+      if (data.status !== api.code.OK) reject();
 
       dispatch(setProduct(data.data));
       resolve();

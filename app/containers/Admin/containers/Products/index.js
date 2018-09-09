@@ -12,17 +12,17 @@ import {
   pullBrands,
   pullCategories,
   pullCompositions,
+  pullSizes,
   pullSeasons,
-  pullSizes
 } from './store/actions';
 import './style.scss';
 
 @connect(({ routing }) => ({ routing }), ({
   pullBrands,
   pullCategories,
+  pullSizes,
   pullCompositions,
   pullSeasons,
-  pullSizes
 }))
 export default class Operations extends Component {
 
@@ -44,14 +44,14 @@ export default class Operations extends Component {
     Promise.all([
       this.props.pullBrands(),
       this.props.pullCategories(),
-      // this.props.pullCompositions(),  todo: добавить для сингла
       this.props.pullSeasons(),
-      // this.props.pullSizes(),
+      this.props.pullSizes(),
+      this.props.pullCompositions(),
     ])
       .then(() => this.setState({ ready: true }));
   };
 
-  renderLoader = () => <CircularProgress size={24} className={'dashboard_loading'} />;
+  renderLoader = () => <CircularProgress size={24} className={'admin_loading'} />;
 
   renderContent = () => (
     <Grid container className={'admin product'}>

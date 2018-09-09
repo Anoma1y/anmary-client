@@ -32,6 +32,28 @@ export const setCompositions = (value) => ({
   payload: value,
 });
 
+export const pullSizes = () => (dispatch) => new Promise((resolve, reject) => {
+  api.size.getList()
+    .then((data) => {
+      if (data.status !== api.code.OK) reject();
+
+      dispatch(setSizes(data.data));
+      resolve();
+    })
+    .catch(() => reject());
+});
+
+export const pullCompositions = () => (dispatch) => new Promise((resolve, reject) => {
+  api.composition.getList()
+    .then((data) => {
+      if (data.status !== api.code.OK) reject();
+
+      dispatch(setCompositions(data.data));
+      resolve();
+    })
+    .catch(() => reject());
+});
+
 export const pullCategories = () => (dispatch) => new Promise((resolve, reject) => {
   api.category.getList()
     .then((data) => {
@@ -65,24 +87,3 @@ export const pullSeasons = () => (dispatch) => new Promise((resolve, reject) => 
     .catch(() => reject());
 });
 
-export const pullSizes = () => (dispatch) => new Promise((resolve, reject) => {
-  api.size.getList()
-    .then((data) => {
-      if (data.status !== api.code.OK) reject();
-
-      dispatch(setSizes(data.data));
-      resolve();
-    })
-    .catch(() => reject());
-});
-
-export const pullCompositions = () => (dispatch) => new Promise((resolve, reject) => {
-  api.composition.getList()
-    .then((data) => {
-      if (data.status !== api.code.OK) reject();
-
-      dispatch(setCompositions(data.data));
-      resolve();
-    })
-    .catch(() => reject());
-});

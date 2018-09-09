@@ -29,7 +29,6 @@ import {
 import FieldText from 'containers/Admin/components/FieldText';
 import FieldAmount from 'containers/Admin/components/FieldAmount';
 import FieldSelectNew from 'containers/Admin/components/FieldSelectNew';
-import NumberFormatNegative from 'containers/Admin/components/NumberFormatNegative';
 import MuiButton from 'components/MuiButton';
 import Images from './components/Images';
 import {
@@ -41,11 +40,9 @@ import {
   addProduct,
   editProduct,
   resetFormProduct,
-
   addSizeProduct,
   changeCurrentSize,
   removeSizeProduct,
-
   changeCurrentComposition,
   changeCompositionValue,
   addCompositionProduct,
@@ -458,7 +455,7 @@ export default class Form extends Component {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'product-form_row'} >
+            <Grid item xs={12} className={'product-form_row product-form_images-form'} >
               <Images
                 onFileSelected={this.handleImageChange}
                 disabled={false}

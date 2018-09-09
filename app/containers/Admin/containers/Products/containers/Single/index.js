@@ -15,9 +15,8 @@ import {
   resetProductSingle
 } from './store/actions';
 import moment from 'moment';
-import _ from 'lodash';
 import { amountOutput } from 'lib/amount';
-import Storage from 'lib/storage';
+import _ from 'lodash';
 
 @connect(({ Admin, Admin_Products, Products_Single }) => ({ Admin, Admin_Products, Products_Single }), ({
   pullProduct,
@@ -34,7 +33,7 @@ export default class Single extends Component {
     const { id } = this.props.match.params;
 
     this.props.pullProduct(id)
-      .finally(() => this.setState({ ready: true }));
+      .then(() => this.setState({ ready: true }));
   }
 
   componentWillUnmount() {
@@ -67,11 +66,26 @@ export default class Single extends Component {
         </a>
       </div>
     );
-  }
+  };
 
   renderContent = () => {
 
-    const { id, name, description, category, brand, season, price, discount, image, total_price, created_at, updated_at } = this.props.Products_Single.product;
+    const {
+      id,
+      name,
+      description,
+      category,
+      brand,
+      season,
+      compositions,
+      sizes,
+      price,
+      discount,
+      images,
+      total_price,
+      created_at,
+      updated_at
+    } = this.props.Products_Single.product;
 
     const product_price = new Intl.NumberFormat('ru-RU').format(amountOutput(price).value);
     const product_discount = discount === 0 ? 'Нет' : `${discount} %`;
@@ -162,7 +176,32 @@ export default class Single extends Component {
         </Grid>
 
         <Grid container spacing={40} className={'product-single_row'}>
-          <Grid item xs={4} className={'product-single_item'}>
+          <Grid item xs={6} className={'product-single_item'}>
+            <TextField
+              fullWidth
+              disabled
+              label={'Состав'}
+              value={sizes.reduce((a, b, i) => {
+                const size = _.find(this.props.Admin_Products.sizes, { id: b.size_id });
+                return a + `${size && (`${size.ru} (${size.international}`)})${sizes.length === i + 1 ? '' : ', '}`;
+              }, '')}
+            />
+          </Grid>
+          <Grid item xs={6} className={'product-single_item'}>
+            <TextField
+              fullWidth
+              disabled
+              label={'Размеры'}
+              value={compositions.reduce((a, b, i) => {
+                const composition = _.find(this.props.Admin_Products.compositions, { id: b.composition_id });
+                return a + `${composition && composition.name} ${b.value}%${compositions.length === i + 1 ? '' : ', '}`;
+              }, '')}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={40} className={'product-single_row'}>
+          <Grid item xs={6} className={'product-single_item'}>
             <TextField
               fullWidth
               disabled
@@ -170,7 +209,7 @@ export default class Single extends Component {
               value={product_created}
             />
           </Grid>
-          <Grid item xs={4} className={'product-single_item'}>
+          <Grid item xs={6} className={'product-single_item'}>
             <TextField
               fullWidth
               disabled
@@ -180,12 +219,10 @@ export default class Single extends Component {
           </Grid>
         </Grid>
 
-
-
         <Grid container spacing={40} className={'product-single_row'}>
           <Grid item xs={12} className={'image-attach'}>
             {
-              this.renderImage(image)
+              images.map((image) => this.renderImage(image))
             }
           </Grid>
         </Grid>
