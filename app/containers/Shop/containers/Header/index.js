@@ -7,9 +7,33 @@ import {
 import './style.scss';
 
 export default class Header extends Component {
+
+  state = {
+    headerScrolled: false
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.updateDimensions);
+    this.updateDimensions();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    if (window.pageYOffset > 100) {
+      if (this.state.headerScrolled) return;
+      this.setState({ headerScrolled: true });
+    } else {
+      if (!this.state.headerScrolled) return;
+      this.setState({ headerScrolled: false });
+    }
+  };
+
   render() {
     return (
-      <header className={'header'}>
+      <header className={`header${this.state.headerScrolled ? ' scrolled' : ''}`}>
         <div className={'header_inner'}>
           <div className={'header_logo'}>
             <a href={'#'}>Anmary</a>

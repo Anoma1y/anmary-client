@@ -1,25 +1,33 @@
 @import "lib/style/vars.scss";
 
+.slider {
+  margin-top: 7.5rem;
+}
+
 .header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 7.5rem;
+  height: 120px;
   background: #FFFFFF;
   z-index: 100;
+  transition: all 300ms ease;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  text-shadow: rgba(0,0,0,.01) 0 0 1px;
+  &.scrolled {
+    height: 60px;
+  }
   &_inner {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 4rem;
-    padding-right: 4rem;
   }
   &_logo {
     a {
-      text-decoration: none;
       font-family: $font-bold;
       font-size: 2rem;
       color: $gray-color;
@@ -124,7 +132,6 @@
       a {
         font-size: 12px;
         text-transform: uppercase;
-        text-decoration: none;
         color: $gray-color;
         font-weight: 600;
         letter-spacing: 0.2em;

@@ -1,0 +1,71 @@
+@import 'lib/style/vars.scss';
+
+.shop-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.footer {
+  background-color: darken($white-color, 5%);
+  width: 100%;
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  &_logo {
+    a {
+      font-family: $font-bold;
+      font-size: 4rem;
+      color: lighten($black-color, 30%);
+    }
+  }
+  &_nav {
+    margin-top: 1rem;
+    ul {
+      li {
+        display: inline-block;
+        margin-right: 3rem;
+        &:last-child {
+          margin-right: 0;
+        }
+        a {
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          color: lighten($black-color, 30%);
+          font-weight: 600;
+          letter-spacing: 0.15rem;
+          transition: color 0.2s linear;
+          &:hover {
+            color: lighten($black-color, 50%);
+          }
+        }
+      }
+    }
+  }
+  &_pay {
+    margin-top: 3.5rem;
+    ul {
+      list-style-type: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      li {
+        margin-left: 1.2rem;
+        &:first-child {
+          margin-left: 0;
+        }
+        img {
+          width: 1.8rem;
+        }
+      }
+    }
+  }
+  &_copyright {
+    text-align: center;
+    padding-bottom: 1rem;
+    font-family: $font-thin;
+    font-size: 0.75rem;
+    color: darken($gray-color, 10%);
+  }
+}
