@@ -6,7 +6,7 @@
 }
 
 .footer {
-  background-color: darken($white-color, 5%);
+  background-color: rgba(247, 247, 247, 1);
   width: 100%;
   padding-top: 5rem;
   display: flex;
@@ -17,7 +17,7 @@
     a {
       font-family: $font-bold;
       font-size: 4rem;
-      color: lighten($black-color, 30%);
+      color: #3c3c3c;
     }
   }
   &_nav {
@@ -32,12 +32,12 @@
         a {
           font-size: 0.8rem;
           text-transform: uppercase;
-          color: lighten($black-color, 30%);
+          color: #3c3c3c;
           font-weight: 600;
           letter-spacing: 0.15rem;
           transition: color 0.2s linear;
           &:hover {
-            color: lighten($black-color, 50%);
+            color: lighten(#3c3c3c, 30%);
           }
         }
       }
@@ -46,12 +46,11 @@
   &_pay {
     margin-top: 3.5rem;
     ul {
-      list-style-type: none;
       display: flex;
       align-items: center;
       justify-content: center;
       li {
-        margin-left: 1.2rem;
+        margin-left: 1.5rem;
         &:first-child {
           margin-left: 0;
         }
@@ -64,8 +63,8 @@
   &_copyright {
     text-align: center;
     padding-bottom: 1rem;
-    font-family: $font-thin;
+    font-family: $font-thin-serif;
     font-size: 0.75rem;
-    color: darken($gray-color, 10%);
+    color: lighten(#3c3c3c, 5%);
   }
 }

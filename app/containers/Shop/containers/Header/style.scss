@@ -19,7 +19,7 @@
   text-shadow: rgba(0,0,0,.01) 0 0 1px;
   &.scrolled {
     height: 60px;
-    opacity: 0.94;
+    opacity: 0.96;
   }
   &_inner {
     width: 100%;
@@ -33,11 +33,6 @@
     img {
       width: 100%;
     }
-    //a {
-    //  font-family: $font-regular-serif;
-    //  font-size: 2rem;
-    //  color: lighten($black-color, 15%);
-    //}
   }
   &-search {
     display: inline-block;

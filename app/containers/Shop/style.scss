@@ -37,7 +37,7 @@
 }
 
 .container {
-  max-width: 1380px !important;
+  max-width: 1290px !important;
   margin: 0 auto !important;
   padding: 4rem;
   position: relative;
@@ -53,7 +53,7 @@
 }
 
 @mixin overlay($opacity) {
-  .overlay {
+  .information-block_overlay {
     background-color: rgba(0,0,0,$opacity);
     position: absolute;
     left: 0;
@@ -63,10 +63,9 @@
   }
 }
 
-.blocks {
-  max-width: 1140px;
+.information-blocks {
+  max-width: 1290px;
   margin: 0 auto;
-  padding: 5px 10px 0;
   color: $white-color;
   display: grid;
   grid-template-columns: 290px 1.5fr 1fr 1.5fr;
@@ -109,234 +108,231 @@
             "all_catalog"
             "subscribe";
   }
+}
 
-
-  .block {
-    background-color: #ebebeb;
-    &_link {
-      display: block;
-      width: 80%;
-      margin: 0 auto;
-      background-color: lighten($black-color, 15%);
-      padding: 1rem 2rem;
-      color: $white-color !important;
-      cursor: pointer;
-      user-select: none;
-      transition: all 150ms linear;
+.information-block {
+  background-color: #ebebeb;
+  &_link {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    color: $white-color !important;
+    cursor: pointer;
+    user-select: none;
+    transition: all 150ms linear;
+    text-align: center;
+    z-index: 5000;
+    white-space: nowrap;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    border: 0 none;
+    border-radius: 4px;
+    font-family: $font-regular;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    box-shadow: 2px 5px 10px rgba(244, 244, 244, .2);
+    &__black {
+      background-color: #161919;
+      &:hover {
+        background-color: lighten(#161919, 5%);
+      }
+    }
+  }
+  &.new_collections {
+    grid-area: new_collections;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: url(/static/images/season.png) 50% 100% / cover no-repeat;
+    @include overlay(.1);
+    .collection_info {
       text-align: center;
-      z-index: 5000;
-      white-space: nowrap;
-      text-decoration: none !important;
       text-transform: uppercase;
-      border: 0 none;
-      border-radius: 4px;
-      font-family: $font-regular-serif !important;
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 1.3;
-      appearance: none;
-      box-shadow: 2px 5px 10px rgba(244, 244, 244, .2);
-      &:hover {
-        transition: all 150ms linear;
-        background-color: lighten($black-color, 25%);
-      }
-    }
-    &.new_collections {
-      grid-area: new_collections;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background: url(/static/images/season.png) 50% 100% / cover no-repeat;
-      @include overlay(.1);
-      .collection_info {
-        text-align: center;
-        text-transform: uppercase;
-        z-index: 9999;
-        .collection_name {
-          margin: 30px;
-          padding: 1rem 0;
-          background-color: rgba(0, 0, 0, .2);
-          color: $white-color;
-          h2 {
-            font-size: 1.5rem;
-            font-family: $font-semibold-serif;
-            letter-spacing: 1.5px;
-          }
-          p {
-            font-size: 0.8rem;
-            font-family: $font-regular-serif !important;
-            display: block;
-            margin: 5px;
-          }
-        }
-
-      }
-    }
-    &.season_sale {
-      grid-area: season_sale;
-      background-color: $red-color;
-      &:hover {
-        transform: perspective(500px) rotateX(-5deg) rotateY(0deg) rotateZ(0deg);
-      }
-      .season_sale_info {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        height: 100%;
-        font-family: $font-bold;
-        &:hover {
-          & h1 {
-            color: $black-color;
-            animation-name: scal1;
-            animation-duration: 1s;
-          }
-          & p {
-            color: $black-color;
-          }
-        }
-        p, h1 {
-          color: $white-color;
-          text-transform: uppercase;
-          transition: color .3s ease;
-        }
-        p {
-          letter-spacing: 5px;
-          line-height: 2;
-          font-size: 16px;
-        }
-        h1 {
-          line-height: 0.8;
-          font-weight: 900;
-          font-size: 100px;
-        }
-      }
-    }
-    &.new_arrivals {
-      position: relative;
-      grid-area: new_arrivals;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background-image: url(/static/images/new_arrivals.jpg);
-      background-size: cover;
-      @include overlay(.3);
-      .arrivals_info {
-        text-align: center;
-        text-transform: uppercase;
-        font-family: $font-bold;
-        z-index: 9999;
-        h1 {
-          font-size: 1.2rem;
-          color: $white-color;
-          font-weight: bold;
-          margin-bottom: 25px;
-          letter-spacing: 2px;
-        }
-      }
-    }
-    &.subscribe {
-      position: relative;
-      grid-area: subscribe;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background-image: url(/static/images/subscribe.jpg);
-      background-size: cover;
-      @include overlay(.3);
-      .formSubscribe {
-        z-index: 9999;
-        margin: 0 auto;
-        position: relative;
-        input {
-          font-family: $font-regular-serif;
-          font-weight: bold;
-          border: none;
-          outline: none;
-          padding: 5px 10px;
-          float: left;
-          height: 30px;
-          &::placeholder {
-            font-size: 0.7rem;
-            color: rgba(0,0,0,.5);
-          }
-        }
-        button {
-          position: relative;
-          font-family: $font-regular-serif;
-          height: 30px;
-          width: 40px;
-          font-weight: bold;
-          padding: 0;
-          border: none;
-          background-color: $gray-color;
-          cursor: pointer;
-          &:hover i {
-            color: #1F3779;
-            animation-name: scal;
-            animation-duration: .6s;
-          }
-          i {
-            color: rgba(255,255,255,.7);
-            display: block;
-            line-height: 30px;
-            font-size: 20px;
-            transition: color .6s ease;
-          }
-        }
-        #error-subscribe {
-          position: absolute;
-          bottom: -20px;
-          font-size: 12px;
-          font-family: $font-regular-serif;
-          font-weight: 300;
-          color: $red-color;
-          cursor: default;
-        }
-      }
-      .get_subscribe {
-        text-align: center;
-        z-index: 9999;
-        text-transform: uppercase;
-        font-family: $font-regular-serif;
+      z-index: 9999;
+      .collection_name {
+        margin: 30px;
+        padding: 1rem 0;
+        background-color: rgba(0, 0, 0, .2);
+        color: $white-color;
         h2 {
-          font-size: 20px;
-          color: $white-color;
-          font-weight: 300;
-          margin-bottom: 25px;
+          font-size: 1.5rem;
+          font-family: $font-semibold-serif;
           letter-spacing: 1.5px;
         }
+        p {
+          font-size: 0.8rem;
+          font-family: $font-regular-serif !important;
+          display: block;
+          margin: 5px;
+        }
       }
+
     }
-    &.all_catalog {
-      grid-area: all_catalog;
-      position: relative;
+  }
+  &.season_sale {
+    grid-area: season_sale;
+    background-color: $red-color;
+    &:hover {
+      transform: perspective(500px) rotateX(-5deg) rotateY(0deg) rotateZ(0deg);
+    }
+    .season_sale_info {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      background-image: url(/static/images/all_products.jpg);
-      background-size: cover;
-      @include overlay(.2);
-      .catalog_info {
-        text-align: center;
-        z-index: 9999;
-        text-transform: uppercase;
-        font-family: $font-bold;
-        h2 {
-          font-size: 18px;
-          color: $white-color;
-          font-weight: 800;
-          margin-bottom: 25px;
-          letter-spacing: 1px;
+      text-align: center;
+      height: 100%;
+      font-family: $font-bold;
+      &:hover {
+        & h1 {
+          color: $black-color;
+          animation-name: scal1;
+          animation-duration: 1s;
         }
+        & p {
+          color: $black-color;
+        }
+      }
+      p, h1 {
+        color: $white-color;
+        text-transform: uppercase;
+        transition: color .3s ease;
+      }
+      p {
+        letter-spacing: 5px;
+        line-height: 2;
+        font-size: 16px;
+      }
+      h1 {
+        line-height: 0.8;
+        font-weight: 900;
+        font-size: 100px;
+      }
+    }
+  }
+  &.new_arrivals {
+    position: relative;
+    grid-area: new_arrivals;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: url(/static/images/new_arrivals.jpg);
+    background-size: cover;
+    @include overlay(.3);
+    .arrivals_info {
+      text-align: center;
+      text-transform: uppercase;
+      font-family: $font-bold;
+      z-index: 9999;
+      h1 {
+        font-size: 1.2rem;
+        color: $white-color;
+        font-weight: bold;
+        margin-bottom: 25px;
+        letter-spacing: 2px;
+      }
+    }
+  }
+  &.subscribe {
+    position: relative;
+    grid-area: subscribe;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-image: url(/static/images/subscribe.jpg);
+    background-size: cover;
+    @include overlay(.3);
+    .formSubscribe {
+      z-index: 9999;
+      margin: 0 auto;
+      position: relative;
+      input {
+        font-family: $font-regular-serif;
+        font-weight: bold;
+        border: none;
+        outline: none;
+        padding: 5px 10px;
+        float: left;
+        height: 30px;
+        &::placeholder {
+          font-size: 0.7rem;
+          color: rgba(0,0,0,.5);
+        }
+      }
+      button {
+        position: relative;
+        font-family: $font-regular-serif;
+        height: 30px;
+        width: 40px;
+        font-weight: bold;
+        padding: 0;
+        border: none;
+        background-color: $gray-color;
+        cursor: pointer;
+        &:hover i {
+          color: #1F3779;
+          animation-name: scal;
+          animation-duration: .6s;
+        }
+        i {
+          color: rgba(255,255,255,.7);
+          display: block;
+          line-height: 30px;
+          font-size: 20px;
+          transition: color .6s ease;
+        }
+      }
+      #error-subscribe {
+        position: absolute;
+        bottom: -20px;
+        font-size: 12px;
+        font-family: $font-regular-serif;
+        font-weight: 300;
+        color: $red-color;
+        cursor: default;
+      }
+    }
+    .get_subscribe {
+      text-align: center;
+      z-index: 9999;
+      text-transform: uppercase;
+      font-family: $font-regular-serif;
+      h2 {
+        font-size: 20px;
+        color: $white-color;
+        font-weight: 300;
+        margin-bottom: 25px;
+        letter-spacing: 1.5px;
+      }
+    }
+  }
+  &.all_catalog {
+    grid-area: all_catalog;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(/static/images/all_products.jpg);
+    background-size: cover;
+    @include overlay(.2);
+    .catalog_info {
+      text-align: center;
+      z-index: 9999;
+      text-transform: uppercase;
+      font-family: $font-bold;
+      h2 {
+        font-size: 18px;
+        color: $white-color;
+        font-weight: 800;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
       }
     }
   }
 }
-
-
 .section-title-container {
   text-align: center;
   cursor: default;
@@ -435,6 +431,7 @@
     position: absolute;
     top: -0.7rem;
     left: 1rem;
+    cursor: default;
     background: $red-color;
     padding: 0.2rem 0.5rem 0.2rem;
     border-radius: 3px;
@@ -447,6 +444,7 @@
     margin-top: 0.5rem;
     font-family: $font-semibold-serif !important;
     font-size: 1.1rem;
+    cursor: default;
     &__old {
       font-size: 0.8rem;
       font-family: $font-semibold-serif !important;

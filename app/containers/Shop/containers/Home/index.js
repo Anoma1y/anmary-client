@@ -26,9 +26,9 @@ export default class Home extends Component {
             transitionMode={'fade'}
             wrapAround
           >
-            <img src={'/static/images/home_slider_1.jpg'} />
-            <img src={'/static/images/home_slider_1.jpg'} />
-            <img src={'/static/images/home_slider_1.jpg'} />
+            <img src={'http://dualmonitorswallpaper.com/wp-content/uploads/2018/02/anime-scenery-background-dual-wide-9.jpg'} />
+            <img src={'http://dualmonitorswallpaper.com/wp-content/uploads/2018/02/anime-scenery-background-dual-wide-9.jpg'} />
+            <img src={'http://dualmonitorswallpaper.com/wp-content/uploads/2018/02/anime-scenery-background-dual-wide-9.jpg'} />
           </Carousel>
         </Grid>
 
@@ -55,7 +55,7 @@ export default class Home extends Component {
                 <Grid item sm={6} md={4} lg={3}>
                   <div className={'product-card'}>
                     <div className={'product-card_img'}>
-                      <img src={'http://www.vaide.lv/files/vaideCollectionGallery/00-8752_800x1200.jpg'} alt={'IMG-PRODUCT'} />
+                      <img src={'https://qfos.ru/wp-content/uploads/2018/04/Aog6.jpg'} alt={'IMG-PRODUCT'} />
 
                       <a href={'#'} className={'product-card_learn-more'}>
                         Подробнее
@@ -84,7 +84,102 @@ export default class Home extends Component {
                     </div>
                   </div>
                 </Grid>
+                <Grid item sm={6} md={4} lg={3}>
+                  <div className={'product-card'}>
+                    <div className={'product-card_img'}>
+                      <img src={'https://qfos.ru/wp-content/uploads/2018/04/Aog6.jpg'} alt={'IMG-PRODUCT'} />
 
+                      <a href={'#'} className={'product-card_learn-more'}>
+                        Подробнее
+                      </a>
+                    </div>
+
+                    <div className={'product-card-content'}>
+                      <div className={'product-card-info'}>
+                        <a href={'#'} className={'product-card_name'}>
+                          Converse All Star Hi Plimsolls
+                        </a>
+
+                        <div className={'product-card_price'}>
+                          <span className={'product-card_price__old'}>4 275 руб.</span>
+                          <span className={'product-card_price__new'}>4 750 руб.</span>
+                        </div>
+
+                        <div className={'product-card_discount'}>
+                          -10%
+                        </div>
+
+                      </div>
+                      <div className={'product-card_favorite'}>
+                        <FavoriteIcon />
+                      </div>
+                    </div>
+                  </div>
+                </Grid>
+                <Grid item sm={6} md={4} lg={3}>
+                  <div className={'product-card'}>
+                    <div className={'product-card_img'}>
+                      <img src={'https://qfos.ru/wp-content/uploads/2018/04/Aog6.jpg'} alt={'IMG-PRODUCT'} />
+
+                      <a href={'#'} className={'product-card_learn-more'}>
+                        Подробнее
+                      </a>
+                    </div>
+
+                    <div className={'product-card-content'}>
+                      <div className={'product-card-info'}>
+                        <a href={'#'} className={'product-card_name'}>
+                          Converse All Star Hi Plimsolls
+                        </a>
+
+                        <div className={'product-card_price'}>
+                          <span className={'product-card_price__old'}>4 275 руб.</span>
+                          <span className={'product-card_price__new'}>4 750 руб.</span>
+                        </div>
+
+                        <div className={'product-card_discount'}>
+                          -10%
+                        </div>
+
+                      </div>
+                      <div className={'product-card_favorite'}>
+                        <FavoriteIcon />
+                      </div>
+                    </div>
+                  </div>
+                </Grid>
+                <Grid item sm={6} md={4} lg={3}>
+                  <div className={'product-card'}>
+                    <div className={'product-card_img'}>
+                      <img src={'https://qfos.ru/wp-content/uploads/2018/04/Aog6.jpg'} alt={'IMG-PRODUCT'} />
+
+                      <a href={'#'} className={'product-card_learn-more'}>
+                        Подробнее
+                      </a>
+                    </div>
+
+                    <div className={'product-card-content'}>
+                      <div className={'product-card-info'}>
+                        <a href={'#'} className={'product-card_name'}>
+                          Converse All Star Hi Plimsolls
+                        </a>
+
+                        <div className={'product-card_price'}>
+                          <span className={'product-card_price__old'}>4 275 руб.</span>
+                          <span className={'product-card_price__new'}>4 750 руб.</span>
+                        </div>
+
+                        <div className={'product-card_discount'}>
+                          -10%
+                        </div>
+
+                      </div>
+                      <div className={'product-card_favorite'}>
+                        <FavoriteIcon />
+                      </div>
+                    </div>
+                  </div>
+                </Grid>
               </Grid>
 
             </Grid>
