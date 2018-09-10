@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  SupervisorAccount as SupervisorAccountIcon,
-  CardMembership as CardMembershipIcon,
   AccountBalance as AccountBalanceIcon,
   Assessment as AssessmentIcon,
+  CardMembership as CardMembershipIcon,
+  ImportExport as ImportExportIcon,
   Inbox as InboxIcon,
-  ImportExport as ImportExportIcon
+  SupervisorAccount as SupervisorAccountIcon
 } from '@material-ui/icons';
 import Storage from 'lib/storage';
 
@@ -19,30 +19,28 @@ const NAVIGATION_MENU = [
   { id: 6, role_name: 'seasons-list', name: 'Сезоны', icon: <ImportExportIcon />, link: '/admin/seasons' },
   { id: 7, role_name: 'compositions-list', name: 'Составы', icon: <InboxIcon />, link: '/admin/compositions' }
 ];
+const { permissions } = Storage.get('permissions');
 
 export default class Navigation extends Component {
   renderItem = (item) => (
-    <div className={'sidebar-item sidebar-navigation_item'} key={item.id}>
-      <div className={'sidebar-item_icon'}>
-        <div className={'sidebar-navigation_avatar'}>
-          {item.icon}
-        </div>
+    <Link key={item.id} className={'admin-navigation_item'} to={item.link}>
+      <div className={'admin-navigation_icon'}>
+        {item.icon}
       </div>
-
-      <div className={'sidebar-item_content'}>
-        <Link className={'sidebar-navigation_link'} to={item.link}>{item.name}</Link>
+      <div className={'admin-navigation_name'}>
+        {item.name}
       </div>
-    </div>
+    </Link>
   );
 
   render() {
-    const { permissions } = Storage.get('permissions');
-
     return (
-      <div className={'sidebar-navigation'}>
-        {
-          NAVIGATION_MENU.map((item) => permissions.includes(item.role_name) ? this.renderItem(item) : null)
-        }
+      <div className={'admin-bottom-navigation'}>
+        <div className={'admin-bottom-navigation_wrapper'}>
+          {
+            NAVIGATION_MENU.map((item) => permissions.includes(item.role_name) ? this.renderItem(item) : null)
+          }
+        </div>
       </div>
     );
   }

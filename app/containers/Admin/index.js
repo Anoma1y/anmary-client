@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { CircularProgress } from '@material-ui/core';
+import {
+  CircularProgress
+} from '@material-ui/core';
 import { replace } from 'react-router-redux';
-import Sidebar from './containers/Sidebar';
 import Roles from './containers/Roles';
 import Users from './containers/Users';
 import Header from './containers/Header';
@@ -12,6 +13,7 @@ import Seasons from './containers/Seasons';
 import Brands from './containers/Brands';
 import Compositions from './containers/Compositions';
 import Products from './containers/Products';
+import Navigation from './containers/Navigation';
 import { send } from 'containers/Notification/store/actions';
 import {
   pullUser,
@@ -30,7 +32,8 @@ import './style.scss';
 export default class Admin extends Component {
 
   state = {
-    ready: false // todo: fix
+    ready: false, // todo: fix
+    value: 0
   };
 
   componentDidMount() {
@@ -39,7 +42,7 @@ export default class Admin extends Component {
     if (authToken === null) {
       Storage.clear();
       api.removeHeader('Authorization');
-      this.props.replace('/auth/signin');
+      this.props.replace('/');
       return;
     }
 
@@ -76,7 +79,7 @@ export default class Admin extends Component {
     this.props.send({ id: uuid(), status, title, message, actionClose: true });
     Storage.clear();
     api.removeHeader('Authorization');
-    this.props.replace('/auth/signin');
+    this.props.replace('/');
   };
 
   renderLoader = () => <CircularProgress size={70} className={'admin-page_loading'} />;
@@ -84,17 +87,13 @@ export default class Admin extends Component {
   renderContent = () => (
     <div className={'admin-page'}>
 
-      <div className={'admin-page-sidebar'}>
-        <Sidebar />
-      </div>
-
       <div className={'admin-page-main'}>
 
-        <div className={'header-wrapper'}>
+        <div className={'admin-header-wrapper'}>
           <Header />
         </div>
 
-        <div className={'content-wrapper'}>
+        <div className={'admin-content-wrapper'}>
           <Switch>
             <Route path={`${this.props.match.url}/categories`} component={Categories} />
             <Route path={`${this.props.match.url}/roles`} component={Roles} />
@@ -106,7 +105,7 @@ export default class Admin extends Component {
           </Switch>
         </div>
       </div>
-
+      <Navigation />
     </div>
   );
 

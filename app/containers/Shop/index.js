@@ -6,7 +6,9 @@ import {
 } from '@material-ui/core';
 import Header from './containers/Header';
 import Footer from './containers/Footer';
+import Catalog from './containers/Catalog';
 import Home from './containers/Home';
+import Admin from 'containers/Admin';
 import './style.scss';
 
 export default class Shop extends Component {
@@ -25,7 +27,10 @@ export default class Shop extends Component {
         </div>
         <div className={'content-wrapper'}>
           <Switch>
-            <Route path={`${this.props.match.url}/`} component={Home} />
+            <Route exact path={'/'} component={Home} />
+            <Route path={'/catalog'} component={Catalog} />
+            <Route path={'/contact'} component={Catalog} />
+            <Route path={'/admin'} component={Admin} />
           </Switch>
         </div>
         <div className={'footer-wrapper'}>
@@ -35,7 +40,6 @@ export default class Shop extends Component {
       </div>
     </div>
   )
-
 
   render() {
     return this.state.ready ? this.renderContent() : this.renderLoader();

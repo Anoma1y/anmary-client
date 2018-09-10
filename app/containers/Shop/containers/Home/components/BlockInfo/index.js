@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  Add as AddIcon,
   Notifications as NotificationsIcon
 } from '@material-ui/icons';
 

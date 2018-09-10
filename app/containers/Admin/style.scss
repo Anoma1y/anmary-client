@@ -14,52 +14,76 @@
   &, *, *:before, *:after {
     box-sizing: border-box;
   }
-
+  margin-top: 120px;
   width: 100%;
 }
 
-.content-wrapper {
+.admin-content-wrapper {
   width: 100%;
   margin: 0 auto;
   flex: 1 1 auto;
   position: relative;
 }
-
-.header-wrapper {
+//
+.admin-header-wrapper {
   width: 100%;
   flex: none;
 }
 
-.footer-wrapper {
+.admin-bottom-navigation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 70px;
   width: 100%;
-  flex: none;
+  background-color: #f6f6f6;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  &:hover {
+    opacity: 1;
+  }
+  &_wrapper {
+    width: 80%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+
+.admin-navigation_item {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: $lightblue-color;
+  font-family: $font-regular-serif;
+  height: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #f6f6f6;
+  transition: background-color 200ms ease, color 200ms ease;
+  &:hover {
+    background-color: $lightblue-color;
+    color: $white-color;
+  }
 }
 
 .admin-page-main {
-  width: 100%;
-  padding-left: 260px;
-
-  @media screen and (max-width: $break-lg - 1) {
-    padding: 0;
-  }
-
-  flex: 1 1 auto;
-  display: flex;
-  flex-flow: column nowrap;
-  min-height: 100vh;
-  transition: padding-left 0.2s ease;
-
+//
 }
-
-/**
-Основной стиль для контейнеров
- */
+//
+///**
+//Основной стиль для контейнеров
+// */
 .main-container {
   margin: 0 auto;
   padding: 3rem 2.5rem 2rem;
   position: relative;
 }
-
+//
 .admin {
   margin: 0 auto;
   padding: 2rem 4rem 2rem;

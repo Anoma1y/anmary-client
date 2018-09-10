@@ -57,7 +57,7 @@ export const lowerCase = (item) => {
  */
 export const getPathInfo = (path) => {
   return _.compact(path.split('/').map((p, i, arr) => {
-    if (!/[^\d]/.test(p)) return undefined;
+    // if (!/[^\d]/.test(p)) return undefined;
 
     if (p !== '') {
       let link = arr.slice(0, i + 1).join('/');
