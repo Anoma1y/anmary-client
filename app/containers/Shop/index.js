@@ -22,9 +22,11 @@ export default class Shop extends Component {
   renderContent = () => (
     <div className={'page'}>
       <div className={'page-main'}>
+
         <div className={'header-wrapper'}>
           <Header />
         </div>
+
         <div className={'content-wrapper'}>
           <Switch>
             <Route exact path={'/'} component={Home} />
@@ -33,6 +35,7 @@ export default class Shop extends Component {
             <Route path={'/admin'} component={Admin} />
           </Switch>
         </div>
+
         <div className={'footer-wrapper'}>
           <Footer />
         </div>

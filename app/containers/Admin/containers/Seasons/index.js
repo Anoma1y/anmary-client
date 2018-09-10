@@ -158,13 +158,13 @@ export default class Season extends Component {
     );
   };
 
-  renderLoader = () => <CircularProgress size={24} className={'Admin_loading'} />;
+  renderLoader = () => <CircularProgress size={24} className={'admin_loading'} />;
 
   renderContent = () => {
     const { permissions } = Storage.get('permissions');
 
     return (
-      <Grid container className={'Admin'}>
+      <Grid container className={'admin'}>
         <Grid item xs={12} lg={10} className={'season'}>
           {
             permissions.includes('seasons-create') && (

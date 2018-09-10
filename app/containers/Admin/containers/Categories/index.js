@@ -161,13 +161,13 @@ export default class Categories extends Component {
     );
   };
 
-  renderLoader = () => <CircularProgress size={24} className={'dashboard_loading'} />;
+  renderLoader = () => <CircularProgress size={24} className={'admin_loading'} />;
 
   renderContent = () => {
     const { permissions } = Storage.get('permissions');
 
     return (
-      <Grid container className={'dashboard'}>
+      <Grid container className={'admin'}>
         <Grid item xs={12} lg={10} className={'category'}>
           {
             permissions.includes('categories-create') && (

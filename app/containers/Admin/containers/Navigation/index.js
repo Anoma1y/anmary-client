@@ -12,12 +12,12 @@ import Storage from 'lib/storage';
 
 const NAVIGATION_MENU = [
   { id: 1, role_name: 'products-list', name: 'Товары', icon: <AccountBalanceIcon />, link: '/admin/products' },
-  { id: 2, role_name: 'users-list', name: 'Пользователи', icon: <CardMembershipIcon />, link: '/admin/users' },
-  { id: 3, role_name: 'roles-list', name: 'Роли', icon: <AssessmentIcon />, link: '/admin/roles' },
-  { id: 4, role_name: 'categories-list', name: 'Категории', icon: <SupervisorAccountIcon />, link: '/admin/categories' },
-  { id: 5, role_name: 'brands-list', name: 'Бренды', icon: <InboxIcon />, link: '/admin/brands' },
-  { id: 6, role_name: 'seasons-list', name: 'Сезоны', icon: <ImportExportIcon />, link: '/admin/seasons' },
-  { id: 7, role_name: 'compositions-list', name: 'Составы', icon: <InboxIcon />, link: '/admin/compositions' }
+  { id: 2, role_name: 'categories-list', name: 'Категории', icon: <SupervisorAccountIcon />, link: '/admin/categories' },
+  { id: 3, role_name: 'compositions-list', name: 'Составы', icon: <InboxIcon />, link: '/admin/compositions' },
+  { id: 4, role_name: 'brands-list', name: 'Бренды', icon: <InboxIcon />, link: '/admin/brands' },
+  { id: 5, role_name: 'seasons-list', name: 'Сезоны', icon: <ImportExportIcon />, link: '/admin/seasons' },
+  { id: 6, role_name: 'roles-list', name: 'Роли', icon: <AssessmentIcon />, link: '/admin/roles' },
+  { id: 7, role_name: 'users-list', name: 'Пользователи', icon: <CardMembershipIcon />, link: '/admin/users' },
 ];
 const { permissions } = Storage.get('permissions');
 

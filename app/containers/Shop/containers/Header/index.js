@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   ShoppingCart as ShoppingCartIcon,
   Favorite as FavoriteIcon,
@@ -36,17 +37,17 @@ export default class Header extends Component {
       <header className={`header${this.state.headerScrolled ? ' scrolled' : ''}`}>
         <div className={'header_inner'}>
           <div className={'header_logo'}>
-            <a href={'#'}>
+            <Link to={'/'}>
               <img src={'/static/images/logo.svg'} alt={'Logo'} />
-            </a>
+            </Link>
           </div>
           <nav className={'main_nav'}>
             <ul>
-              <li><a href={'#'}>home</a></li>
-              <li><a href={'#'}>clothes</a></li>
+              <li><Link to={'/'}>Главная</Link></li>
+              <li><Link to={'/catalog'}>Каталог</Link></li>
               <li><a href={'#'}>accessories</a></li>
-              <li><a href={'#'}>lingerie</a></li>
-              <li><a href={'#'}>contact</a></li>
+              <li><Link to={'/admin'}>lingerie</Link></li>
+              <li><Link to={'/contact'}>Контакты</Link></li>
             </ul>
           </nav>
           <div className={'header-content'}>
