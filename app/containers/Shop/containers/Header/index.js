@@ -36,7 +36,9 @@ export default class Header extends Component {
       <header className={`header${this.state.headerScrolled ? ' scrolled' : ''}`}>
         <div className={'header_inner'}>
           <div className={'header_logo'}>
-            <a href={'#'}>Anmary</a>
+            <a href={'#'}>
+              <img src={'/static/images/logo.svg'} alt={'Logo'} />
+            </a>
           </div>
           <nav className={'main_nav'}>
             <ul>

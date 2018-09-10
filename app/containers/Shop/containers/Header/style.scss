@@ -10,7 +10,7 @@
   left: 0;
   width: 100%;
   height: 120px;
-  background: #FFFFFF;
+  background: $white-color;
   transition: all 300ms ease;
   padding-left: 4rem;
   padding-right: 4rem;
@@ -29,11 +29,15 @@
     align-items: center;
   }
   &_logo {
-    a {
-      font-family: $font-bold;
-      font-size: 2rem;
-      color: $gray-color;
+    width: 7.2rem;
+    img {
+      width: 100%;
     }
+    //a {
+    //  font-family: $font-regular-serif;
+    //  font-size: 2rem;
+    //  color: lighten($black-color, 15%);
+    //}
   }
   &-search {
     display: inline-block;

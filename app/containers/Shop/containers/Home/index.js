@@ -53,111 +53,37 @@ export default class Home extends Component {
               <Grid container spacing={24}>
 
                 <Grid item sm={6} md={4} lg={3}>
-                  <div className="product">
-                    <div className="product-img">
-                      <img src="http://www.vaide.lv/files/vaideCollectionGallery/00-8752_800x1200.jpg" alt="IMG-PRODUCT" />
+                  <div className={'product-card'}>
+                    <div className={'product-card_img'}>
+                      <img src={'http://www.vaide.lv/files/vaideCollectionGallery/00-8752_800x1200.jpg'} alt={'IMG-PRODUCT'} />
 
-                      <a href="#" className={'product-quick-view'}>
-                        Quick View
+                      <a href={'#'} className={'product-card_learn-more'}>
+                        Подробнее
                       </a>
                     </div>
 
-                    <div className="product-content">
-                      <div className="product-info">
-                        <a href="#" className="product-name">
+                    <div className={'product-card-content'}>
+                      <div className={'product-card-info'}>
+                        <a href={'#'} className={'product-card_name'}>
                           Converse All Star Hi Plimsolls
                         </a>
 
-                        <span className="product-price">
-                            $75.00
-                        </span>
-                      </div>
+                        <div className={'product-card_price'}>
+                          <span className={'product-card_price__old'}>4 275 руб.</span>
+                          <span className={'product-card_price__new'}>4 750 руб.</span>
+                        </div>
 
-                      <div className="product-favorite">
+                        <div className={'product-card_discount'}>
+                          -10%
+                        </div>
+
+                      </div>
+                      <div className={'product-card_favorite'}>
                         <FavoriteIcon />
                       </div>
                     </div>
                   </div>
                 </Grid>
-                <Grid item sm={6} md={4} lg={3}>
-                  <div className="product">
-                    <div className="product-img">
-                      <img src="http://www.vaide.lv/files/vaideCollectionGallery/00-8752_800x1200.jpg" alt="IMG-PRODUCT" />
-
-                      <a href="#" className={'product-quick-view'}>
-                        Quick View
-                      </a>
-                    </div>
-
-                    <div className="product-content">
-                      <div className="product-info">
-                        <a href="#" className="product-name">
-                          Converse All Star Hi Plimsolls
-                        </a>
-
-                        <span className="product-price">
-                            $75.00
-                        </span>
-                      </div>
-
-                      <div className="product-favorite">
-                        <FavoriteIcon />
-                      </div>
-                    </div>
-                  </div>
-                </Grid>                <Grid item sm={6} md={4} lg={3}>
-                  <div className="product">
-                    <div className="product-img">
-                      <img src="https://i.pinimg.com/736x/af/1c/30/af1c30d6d881d9447dec06149f61d2f9--drawings-of-girls-anime-drawings-girl.jpg" alt="IMG-PRODUCT" />
-
-                      <a href="#" className={'product-quick-view'}>
-                      Quick View
-                      </a>
-                    </div>
-
-                    <div className="product-content">
-                      <div className="product-info">
-                        <a href="#" className="product-name">
-                        Converse All Star Hi Plimsolls
-                        </a>
-
-                        <span className="product-price">
-                            $75.00
-                        </span>
-                      </div>
-
-                      <div className="product-favorite">
-                        <FavoriteIcon />
-                      </div>
-                    </div>
-                  </div>
-                </Grid>                <Grid item sm={6} md={4} lg={3}>
-                                         <div className="product">
-                    <div className="product-img">
-                                             <img src="https://pm1.narvii.com/6448/76156a7706585cb6b463531e9aa42cdc7f6180fe_hq.jpg" alt="IMG-PRODUCT" />
-
-                                             <a href="#" className={'product-quick-view'}>
-                      Quick View
-                      </a>
-                                           </div>
-
-                    <div className="product-content">
-                                             <div className="product-info">
-                        <a href="#" className="product-name">
-                        Converse All Star Hi Plimsolls
-                                               </a>
-
-                        <span className="product-price">
-                            $75.00
-                                               </span>
-                      </div>
-
-                                             <div className="product-favorite">
-                        <FavoriteIcon />
-                      </div>
-                                           </div>
-                  </div>
-                                                              </Grid>
 
               </Grid>
 

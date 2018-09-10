@@ -9,7 +9,7 @@ import Footer from './containers/Footer';
 import Home from './containers/Home';
 import './style.scss';
 
-export default class Main extends Component {
+export default class Shop extends Component {
 
   state = {
     ready: true

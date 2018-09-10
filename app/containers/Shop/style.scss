@@ -373,9 +373,9 @@
   display: inline-block;
 }
 
-.product {
+.product-card {
   width: 100%;
-  &-img {
+  &_img {
     height: 400px;
     position: relative;
     overflow: hidden;
@@ -396,10 +396,10 @@
         transform: scale(1.1);
       }
     }
-    &:hover .product-quick-view {
+    &:hover .product-card_learn-more {
       bottom: 50px;
     }
-    .product-quick-view {
+    .product-card_learn-more {
       position: absolute;
       z-index: 99;
       bottom: -50px;
@@ -422,22 +422,49 @@
     position: relative;
     padding: 1rem 0;
   }
-  &-name {
+  &_name {
     display: block;
     font-family: $font-regular-serif;
     color: darken($lightgray-color, 10%);
+    transition: color .2s linear;
+    &:hover {
+      color: $lightblue-color;
+    }
   }
-  &-price {
-    display: block;
+  &_discount {
+    position: absolute;
+    top: -0.7rem;
+    left: 1rem;
+    background: $red-color;
+    padding: 0.2rem 0.5rem 0.2rem;
+    border-radius: 3px;
+    color: $white-color;
+    text-transform: uppercase;
+    font-family: $font-semibold-serif !important;
+    font-size: 0.9rem;
+  }
+  &_price {
     margin-top: 0.5rem;
     font-family: $font-semibold-serif !important;
+    font-size: 1.1rem;
+    &__old {
+      font-size: 0.8rem;
+      font-family: $font-semibold-serif !important;
+      text-decoration: line-through;
+    }
+    &__new {
+      margin-left: 0.7rem;
+      font-size: 1.1rem;
+      font-family: $font-semibold-serif !important;
+      color: $red-color;
+    }
   }
-  &-favorite {
+  &_favorite {
     position: absolute;
     right: 0;
     top: 1rem;
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: color 0.2s linear;
     &:hover {
       color: $lightblue-color;
     }
