@@ -114,12 +114,14 @@ export default class Form extends Component {
       const { id } = this.props.match.params;
 
       Promise.all([
-        this.props.pullProduct(id),
         this.props.pullSizes(),
         this.props.pullCompositions()
       ])
-        .then(() => this.setState({ ready: true, pageType: 'edit' }));
-
+        .then(() => {
+          this.props.pullProduct(id)
+            .then(() => this.setState({ ready: true, pageType: 'edit' }));
+        })
+    //
     } else {
       Promise.all([
         this.props.pullSizes(),
@@ -338,6 +340,18 @@ export default class Form extends Component {
             Добавление товара
           </FormLabel>
           <Grid container justify={'flex-start'}>
+
+            <Grid item xs={12} className={'product-form_row'} >
+              <Grid container spacing={40}>
+                <Grid item xs={12} md={12} className={'product-form_item'}>
+                  <Field
+                    name={'name'}
+                    component={FieldText}
+                    label={'Название'}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
 
             <Grid item xs={12} className={'product-form_row'} >
               <Grid container spacing={40}>

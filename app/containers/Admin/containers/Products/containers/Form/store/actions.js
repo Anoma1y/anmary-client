@@ -15,7 +15,8 @@ import {
   SET_SIZES_USED,
   SET_SIZES_AVAILABLE,
   CHANGE_CURRENT_SIZE,
-
+  SET_COMPOSITIONS_PRODUCT,
+  SET_SIZES_PRODUCT,
   SET_COMPOSITIONS_USED,
   SET_COMPOSITIONS_AVAILABLE,
   CHANGE_CURRENT_COMPOSITION,
@@ -43,6 +44,16 @@ export const setImages = (value) => ({
 
 export const setCompositions = (value) => ({
   type: SET_COMPOSITIONS,
+  payload: value,
+});
+
+export const setCompositionsProduct = (value) => ({
+  type: SET_COMPOSITIONS_PRODUCT,
+  payload: value,
+});
+
+export const setSizesProduct = (value) => ({
+  type: SET_SIZES_PRODUCT,
   payload: value,
 });
 
@@ -222,7 +233,10 @@ export const removeCompositionProduct = (index) => (dispatch, getState) => {
   dispatch(removeComposition(composition_id));
 };
 
-export const pullProduct = (product_id) => (dispatch) => new Promise((resolve, reject) => {
+export const pullProduct = (product_id) => (dispatch, getState) => new Promise((resolve, reject) => {
+
+  const { sizes, sizesUsed, newSizesAvailable } = getState().Products_Form;
+
   api.product.getSingle(product_id)
     .then((data) => {
       if (data.status !== api.code.OK) reject();
@@ -235,10 +249,22 @@ export const pullProduct = (product_id) => (dispatch) => new Promise((resolve, r
         brand: data.data.brand.id,
         season: data.data.season.id,
         price: String(amountOutput(data.data.price).value),
-        total_price: String(amountOutput(data.data.total_price).value),
+        discount: data.data.discount,
       };
 
-      dispatch(setImages(data.data.image));
+      dispatch(setImages(data.data.images));
+      dispatch(setCompositionsProduct(data.data.compositions));
+      // todo сделать пулл размеров и составов в самом начале
+      const getId = sizes.map((it) => it.id);
+      const sizesUsedId = data.data.sizes.map((it) => it.size_id);
+      //
+      const newSizesAvailable = _.difference(getId, sizesUsedId);
+      console.log(sizesUsedId)
+      console.log(newSizesAvailable)
+      dispatch(setSizesAvailable(newSizesAvailable));
+      dispatch(setSizesUsed(sizesUsedId))
+
+      dispatch(setSizesProduct(data.data.sizes));
       dispatch(setProduct(product));
       resolve();
     })
@@ -267,33 +293,51 @@ export const addProduct = () => (dispatch, getState) => {
       }
     },
     Products_Form: {
-      tags,
-      files
+      sizesProduct,
+      compositionsProduct,
+      images
     }
   } = getState();
 
-  if (syncError || !values || !values.type || !values.category || !values.currency) {
+  if (syncError
+    || !values
+    || !values.price
+    || !values.discount
+    || !values.category
+    || !values.season
+    || !values.brand
+    || images.length === 0
+    || compositionsProduct.length === 0
+    || sizesProduct.length === 0
+
+  ) {
     dispatch(send({ id: uuid(), status: 'warning', title: 'Предупреждение', message: 'Заполните все необходимые поля формы', timeout: 2500 }));
     return;
   }
 
-  const productTags = tags.length !== 0 ? tags.map((tag) => tag.id) : [];
-  const productImages = files.length !== 0 ? files.map((file) => file.id) : [];
+  const productSizes = sizesProduct.map((size) => size.id);
+  const productCompositions = compositionsProduct.map((composition) => composition.id);
+  const productImages = images.map((image) => image.id);
 
   const product = {
     ...values,
-    sum: amountInput(values.sum.replace(/,/g, '')),
-    tags: productTags,
-    files: productImages
+    category_id: Number(values.category),
+    brand_id: Number(values.brand),
+    season_id: Number(values.season),
+    price: amountInput(values.price.replace(/,/g, '')),
+    discount: Number(values.discount.replace(/,/g, '')),
+    size: productSizes,
+    image: productImages,
+    composition: productCompositions
   };
 
   dispatch(setIsLoading(true));
-  api.products.add(product)
+  api.product.add(product)
     .then((data) => {
       if (data.status !== api.code.CREATED) return;
 
       dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: 'Товар был успешно добавлен', timeout: 2500 }));
-      dispatch(replace('/products/products/'));
+      dispatch(replace('/admin/products/'));
     })
     .catch(() => dispatch(send({ id: uuid(), status: 'error', title: 'Ошибка', message: 'Ошибка добавления новой товара', timeout: 2500 })))
     .finally(() => dispatch(setIsLoading(false)));
@@ -330,7 +374,7 @@ export const editProduct = () => (dispatch, getState) => {
   };
 
   dispatch(setIsLoading(true));
-  api.products.edit(editProduct.id, product)
+  api.product.edit(editProduct.id, product)
     .then((data) => {
       if (data.status !== api.code.OK) return;
 

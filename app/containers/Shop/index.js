@@ -9,6 +9,7 @@ import Footer from './containers/Footer';
 import Catalog from './containers/Catalog';
 import Home from './containers/Home';
 import Admin from 'containers/Admin';
+import Auth from 'containers/Auth';
 import './style.scss';
 
 export default class Shop extends Component {
@@ -33,6 +34,7 @@ export default class Shop extends Component {
             <Route path={'/catalog'} component={Catalog} />
             <Route path={'/contact'} component={Catalog} />
             <Route path={'/admin'} component={Admin} />
+            <Route path={'/auth'} component={Auth} />
           </Switch>
         </div>
 

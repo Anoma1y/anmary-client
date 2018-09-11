@@ -15,6 +15,8 @@ import {
   SET_SIZES_AVAILABLE,
   SET_SIZES_USED,
   CHANGE_CURRENT_SIZE,
+  SET_COMPOSITIONS_PRODUCT,
+  SET_SIZES_PRODUCT,
 
   SET_COMPOSITIONS_USED,
   SET_COMPOSITIONS_AVAILABLE,
@@ -67,6 +69,10 @@ const HANDLERS = {
     ...state,
     sizesProduct: [...state.sizesProduct].filter((it) => it.size_id !== payload)
   }),
+  [SET_SIZES_PRODUCT]: (state, { payload }) => ({
+    ...state,
+    sizesProduct: payload
+  }),
 
   [CHANGE_COMPOSITION_vALUE]: (state, { payload }) => ({
     ...state,
@@ -96,6 +102,10 @@ const HANDLERS = {
   [REMOVE_COMPOSITION]: (state, { payload }) => ({
     ...state,
     compositionsProduct: [...state.compositionsProduct].filter((it) => it.composition_id !== payload)
+  }),
+  [SET_COMPOSITIONS_PRODUCT]: (state, { payload }) => ({
+    ...state,
+    compositionsProduct: payload
   }),
 
   [SET_COMPOSITIONS]: (state, { payload }) => ({

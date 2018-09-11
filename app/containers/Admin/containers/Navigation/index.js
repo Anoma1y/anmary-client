@@ -19,7 +19,6 @@ const NAVIGATION_MENU = [
   { id: 6, role_name: 'roles-list', name: 'Роли', icon: <AssessmentIcon />, link: '/admin/roles' },
   { id: 7, role_name: 'users-list', name: 'Пользователи', icon: <CardMembershipIcon />, link: '/admin/users' },
 ];
-const { permissions } = Storage.get('permissions');
 
 export default class Navigation extends Component {
   renderItem = (item) => (
@@ -34,6 +33,10 @@ export default class Navigation extends Component {
   );
 
   render() {
+    const { permissions } = Storage.get('permissions');
+
+    if (!permissions) return null;
+
     return (
       <div className={'admin-bottom-navigation'}>
         <div className={'admin-bottom-navigation_wrapper'}>
