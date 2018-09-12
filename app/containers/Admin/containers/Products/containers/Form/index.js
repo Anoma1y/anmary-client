@@ -119,15 +119,23 @@ export default class Form extends Component {
       ])
         .then(() => {
           this.props.pullProduct(id)
-            .then(() => this.setState({ ready: true, pageType: 'edit' }));
+            .then((product) => this.setState({
+              ready: true,
+              pageType: 'edit',
+              discount: product.discount,
+              price: product.price
+            }));
         })
-    //
     } else {
       Promise.all([
         this.props.pullSizes(),
         this.props.pullCompositions()
       ])
-        .then(() => this.setState({ ready: true }));
+        .then(() => {
+          this.props.changeReduxForm('Products_Form', 'discount', '0');
+
+          this.setState({ ready: true });
+        });
     }
   }
 
@@ -135,15 +143,14 @@ export default class Form extends Component {
     this.props.resetFormProduct();
   }
 
-  calculateTotalPrice = () => {
-    const { price, discount } = this.state;
+  calculateTotalPrice = (price, discount) => {
 
     if (discount === 0) {
       return price;
     }
 
     return price - (price * (discount / 100));
-  }
+  };
 
   handleImageChange = (file) => this.props.uploadImage(file);
 
@@ -151,9 +158,9 @@ export default class Form extends Component {
 
   handleEditProduct = () => this.props.editProduct();
 
-  handleChangeCurrentSize = (e) => this.props.changeCurrentSize(e.target.value)
+  handleChangeCurrentSize = (e) => this.props.changeCurrentSize(e.target.value);
 
-  handleChangeCurrentComposition = (e) => this.props.changeCurrentComposition(e.target.value)
+  handleChangeCurrentComposition = (e) => this.props.changeCurrentComposition(e.target.value);
 
   handleChangeValueComposition = (e) => {
     const { value } = e.target;
@@ -333,17 +340,22 @@ export default class Form extends Component {
   }
 
   renderContent = () => {
+    const {
+      price: statePrice,
+      discount: stateDiscount
+    } = this.state;
+
     return (
-      <Grid item xs={12} lg={7} className={'product-form'}>
-        <FormControl fullWidth className={'product-form_control'}>
-          <FormLabel component={'legend'} className={'product-form_label'}>
+      <Grid item xs={12} lg={7} className={'admin-form'}>
+        <FormControl fullWidth className={'admin-form_control'}>
+          <FormLabel component={'legend'} className={'admin-form_label'}>
             Добавление товара
           </FormLabel>
           <Grid container justify={'flex-start'}>
 
-            <Grid item xs={12} className={'product-form_row'} >
+            <Grid item xs={12} className={'admin-form_row'} >
               <Grid container spacing={40}>
-                <Grid item xs={12} md={12} className={'product-form_item'}>
+                <Grid item xs={12} md={12} className={'admin-form_item'}>
                   <Field
                     name={'name'}
                     component={FieldText}
@@ -353,10 +365,10 @@ export default class Form extends Component {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'product-form_row'} >
+            <Grid item xs={12} className={'admin-form_row'} >
               <Grid container spacing={40}>
 
-                <Grid item xs={12} md={4} className={'product-form_item'}>
+                <Grid item xs={12} md={4} className={'admin-form_item'}>
                   <Field
                     name={'price'}
                     component={FieldAmount}
@@ -368,7 +380,7 @@ export default class Form extends Component {
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} md={4} className={'product-form_item'}>
+                <Grid item xs={12} md={4} className={'admin-form_item'}>
                   <Field
                     name={'discount'}
                     component={FieldAmount}
@@ -381,24 +393,24 @@ export default class Form extends Component {
                   />
                 </Grid>
 
-                <Grid item xs={12} md={4} className={'product-form_item'}>
+                <Grid item xs={12} md={4} className={'admin-form_item'}>
                   <TextField
                     fullWidth
                     disabled
                     label={'Сумма'}
-                    value={this.calculateTotalPrice()}
+                    value={this.calculateTotalPrice(statePrice, stateDiscount)}
                   />
                 </Grid>
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'product-form_row'} >
+            <Grid item xs={12} className={'admin-form_row'} >
               <Grid container spacing={40}>
-                <Grid item xs={12} md={4} className={'product-form_item'}>
+                <Grid item xs={12} md={4} className={'admin-form_item'}>
                   <FormControl fullWidth>
                     <InputLabel>Категория</InputLabel>
                     <Field
-                      name={'category'}
+                      name={'category_id'}
                       component={FieldSelectNew}
                     >
                       {
@@ -409,11 +421,11 @@ export default class Form extends Component {
                   </FormControl>
                 </Grid>
 
-                <Grid item xs={12} md={4} className={'product-form_item'}>
+                <Grid item xs={12} md={4} className={'admin-form_item'}>
                   <FormControl fullWidth>
                     <InputLabel>Бренд</InputLabel>
                     <Field
-                      name={'brand'}
+                      name={'brand_id'}
                       component={FieldSelectNew}
                     >
                       {
@@ -424,11 +436,11 @@ export default class Form extends Component {
                   </FormControl>
                 </Grid>
 
-                <Grid item xs={12} md={4} className={'product-form_item'}>
+                <Grid item xs={12} md={4} className={'admin-form_item'}>
                   <FormControl fullWidth>
                     <InputLabel>Сезон</InputLabel>
                     <Field
-                      name={'season'}
+                      name={'season_id'}
                       component={FieldSelectNew}
                     >
                       {
@@ -442,9 +454,9 @@ export default class Form extends Component {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'product-form_row'} >
+            <Grid item xs={12} className={'admin-form_row'} >
               <Grid container spacing={40}>
-                <Grid item xs={12} className={'product-form_item'}>
+                <Grid item xs={12} className={'admin-form_item'}>
                   <Field
                     name={'description'}
                     component={FieldText}
@@ -455,21 +467,21 @@ export default class Form extends Component {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'product-form_row'} >
+            <Grid item xs={12} className={'admin-form_row'} >
               <Grid container spacing={40}>
 
-                <Grid item xs={12} md={6} className={'product-form_item'}>
+                <Grid item xs={12} md={6} className={'admin-form_item'}>
                   {this.renderSizeForm()}
                 </Grid>
 
-                <Grid item xs={12} md={6} className={'product-form_item'}>
+                <Grid item xs={12} md={6} className={'admin-form_item'}>
                   {this.renderCompositionForm()}
                 </Grid>
 
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'product-form_row product-form_images-form'} >
+            <Grid item xs={12} className={'admin-form_row admin-form_images-form'} >
               <Images
                 onFileSelected={this.handleImageChange}
                 disabled={false}
@@ -515,13 +527,13 @@ export default class Form extends Component {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} className={'product-form_row'}>
+            <Grid item xs={12} className={'admin-form_row'}>
               <MuiButton isLoading={this.props.Products_Form.isLoading}>
                 <Button
                   fullWidth
                   variant={'raised'}
                   color={'primary'}
-                  className={'product-form_btn'}
+                  className={'admin-form_btn'}
                   disabled={this.props.Products_Form.isLoading}
                   onClick={() => this.state.pageType === 'add' ? this.handleAddProduct() : this.handleEditProduct()}
                 >

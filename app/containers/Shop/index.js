@@ -8,6 +8,7 @@ import Header from './containers/Header';
 import Footer from './containers/Footer';
 import Catalog from './containers/Catalog';
 import Home from './containers/Home';
+import Contact from './containers/Contact';
 import Admin from 'containers/Admin';
 import Auth from 'containers/Auth';
 import './style.scss';
@@ -32,7 +33,7 @@ export default class Shop extends Component {
           <Switch>
             <Route exact path={'/'} component={Home} />
             <Route path={'/catalog'} component={Catalog} />
-            <Route path={'/contact'} component={Catalog} />
+            <Route path={'/contact'} component={Contact} />
             <Route path={'/admin'} component={Admin} />
             <Route path={'/auth'} component={Auth} />
           </Switch>

@@ -235,7 +235,7 @@ export const removeCompositionProduct = (index) => (dispatch, getState) => {
 
 export const pullProduct = (product_id) => (dispatch, getState) => new Promise((resolve, reject) => {
 
-  const { sizes, sizesUsed, newSizesAvailable } = getState().Products_Form;
+  const { sizes, compositions } = getState().Products_Form;
 
   api.product.getSingle(product_id)
     .then((data) => {
@@ -245,28 +245,33 @@ export const pullProduct = (product_id) => (dispatch, getState) => new Promise((
         id: data.data.id,
         name: data.data.name,
         description: data.data.description,
-        category: data.data.category.id,
-        brand: data.data.brand.id,
-        season: data.data.season.id,
+        category_id: data.data.category.id,
+        brand_id: data.data.brand.id,
+        season_id: data.data.season.id,
         price: String(amountOutput(data.data.price).value),
         discount: data.data.discount,
       };
 
-      dispatch(setImages(data.data.images));
-      dispatch(setCompositionsProduct(data.data.compositions));
-      // todo сделать пулл размеров и составов в самом начале
-      const getId = sizes.map((it) => it.id);
+      const getSizeID = sizes.map((it) => it.id);
       const sizesUsedId = data.data.sizes.map((it) => it.size_id);
-      //
-      const newSizesAvailable = _.difference(getId, sizesUsedId);
-      console.log(sizesUsedId)
-      console.log(newSizesAvailable)
+      const newSizesAvailable = _.difference(getSizeID, sizesUsedId);
       dispatch(setSizesAvailable(newSizesAvailable));
       dispatch(setSizesUsed(sizesUsedId))
+      const getCompositionID = compositions.map((it) => it.id);
+
+      const compositionsUsedId = data.data.compositions.map((it) => it.composition_id);
+      const newCompositionsAvailable = _.difference(getCompositionID, compositionsUsedId);
+      dispatch(setCompositionsAvailable(newCompositionsAvailable));
+      dispatch(setCompositionsUsed(compositionsUsedId))
 
       dispatch(setSizesProduct(data.data.sizes));
+      dispatch(setCompositionsProduct(data.data.compositions));
+      dispatch(setImages(data.data.images));
       dispatch(setProduct(product));
-      resolve();
+      resolve({
+        price: product.price,
+        discount: product.discount
+      });
     })
     .catch(() => reject());
 });
@@ -303,13 +308,12 @@ export const addProduct = () => (dispatch, getState) => {
     || !values
     || !values.price
     || !values.discount
-    || !values.category
-    || !values.season
-    || !values.brand
+    || !values.category_id
+    || !values.season_id
+    || !values.brand_id
     || images.length === 0
     || compositionsProduct.length === 0
     || sizesProduct.length === 0
-
   ) {
     dispatch(send({ id: uuid(), status: 'warning', title: 'Предупреждение', message: 'Заполните все необходимые поля формы', timeout: 2500 }));
     return;
@@ -321,11 +325,11 @@ export const addProduct = () => (dispatch, getState) => {
 
   const product = {
     ...values,
-    category_id: Number(values.category),
-    brand_id: Number(values.brand),
-    season_id: Number(values.season),
-    price: amountInput(values.price.replace(/,/g, '')),
-    discount: Number(values.discount.replace(/,/g, '')),
+    category_id: Number(values.category_id),
+    brand_id: Number(values.brand_id),
+    season_id: Number(values.season_id),
+    price: amountInput(typeof values.price === 'string' ? values.price.replace(/,/g, '') : values.price),
+    discount: Number(typeof values.discount === 'string' ? values.discount.replace(/,/g, '') : values.discount),
     size: productSizes,
     image: productImages,
     composition: productCompositions
@@ -352,25 +356,41 @@ export const editProduct = () => (dispatch, getState) => {
       }
     },
     Products_Form: {
-      tags,
-      files,
-      product: editProduct
+      product: editProduct,
+      sizesProduct,
+      compositionsProduct,
+      images
     }
   } = getState();
 
-  if (syncError || !values || !values.type || !values.category || !values.currency) {
+  if (syncError
+    || !values
+    || !values.price
+    || !values.category_id
+    || !values.season_id
+    || !values.brand_id
+    || images.length === 0
+    || compositionsProduct.length === 0
+    || sizesProduct.length === 0
+  ) {
     dispatch(send({ id: uuid(), status: 'warning', title: 'Предупреждение', message: 'Заполните все необходимые поля формы', timeout: 2500 }));
     return;
   }
 
-  const productTags = tags.length !== 0 ? tags.map((tag) => tag.id) : [];
-  const productImages = files.length !== 0 ? files.map((file) => file.id) : [];
+  const productSizes = sizesProduct.map((size) => size.id);
+  const productCompositions = compositionsProduct.map((composition) => composition.id);
+  const productImages = images.map((image) => image.id);
 
   const product = {
     ...values,
-    sum: amountInput(values.sum.replace(/,/g, '')),
-    tags: productTags,
-    files: productImages
+    category_id: Number(values.category_id),
+    brand_id: Number(values.brand_id),
+    season_id: Number(values.season_id),
+    price: amountInput(typeof values.price === 'string' ? values.price.replace(/,/g, '') : values.price),
+    discount: !values.discount ? 0 : Number(typeof values.discount === 'string' ? values.discount.replace(/,/g, '') : values.discount),
+    size: productSizes,
+    image: productImages,
+    composition: productCompositions
   };
 
   dispatch(setIsLoading(true));
@@ -378,8 +398,8 @@ export const editProduct = () => (dispatch, getState) => {
     .then((data) => {
       if (data.status !== api.code.OK) return;
 
-      dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: `Товар ${editProduct.id} был успешно изменен`, timeout: 2500 }));
-      dispatch(replace(`/products/products/${editProduct.id}`));
+      dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: `Товар ${editProduct.name} был успешно изменен`, timeout: 2500 }));
+      dispatch(replace(`admin/products/${editProduct.id}`));
     })
     .catch(() => dispatch(send({ id: uuid(), status: 'error', title: 'Ошибка', message: 'Ошибка изменения товара', timeout: 2500 })))
     .finally(() => dispatch(setIsLoading(false)));

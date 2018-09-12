@@ -32,7 +32,7 @@ import './style.scss';
 export default class Admin extends Component {
 
   state = {
-    ready: false, // todo: fix
+    ready: false,
     value: 0
   };
 
@@ -42,7 +42,7 @@ export default class Admin extends Component {
     if (authToken === null) {
       Storage.clear();
       api.removeHeader('Authorization');
-      this.props.replace('/');
+      this.props.replace('/auth');
       return;
     }
 
@@ -69,17 +69,11 @@ export default class Admin extends Component {
       .catch(() => this.handlerError('error', 'Ошибка', 'Данные не были загружены'));
   };
 
-  /**
-   * Метод для вывода оповещения и ошибки
-   * @param status - статус оповещения
-   * @param title - заголовок оповещения
-   * @param message - сообщение оповещения
-   */
   handlerError = (status, title, message) => {
     this.props.send({ id: uuid(), status, title, message, actionClose: true });
     Storage.clear();
     api.removeHeader('Authorization');
-    this.props.replace('/');
+    this.props.replace('/auth');
   };
 
   renderLoader = () => <CircularProgress size={70} className={'admin-page_loading'} />;
@@ -95,6 +89,7 @@ export default class Admin extends Component {
 
         <div className={'admin-content-wrapper'}>
           <Switch>
+            <Route exact path={`${this.props.match.url}/`} component={Products} />
             <Route path={`${this.props.match.url}/categories`} component={Categories} />
             <Route path={`${this.props.match.url}/roles`} component={Roles} />
             <Route path={`${this.props.match.url}/users`} component={Users} />
