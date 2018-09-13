@@ -51,7 +51,7 @@ export const pullRole = (role_id) => (dispatch) => new Promise((resolve, reject)
 })
 
 export const addRole = () => (dispatch, getState) => {
-  const { display_name, description, permissions } = getState().Roles_Form.role;
+  const { display_name, description, permissions } = getState().Admin_Roles_Form.role;
   const translitName = cyrillicToTranslit().transform(display_name.toLowerCase(), '_');
 
   if (display_name.length < 3 || translitName.length < 3) return;
@@ -71,7 +71,7 @@ export const addRole = () => (dispatch, getState) => {
 };
 
 export const editRole = () => (dispatch, getState) => {
-  const { id, display_name, description, permissions } = getState().Roles_Form.role;
+  const { id, display_name, description, permissions } = getState().Admin_Roles_Form.role;
 
   if (display_name.length < 3) return;
 

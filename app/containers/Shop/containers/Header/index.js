@@ -44,7 +44,7 @@ export default class Header extends Component {
           <nav className={'main_nav'}>
             <ul>
               <li><Link to={'/'}>Главная</Link></li>
-              <li><Link to={'/catalog'}>Каталог</Link></li>
+              <li><Link to={'/product'}>Каталог</Link></li>
               <li><a href={'#'}>accessories</a></li>
               <li><Link to={'/admin'}>lingerie</Link></li>
               <li><Link to={'/contact'}>Контакты</Link></li>

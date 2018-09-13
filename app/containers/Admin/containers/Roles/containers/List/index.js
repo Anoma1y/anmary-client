@@ -22,7 +22,7 @@ import {
 } from './store/actions';
 import Storage from 'lib/storage';
 
-@connect(({ Roles_List }) => ({ Roles_List }), ({
+@connect(({ Admin_Roles_List }) => ({ Admin_Roles_List }), ({
   pullRoles,
   resetRoleList,
   replace
@@ -78,7 +78,7 @@ export default class List extends Component {
         }
         <Grid container>
           {
-            this.props.Roles_List.roles
+            this.props.Admin_Roles_List.roles
               .map((role) => (
                 <Grid key={role.id} item xs={12} className={'roles-list_item'}>
                   <Card className={'card'}>

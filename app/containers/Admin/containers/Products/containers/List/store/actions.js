@@ -56,7 +56,7 @@ export const pullProducts = () => (dispatch, getState) => new Promise((resolve, 
   const {
     page,
     num_on_page,
-  } = getState().Products_List;
+  } = getState().Admin_Products_List;
 
   dispatch(setIsLoadingTable(true));
   api.product.getList(page, num_on_page, '')
@@ -89,7 +89,7 @@ export const applyFilter = (pageParam, numOnPageParam) => (dispatch, getState) =
         values
       }
     },
-    Products_List: {
+    Admin_Products_List: {
       page = pageParam,
       num_on_page = numOnPageParam
     }

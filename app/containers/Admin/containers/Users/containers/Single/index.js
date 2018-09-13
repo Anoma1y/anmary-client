@@ -16,7 +16,7 @@ import {
   resetUserSingle
 } from './store/actions';
 
-@connect(({ Admin_Users, Users_Single }) => ({ Admin_Users, Users_Single }), ({
+@connect(({ Admin_Users, Admin_Users_Single }) => ({ Admin_Users, Admin_Users_Single }), ({
   pullUser,
   resetUserSingle,
   replace
@@ -47,24 +47,24 @@ export default class Single extends Component {
           <CardHeader
             avatar={<PersonIcon />}
             className={'user-single_header'}
-            title={`Имя: ${this.props.Users_Single.user.name}`}
-            subheader={`E-Mail: ${this.props.Users_Single.user.email}`}
+            title={`Имя: ${this.props.Admin_Users_Single.user.name}`}
+            subheader={`E-Mail: ${this.props.Admin_Users_Single.user.email}`}
           />
           <CardContent className={'user-single_content'}>
             <p className={'user-single_text'}>
-              Телефон: <span>{this.props.Users_Single.user.profile.phone === '' ? 'не указан' : this.props.Users_Single.user.profile.phone}</span>
+              Телефон: <span>{this.props.Admin_Users_Single.user.profile.phone === '' ? 'не указан' : this.props.Admin_Users_Single.user.profile.phone}</span>
             </p>
             <p className={'user-single_text'}>
-              Статус: <span>{this.props.Admin_Users.schema.status[this.props.Users_Single.user.profile.status]}</span>
+              Статус: <span>{this.props.Admin_Users.schema.status[this.props.Admin_Users_Single.user.profile.status]}</span>
             </p>
             <p className={'user-single_text'}>
-              Роль: {this.props.Users_Single.user.roles.map((role) => <span key={role.name}>{`${role.display_name} `}</span>)}
+              Роль: {this.props.Admin_Users_Single.user.roles.map((role) => <span key={role.name}>{`${role.display_name} `}</span>)}
             </p>
           </CardContent>
           <CardActions className={'user-single_btn'}>
             <Button
               variant={'raised'}
-              onClick={() => this.props.replace(`/admin/users/${this.props.Users_Single.user.id}/edit`)}
+              onClick={() => this.props.replace(`/admin/users/${this.props.Admin_Users_Single.user.id}/edit`)}
             >
               Изменить
             </Button>

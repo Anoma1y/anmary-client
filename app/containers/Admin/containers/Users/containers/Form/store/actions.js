@@ -29,7 +29,7 @@ export const setIsLoading = (isLoading = false) => ({
 export const resetUserForm = () => ({ type: RESET });
 
 export const pullUser = (user_id) => (dispatch, getState) => new Promise((resolve, reject) => {
-  const { roles } = getState().Users_Form;
+  const { roles } = getState().Admin_Users_Form;
 
   api.users.getSingle(user_id)
     .then((data) => {
@@ -65,7 +65,7 @@ export const pullRoles = () => (dispatch) => new Promise((resolve, reject) => {
 });
 
 export const addUser = () => (dispatch, getState) => {
-  const { syncErrors, values } = getState().form.Users_Form;
+  const { syncErrors, values } = getState().form.Admin_Users_Form;
 
   if (syncErrors || !values.role_id || !values.status) {
     dispatch(send({ id: uuid(), status: 'warning', title: 'Предупреждение', message: 'Заполните все необходимые поля', timeout: 1500 }));
@@ -99,8 +99,8 @@ export const editUser = () => (dispatch, getState) => {
     values: {
       name, email, password, phone, role_id, status
     }
-  } = getState().form.Users_Form;
-  const { user } = getState().Users_Form;
+  } = getState().form.Admin_Users_Form;
+  const { user } = getState().Admin_Users_Form;
 
   if (syncErrors) return;
 

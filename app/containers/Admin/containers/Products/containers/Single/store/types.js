@@ -1,2 +1,2 @@
-export const SET_PRODUCT = 'Products_Single/SET_PRODUCT';
-export const RESET = 'Products_Single/RESET';
+export const SET_PRODUCT = 'Admin_Products_Single/SET_PRODUCT';
+export const RESET = 'Admin_Products_Single/RESET';

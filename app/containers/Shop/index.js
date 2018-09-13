@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import Header from './containers/Header';
 import Footer from './containers/Footer';
-import Catalog from './containers/Catalog';
+import Products from './containers/Products';
 import Home from './containers/Home';
 import Contact from './containers/Contact';
 import Admin from 'containers/Admin';
@@ -32,7 +32,7 @@ export default class Shop extends Component {
         <div className={'content-wrapper'}>
           <Switch>
             <Route exact path={'/'} component={Home} />
-            <Route path={'/catalog'} component={Catalog} />
+            <Route path={'/product'} component={Products} />
             <Route path={'/contact'} component={Contact} />
             <Route path={'/admin'} component={Admin} />
             <Route path={'/auth'} component={Auth} />

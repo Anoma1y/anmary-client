@@ -21,7 +21,7 @@ import {
   resetFilter
 } from '../../store/actions';
 
-@connect(({ Admin, Admin_Products, Products_List }) => ({ Admin, Admin_Products, Products_List }), ({
+@connect(({ Admin, Admin_Products, Admin_Products_List }) => ({ Admin, Admin_Products, Admin_Products_List }), ({
   applyFilter,
   resetFilter,
   changeReduxForm
@@ -113,11 +113,11 @@ export default class FilterProduct extends Component {
             <Grid item xs={12} md={6} className={'products-filter_tags'}>
               <Grid container justify={'flex-end'} spacing={40}>
                 <Grid item xs={6} md={4}>
-                  <MuiButton isLoading={this.props.Products_List.isLoading}>
+                  <MuiButton isLoading={this.props.Admin_Products_List.isLoading}>
                     <Button
                       fullWidth
                       variant={'raised'}
-                      disabled={this.props.Products_List.isLoading}
+                      disabled={this.props.Admin_Products_List.isLoading}
                       onClick={this.props.resetFilter}
                     >
                       Сбросить
@@ -125,12 +125,12 @@ export default class FilterProduct extends Component {
                   </MuiButton>
                 </Grid>
                 <Grid item xs={6} md={4}>
-                  <MuiButton isLoading={this.props.Products_List.isLoading}>
+                  <MuiButton isLoading={this.props.Admin_Products_List.isLoading}>
                     <Button
                       fullWidth
                       variant={'raised'}
                       color={'primary'}
-                      disabled={this.props.Products_List.isLoading}
+                      disabled={this.props.Admin_Products_List.isLoading}
                       onClick={this.props.applyFilter}
                     >
                       Применить

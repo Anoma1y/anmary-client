@@ -38,7 +38,7 @@ import Storage from 'lib/storage';
 import moment from 'moment';
 import _ from 'lodash';
 
-@connect(({ routing, Admin, Admin_Products, Products_List }) => ({ routing, Admin, Admin_Products, Products_List }), ({
+@connect(({ routing, Admin, Admin_Products, Admin_Products_List }) => ({ routing, Admin, Admin_Products, Admin_Products_List }), ({
   pullProducts,
   resetProductsList,
   changeNumOnPage,
@@ -72,14 +72,14 @@ export default class List extends Component {
   };
 
   handleChangePage = (event, page) => {
-    const { num_on_page } = this.props.Products_List;
+    const { num_on_page } = this.props.Admin_Products_List;
 
     this.props.changePage(page);
     this.props.applyFilter(page, num_on_page);
   };
 
   handleChangeRowsPerPage = event => {
-    const { page } = this.props.Products_List;
+    const { page } = this.props.Admin_Products_List;
     const { value } = event.target;
 
     this.props.changeNumOnPage(value);
@@ -96,7 +96,7 @@ export default class List extends Component {
     </TableRow>
   )
 
-  renderTableContent = (permissions) => this.props.Products_List.products
+  renderTableContent = (permissions) => this.props.Admin_Products_List.products
     .map((product) => {
 
       const { id, name, category, brand, season, price, discount, total_price, created_at } = product;
@@ -135,7 +135,7 @@ export default class List extends Component {
       num_on_page,
       page,
       total_records
-    } = this.props.Products_List;
+    } = this.props.Admin_Products_List;
     const { permissions } = Storage.get('permissions');
 
     return (
@@ -198,7 +198,7 @@ export default class List extends Component {
               </TableHead>
 
               <TableBody className={'products-list-table_body'}>
-                {this.props.Products_List.isLoadingTable ? this.renderLoaderTable() : this.renderTableContent(permissions)}
+                {this.props.Admin_Products_List.isLoadingTable ? this.renderLoaderTable() : this.renderTableContent(permissions)}
               </TableBody>
 
               <TableFooter>

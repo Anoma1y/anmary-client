@@ -62,14 +62,14 @@ const validate = values => {
   return errors;
 };
 
-@connect(({ Admin_Users, Users_Form }) => ({ Admin_Users, Users_Form, initialValues: window.location.pathname.split('/').some((it) => it === 'new') ? null : Users_Form.user }), ({
+@connect(({ Admin_Users, Admin_Users_Form }) => ({ Admin_Users, Admin_Users_Form, initialValues: window.location.pathname.split('/').some((it) => it === 'new') ? null : Admin_Users_Form.user }), ({
   pullUser,
   addUser,
   editUser,
   pullRoles,
   resetUserForm,
 }))
-@reduxForm({ form: 'Users_Form', validate, enableReinitialize: true })
+@reduxForm({ form: 'Admin_Users_Form', validate, enableReinitialize: true })
 export default class Form extends Component {
 
   state = {
@@ -180,7 +180,7 @@ export default class Form extends Component {
                       name={'role_id'}
                       component={FieldSelectNew}
                     >
-                      {this.props.Users_Form.roles.map((item) => <MenuItem key={item.id} value={item.id}>{item.display_name}</MenuItem>)}
+                      {this.props.Admin_Users_Form.roles.map((item) => <MenuItem key={item.id} value={item.id}>{item.display_name}</MenuItem>)}
                     </Field>
                     <FormHelperText>Обязательное поле</FormHelperText>
                   </FormControl>
@@ -207,13 +207,13 @@ export default class Form extends Component {
             </Grid>
 
             <Grid item xs={12} md={2} className={'admin-form_row'}>
-              <MuiButton isLoading={this.props.Users_Form.isLoading}>
+              <MuiButton isLoading={this.props.Admin_Users_Form.isLoading}>
                 <Button
                   fullWidth
                   variant={'raised'}
                   color={'primary'}
                   className={'admin-form_btn'}
-                  disabled={this.props.Users_Form.isLoading}
+                  disabled={this.props.Admin_Users_Form.isLoading}
                   onClick={this.handleClick}
                 >
                   {

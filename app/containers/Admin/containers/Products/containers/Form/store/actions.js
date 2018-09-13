@@ -147,7 +147,7 @@ export const pullSizes = () => (dispatch) => new Promise((resolve, reject) => {
 });
 
 export const addSizeProduct = () => (dispatch, getState) => {
-  const { sizes, sizesUsed, currentSize } = getState().Products_Form;
+  const { sizes, sizesUsed, currentSize } = getState().Admin_Products_Form;
 
   if (currentSize === '') return;
 
@@ -170,7 +170,7 @@ export const addSizeProduct = () => (dispatch, getState) => {
 };
 
 export const removeSizeProduct = (index) => (dispatch, getState) => {
-  const { sizesProduct, sizesUsed, sizesAvailable } = getState().Products_Form;
+  const { sizesProduct, sizesUsed, sizesAvailable } = getState().Admin_Products_Form;
 
   const { size_id } = sizesProduct[index];
 
@@ -196,7 +196,7 @@ export const pullCompositions = () => (dispatch) => new Promise((resolve, reject
 });
 
 export const addCompositionProduct = () => (dispatch, getState) => {
-  const { compositions, compositionsUsed, currentComposition, currentComposition_Value } = getState().Products_Form;
+  const { compositions, compositionsUsed, currentComposition, currentComposition_Value } = getState().Admin_Products_Form;
 
   if (currentComposition === '' || !/^\d+$/.test(currentComposition_Value)) return;
 
@@ -220,7 +220,7 @@ export const addCompositionProduct = () => (dispatch, getState) => {
 };
 
 export const removeCompositionProduct = (index) => (dispatch, getState) => {
-  const { compositionsProduct, compositionsUsed, compositionsAvailable } = getState().Products_Form;
+  const { compositionsProduct, compositionsUsed, compositionsAvailable } = getState().Admin_Products_Form;
 
   const { composition_id } = compositionsProduct[index];
 
@@ -235,7 +235,7 @@ export const removeCompositionProduct = (index) => (dispatch, getState) => {
 
 export const pullProduct = (product_id) => (dispatch, getState) => new Promise((resolve, reject) => {
 
-  const { sizes, compositions } = getState().Products_Form;
+  const { sizes, compositions } = getState().Admin_Products_Form;
 
   api.product.getSingle(product_id)
     .then((data) => {
@@ -292,12 +292,12 @@ export const uploadImage = (formData) => (dispatch) => {
 export const addProduct = () => (dispatch, getState) => {
   const {
     form: {
-      Products_Form: {
+      Admin_Products_Form: {
         values,
         syncError
       }
     },
-    Products_Form: {
+    Admin_Products_Form: {
       sizesProduct,
       compositionsProduct,
       images
@@ -350,12 +350,12 @@ export const addProduct = () => (dispatch, getState) => {
 export const editProduct = () => (dispatch, getState) => {
   const {
     form: {
-      Products_Form: {
+      Admin_Products_Form: {
         values,
         syncError
       }
     },
-    Products_Form: {
+    Admin_Products_Form: {
       product: editProduct,
       sizesProduct,
       compositionsProduct,

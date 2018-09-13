@@ -18,7 +18,7 @@ import moment from 'moment';
 import { amountOutput } from 'lib/amount';
 import _ from 'lodash';
 
-@connect(({ Admin, Admin_Products, Products_Single }) => ({ Admin, Admin_Products, Products_Single }), ({
+@connect(({ Admin, Admin_Products, Admin_Products_Single }) => ({ Admin, Admin_Products, Admin_Products_Single }), ({
   pullProduct,
   resetProductSingle,
   replace,
@@ -85,7 +85,7 @@ export default class Single extends Component {
       total_price,
       created_at,
       updated_at
-    } = this.props.Products_Single.product;
+    } = this.props.Admin_Products_Single.product;
 
     const product_price = new Intl.NumberFormat('ru-RU').format(amountOutput(price).value);
     const product_discount = discount === 0 ? 'Нет' : `${discount} %`;

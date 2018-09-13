@@ -27,7 +27,7 @@ import {
   resetRoleForm
 } from './store/actions';
 
-@connect(({ Admin_Roles, Roles_Form }) => ({ Admin_Roles, Roles_Form }), ({
+@connect(({ Admin_Roles, Admin_Roles_Form }) => ({ Admin_Roles, Admin_Roles_Form }), ({
   changePermission,
   changeRole,
   addRole,
@@ -70,7 +70,7 @@ export default class Form extends Component {
   handleChangeRoleDescription = (e) => this.props.changeRole('description', e.target.value);
 
   handleChangePermission = (permissionKey) => {
-    const { permissions } = this.props.Roles_Form.role;
+    const { permissions } = this.props.Admin_Roles_Form.role;
 
     if (permissions.includes(permissionKey)) {
       this.props.changePermission(permissionKey, false);
@@ -117,7 +117,7 @@ export default class Form extends Component {
                                 control={
                                   <Switch
                                     color={'primary'}
-                                    checked={this.props.Roles_Form.role.permissions.includes(permissionKey)}
+                                    checked={this.props.Admin_Roles_Form.role.permissions.includes(permissionKey)}
                                     onChange={() => this.handleChangePermission(permissionKey)}
                                     value={permissionKey}
                                   />
@@ -164,7 +164,7 @@ export default class Form extends Component {
                     fullWidth
                     label={'Имя роли'}
                     onChange={this.handleChangeRoleName}
-                    value={this.props.Roles_Form.role.display_name}
+                    value={this.props.Admin_Roles_Form.role.display_name}
                     helperText={this.state.nameIsErrorValidation ? 'Имя роли должно содержать минимум 3 символа' : 'Обязательное поле'}
                     error={this.state.nameIsErrorValidation}
                   />
@@ -178,8 +178,8 @@ export default class Form extends Component {
                     placeholder={'Name'}
                     value={
                       this.state.pageType === 'add' ? (
-                        cyrillicToTranslit().transform(this.props.Roles_Form.role.display_name.toLowerCase(), '_')
-                      ) : this.props.Roles_Form.role.name
+                        cyrillicToTranslit().transform(this.props.Admin_Roles_Form.role.display_name.toLowerCase(), '_')
+                      ) : this.props.Admin_Roles_Form.role.name
                     }
                   />
                 </Grid>
@@ -193,7 +193,7 @@ export default class Form extends Component {
                     fullWidth
                     label={'Описание'}
                     onChange={this.handleChangeRoleDescription}
-                    value={this.props.Roles_Form.role.description}
+                    value={this.props.Admin_Roles_Form.role.description}
                     helperText={'Необязательное поле'}
                   />
                 </Grid>
@@ -205,13 +205,13 @@ export default class Form extends Component {
             }
 
             <Grid item xs={12} sm={6} md={3} className={'admin-form_row'}>
-              <MuiButton isLoading={this.props.Roles_Form.isLoading}>
+              <MuiButton isLoading={this.props.Admin_Roles_Form.isLoading}>
                 <Button
                   fullWidth
                   variant={'raised'}
                   color={'primary'}
                   className={'admin-form_btn'}
-                  disabled={this.props.Roles_Form.isLoading}
+                  disabled={this.props.Admin_Roles_Form.isLoading}
                   onClick={this.handleClick}
                 >
                   {

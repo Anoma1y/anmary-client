@@ -48,7 +48,7 @@ export default class Home extends Component {
         <Grid item xs={12} className={'container'}>
 
           <Grid container className={'new-products'}>
-            <Grid item xs={12} className={'new-products_list'}>
+            <Grid item xs={12} className={'new-Shop_Products_List'}>
 
               <Grid container spacing={24}>
 

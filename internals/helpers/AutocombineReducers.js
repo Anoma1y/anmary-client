@@ -8,11 +8,13 @@ const OUTPUT_FILE = APP_FOLDER_BASE + STORE_FOLDER_NAME + '/' + '_reducers.js';
 function GetReducersForScreens(path, stackPrefix = '') {
   let output = [];
   const items = fs.readdirSync(path);
+
   items.map((element) => {
-    // Skip these
+
     if (element === '.gitkeep' || element === '.gitignore') return;
 
     const screenItems = fs.readdirSync(path + '/' + element);
+
     if (
       screenItems.includes('store')
       && fs.existsSync(path + '/' + element + '/' + STORE_FOLDER_NAME + '/' + REDUCER_FILE_NAME)
@@ -23,7 +25,8 @@ function GetReducersForScreens(path, stackPrefix = '') {
       ]);
     }
     if (screenItems.includes(CONTAINERS_FOLDER_NAME)) {
-      const screens = GetReducersForScreens(path + '/' + element + '/' + CONTAINERS_FOLDER_NAME, element + '_');
+
+      const screens = GetReducersForScreens(path + '/' + element + '/' + CONTAINERS_FOLDER_NAME, stackPrefix + element + '_');
       output = [...output, ...screens];
     }
   });

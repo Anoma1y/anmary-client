@@ -17,7 +17,7 @@ import {
 } from './store/actions';
 import Storage from 'lib/storage';
 
-@connect(({ Admin_Users, Users_List }) => ({ Admin_Users, Users_List }), ({
+@connect(({ Admin_Users, Admin_Users_List }) => ({ Admin_Users, Admin_Users_List }), ({
   pullUsers,
   resetUserList,
   replace
@@ -77,7 +77,7 @@ export default class List extends Component {
 
               <TableBody className={'users-list-table_body'}>
                 {
-                  this.props.Users_List.users
+                  this.props.Admin_Users_List.users
                     .map((user) => {
 
                       const {

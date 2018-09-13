@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
-import {
-  Grid,
-  CircularProgress
-} from '@material-ui/core';
-import Form from './containers/Form';
+import { CircularProgress, Grid } from '@material-ui/core';
+import { Route, Switch } from 'react-router-dom';
 import List from './containers/List';
 import Single from './containers/Single';
 import {
@@ -14,6 +10,7 @@ import {
   pullCompositions,
   pullSizes,
   pullSeasons,
+  resetProducts,
 } from './store/actions';
 import './style.scss';
 
@@ -23,9 +20,9 @@ import './style.scss';
   pullSizes,
   pullCompositions,
   pullSeasons,
+  resetProducts,
 }))
 export default class Products extends Component {
-
   state = {
     ready: true
   };
@@ -40,6 +37,10 @@ export default class Products extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.resetProducts();
+  }
+
   initialData = () => {
     Promise.all([
       this.props.pullBrands(),
@@ -51,14 +52,12 @@ export default class Products extends Component {
       .then(() => this.setState({ ready: true }));
   };
 
-  renderLoader = () => <CircularProgress size={24} className={'admin_loading'} />;
+  renderLoader = () => <CircularProgress size={24} className={'shop_loading'} />;
 
   renderContent = () => (
-    <Grid container className={'admin product'}>
+    <Grid container className={'shop product'}>
       <Switch>
         <Route exact path={`${this.props.match.url}`} component={List} />
-        <Route exact path={`${this.props.match.url}/new`} component={Form} />
-        <Route exact path={`${this.props.match.url}/:id/edit`} component={Form} />
         <Route exact path={`${this.props.match.url}/:id`} component={Single} />
       </Switch>
     </Grid>

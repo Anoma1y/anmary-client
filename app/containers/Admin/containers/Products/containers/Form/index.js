@@ -73,11 +73,11 @@ const validate = values => {
   return getValuesDeep(errors).every((item) => item === '') ? {} : errors;
 };
 
-@connect(({ Admin, Admin_Products, Products_Form }) => ({
+@connect(({ Admin, Admin_Products, Admin_Products_Form }) => ({
   Admin,
   Admin_Products,
-  Products_Form,
-  initialValues: window.location.pathname.split('/').some((it) => it === 'new') ? null : Products_Form.product
+  Admin_Products_Form,
+  initialValues: window.location.pathname.split('/').some((it) => it === 'new') ? null : Admin_Products_Form.product
 }), ({
     uploadImage,
     pullProduct,
@@ -99,7 +99,7 @@ const validate = values => {
     addCompositionProduct,
     removeCompositionProduct,
   }))
-@reduxForm({ form: 'Products_Form', validate, enableReinitialize: true })
+@reduxForm({ form: 'Admin_Products_Form', validate, enableReinitialize: true })
 export default class Form extends Component {
 
   state = {
@@ -132,7 +132,7 @@ export default class Form extends Component {
         this.props.pullCompositions()
       ])
         .then(() => {
-          this.props.changeReduxForm('Products_Form', 'discount', '0');
+          this.props.changeReduxForm('Admin_Products_Form', 'discount', '0');
 
           this.setState({ ready: true });
         });
@@ -185,7 +185,7 @@ export default class Form extends Component {
   renderLoader = () => <CircularProgress size={24} className={'product_loading'} />;
 
   renderOptionSize = () => {
-    const { sizes, sizesAvailable } = this.props.Products_Form;
+    const { sizes, sizesAvailable } = this.props.Admin_Products_Form;
     const sizesArray = [];
 
     sizesAvailable.forEach((id_sizes) => {
@@ -197,7 +197,7 @@ export default class Form extends Component {
   };
 
   renderOptionComposition = () => {
-    const { compositions, compositionsAvailable } = this.props.Products_Form;
+    const { compositions, compositionsAvailable } = this.props.Admin_Products_Form;
     const compositionsArray = [];
 
     compositionsAvailable.forEach((compositions_id) => {
@@ -219,7 +219,7 @@ export default class Form extends Component {
                 <Select
                   fullWidth
                   native
-                  value={this.props.Products_Form.currentSize}
+                  value={this.props.Admin_Products_Form.currentSize}
                   onChange={this.handleChangeCurrentSize}
                 >
                   <option value={''} disabled hidden />
@@ -242,10 +242,10 @@ export default class Form extends Component {
         </div>
         <div className={'product-select-form-list'}>
           {
-            this.props.Products_Form.sizesProduct.length !== 0 &&
-            this.props.Products_Form.sizesProduct.map((item, index) => {
+            this.props.Admin_Products_Form.sizesProduct.length !== 0 &&
+            this.props.Admin_Products_Form.sizesProduct.map((item, index) => {
 
-              const size = _.find(this.props.Products_Form.sizes, { id: item.size_id });
+              const size = _.find(this.props.Admin_Products_Form.sizes, { id: item.size_id });
 
               return (
                 <div key={item.id} className={'product-select-form-list_item'}>
@@ -280,7 +280,7 @@ export default class Form extends Component {
                 <Select
                   fullWidth
                   native
-                  value={this.props.Products_Form.currentComposition}
+                  value={this.props.Admin_Products_Form.currentComposition}
                   onChange={this.handleChangeCurrentComposition}
                 >
                   <option value={''} disabled hidden />
@@ -294,7 +294,7 @@ export default class Form extends Component {
               <TextField
                 fullWidth
                 label={' '}
-                value={this.props.Products_Form.currentComposition_Value}
+                value={this.props.Admin_Products_Form.currentComposition_Value}
                 onChange={this.handleChangeValueComposition}
               />
             </Grid>
@@ -312,9 +312,9 @@ export default class Form extends Component {
         </div>
         <div className={'product-select-form-list'}>
           {
-            this.props.Products_Form.compositionsProduct.length !== 0 &&
-            this.props.Products_Form.compositionsProduct.map((item, index) => {
-              const composition = _.find(this.props.Products_Form.compositions, { id: item.composition_id });
+            this.props.Admin_Products_Form.compositionsProduct.length !== 0 &&
+            this.props.Admin_Products_Form.compositionsProduct.map((item, index) => {
+              const composition = _.find(this.props.Admin_Products_Form.compositions, { id: item.composition_id });
 
               return (
                 <div key={item.id} className={'product-select-form-list_item'}>
@@ -490,8 +490,8 @@ export default class Form extends Component {
               />
               <Grid item xs={12} className={'image-attach'}>
                 {
-                  this.props.Products_Form.images.length !== 0 &&
-                  this.props.Products_Form.images.map((file) => {
+                  this.props.Admin_Products_Form.images.length !== 0 &&
+                  this.props.Admin_Products_Form.images.map((file) => {
                     const HOST = process.env.API_HOST;
                     const FILE_URI = file.original_uri.split('/');
                     const FILE_NAME = FILE_URI[FILE_URI.length - 1].slice(-15);
@@ -528,13 +528,13 @@ export default class Form extends Component {
             </Grid>
 
             <Grid item xs={12} className={'admin-form_row'}>
-              <MuiButton isLoading={this.props.Products_Form.isLoading}>
+              <MuiButton isLoading={this.props.Admin_Products_Form.isLoading}>
                 <Button
                   fullWidth
                   variant={'raised'}
                   color={'primary'}
                   className={'admin-form_btn'}
-                  disabled={this.props.Products_Form.isLoading}
+                  disabled={this.props.Admin_Products_Form.isLoading}
                   onClick={() => this.state.pageType === 'add' ? this.handleAddProduct() : this.handleEditProduct()}
                 >
                   {
