@@ -13,6 +13,7 @@ import ProfileApiModule from './Profile';
 import ProductsApiModule from './Products';
 import CompoundsApiModule from './Compounds';
 import ProportionApiModule from './Proportion';
+import NewsApiModule from './News';
 
 class Api {
 
@@ -36,6 +37,7 @@ class Api {
     this.users = new UsersApiModule(this.http);
     this.roles = new RolesApiModule(this.http);
     this.compound = new CompoundsApiModule(this.http);
+    this.news = new NewsApiModule(this.http);
     this.season = new SeasonApiModule(this.http);
     this.brand = new BrandApiModule(this.http);
     this.composition = new CompositionApiModule(this.http);

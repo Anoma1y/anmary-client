@@ -5,6 +5,10 @@ import {
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
+  List as MList,
+  ListSubheader,
+  ListItem,
+  ListItemText,
   CircularProgress,
 } from '@material-ui/core';
 import {
@@ -15,6 +19,7 @@ import {
   resetProductsList,
   resetFilter
 } from './store/actions';
+import FilterSidebar from './components/FilterSidebar';
 
 @connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }), ({
   pullProducts,
@@ -47,25 +52,7 @@ export default class List extends Component {
 
             <Grid item sm={12} xs={3}>
 
-              <div className={'product-filter'}>
-
-                <div className={'product-filter_item'}>
-
-                  <ExpansionPanel>
-                    <ExpansionPanelSummary
-                      expanded
-                      expandIcon={<ExpandMoreIcon />}
-                    >
-                      Категории
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                      Трусики
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-
-                </div>
-
-              </div>
+              <FilterSidebar />
 
             </Grid>
 

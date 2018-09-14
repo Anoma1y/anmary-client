@@ -1,2 +1,2 @@
-export const SET_OPERATION = 'Operations_Single/SET_OPERATION';
-export const RESET = 'Operations_Single/RESET';
+export const SET_NEWS = 'Admin_News_Single/SET_NEWS';
+export const RESET = 'Admin_News_Single/RESET';

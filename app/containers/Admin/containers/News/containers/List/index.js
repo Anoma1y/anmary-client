@@ -57,7 +57,7 @@ export default class List extends Component {
     </TableRow>
   )
 
-  renderTableContent = (permissions) => this.props.Operations_List.news
+  renderTableContent = (permissions) => this.props.Admin_News_List.news
     .map((news) => {
 
       const { id, name, content, created_at } = news;
@@ -124,7 +124,7 @@ export default class List extends Component {
               </TableHead>
 
               <TableBody className={'news-list-table_body'}>
-                {this.props.Operations_List.isLoadingTable ? this.renderLoaderTable() : this.renderTableContent(permissions)}
+                {this.props.Admin_News_List.isLoadingTable ? this.renderLoaderTable() : this.renderTableContent(permissions)}
               </TableBody>
 
             </Table>

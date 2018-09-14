@@ -7,6 +7,7 @@ const TRANSLATE = {
   'brands': 'Бренды',
   'seasons': 'Сезоны',
   'compositions': 'Составы',
+  'news': 'Новости',
   'new': 'Добавление',
   'edit': 'Изменение',
 };

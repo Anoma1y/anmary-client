@@ -1,16 +1,16 @@
 import {
-  SET_OPERATION,
+  SET_NEWS,
   RESET
 } from './types';
 
 const INITIAL_STATE = {
-  operation: {}
+  news: {}
 };
 
 const HANDLERS = {
-  [SET_OPERATION]: (state, { payload }) => ({
+  [SET_NEWS]: (state, { payload }) => ({
     ...state,
-    operation: payload
+    news: payload
   }),
   [RESET]: () => ({
     ...INITIAL_STATE,
