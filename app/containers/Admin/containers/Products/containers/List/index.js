@@ -99,12 +99,14 @@ export default class List extends Component {
   renderTableContent = (permissions) => this.props.Admin_Products_List.products
     .map((product) => {
 
-      const { id, name, category, brand, season, price, discount, total_price, created_at } = product;
+      const { id, name, article, category, brand, season, price, discount, total_price, is_available, created_at } = product;
 
+      const product_name = name.length === 0 ? '-' : name;
       const product_price = new Intl.NumberFormat('ru-RU').format(amountOutput(price).value);
       const product_discount = discount === 0 ? 'Нет' : `${discount} %`;
       const product_total_price = new Intl.NumberFormat('ru-RU').format(amountOutput(total_price).value);
       const product_created = moment(created_at * 1000).format('HH:mm DD/MM/YYYY');
+      const product_available = is_available ? 'Есть' : 'Нет';
 
       return (
         <TableRow key={id} className={'products-list_row'}>
@@ -115,15 +117,15 @@ export default class List extends Component {
               ) : id
             }
           </TableCell>
-          <TableCell className={'products-list-table_item'}>{name}</TableCell>
+          <TableCell className={'products-list-table_item'}>{product_name}</TableCell>
+          <TableCell className={'products-list-table_item'}>{article}</TableCell>
           <TableCell className={'products-list-table_item'}>{category.name}</TableCell>
           <TableCell className={'products-list-table_item'}>{brand.name}</TableCell>
           <TableCell className={'products-list-table_item'}>{season.name}</TableCell>
-
           <TableCell className={'products-list-table_item'}>{product_price}</TableCell>
           <TableCell className={'products-list-table_item'}>{product_discount}</TableCell>
           <TableCell className={'products-list-table_item'}>{product_total_price}</TableCell>
-
+          <TableCell className={'products-list-table_item'}>{product_available}</TableCell>
           <TableCell className={'products-list-table_item'}>{product_created}</TableCell>
 
         </TableRow>
@@ -187,12 +189,14 @@ export default class List extends Component {
                 <TableRow className={'products-list-table_header'}>
                   <TableCell>ID</TableCell>
                   <TableCell>Имя</TableCell>
+                  <TableCell>Артикль</TableCell>
                   <TableCell>Категория</TableCell>
                   <TableCell>Бренд</TableCell>
                   <TableCell>Сезон</TableCell>
                   <TableCell>Цена</TableCell>
                   <TableCell>Скидка</TableCell>
                   <TableCell>Сумма</TableCell>
+                  <TableCell>Наличие</TableCell>
                   <TableCell>Дата</TableCell>
                 </TableRow>
               </TableHead>

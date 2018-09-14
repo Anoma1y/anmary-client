@@ -5,15 +5,39 @@ import {
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
-  ExpansionPanelActions,
+  CircularProgress,
 } from '@material-ui/core';
 import {
   ExpandMore as ExpandMoreIcon
 } from '@material-ui/icons';
+import {
+  pullProducts,
+  resetProductsList,
+  resetFilter
+} from './store/actions';
 
-@connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }))
+@connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }), ({
+  pullProducts,
+  resetProductsList,
+  resetFilter
+}))
 export default class List extends Component {
-  render() {
+
+  state = {
+    ready: false
+  }
+
+  componentDidMount() {
+    this.props.pullProducts()
+      .then(() => this.setState({ ready: true }));
+  }
+
+  componentWillUnmount() {
+    this.props.resetProductsList();
+  }
+  renderLoader = () => <CircularProgress size={24} className={'admin_loading'} />;
+
+  renderContent = () => {
     return (
       <Grid container className={'shop products'}>
 
@@ -54,6 +78,11 @@ export default class List extends Component {
         </Grid>
 
       </Grid>
-    );
+    )
   }
+
+  render() {
+    return this.state.ready ? this.renderContent() : this.renderLoader();
+  }
+
 }

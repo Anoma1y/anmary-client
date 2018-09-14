@@ -73,6 +73,7 @@ export default class Single extends Component {
     const {
       id,
       name,
+      article,
       description,
       category,
       brand,
@@ -83,15 +84,19 @@ export default class Single extends Component {
       discount,
       images,
       total_price,
+      is_available,
       created_at,
       updated_at
     } = this.props.Admin_Products_Single.product;
 
+    const product_name = name.length === 0 ? '-' : name;
     const product_price = new Intl.NumberFormat('ru-RU').format(amountOutput(price).value);
     const product_discount = discount === 0 ? 'Нет' : `${discount} %`;
+    const product_description = description.length === 0 ? '-' : description;
     const product_total_price = new Intl.NumberFormat('ru-RU').format(amountOutput(total_price).value);
     const product_created = moment(created_at * 1000).format('HH:mm DD/MM/YYYY');
     const product_updated = moment(updated_at * 1000).format('HH:mm DD/MM/YYYY');
+    const product_available = is_available ? 'Есть' : 'Нет';
 
     return (
       <Grid item xs={10} className={'product-single'}>
@@ -104,12 +109,20 @@ export default class Single extends Component {
               value={id}
             />
           </Grid>
-          <Grid item xs={5} className={'product-single_item'}>
+          <Grid item xs={3} className={'product-single_item'}>
             <TextField
               fullWidth
               disabled
               label={'Имя'}
-              value={name}
+              value={product_name}
+            />
+          </Grid>
+          <Grid item xs={2} className={'product-single_item'}>
+            <TextField
+              fullWidth
+              disabled
+              label={'Артикль'}
+              value={article}
             />
           </Grid>
           <Grid item xs={2} className={'product-single_item'}>
@@ -144,7 +157,7 @@ export default class Single extends Component {
               disabled
               multiline
               label={'Описание'}
-              value={description}
+              value={product_description}
             />
           </Grid>
         </Grid>
@@ -201,7 +214,7 @@ export default class Single extends Component {
         </Grid>
 
         <Grid container spacing={40} className={'product-single_row'}>
-          <Grid item xs={6} className={'product-single_item'}>
+          <Grid item xs={5} className={'product-single_item'}>
             <TextField
               fullWidth
               disabled
@@ -209,12 +222,20 @@ export default class Single extends Component {
               value={product_created}
             />
           </Grid>
-          <Grid item xs={6} className={'product-single_item'}>
+          <Grid item xs={5} className={'product-single_item'}>
             <TextField
               fullWidth
               disabled
               label={'Дата изменения'}
               value={product_updated}
+            />
+          </Grid>
+          <Grid item xs={2} className={'product-single_item'}>
+            <TextField
+              fullWidth
+              disabled
+              label={'Наличие'}
+              value={product_available}
             />
           </Grid>
         </Grid>

@@ -25,10 +25,12 @@ import {
   TextField,
   FormHelperText,
   FormLabel,
+  Switch,
 } from '@material-ui/core';
 import FieldText from 'containers/Admin/components/FieldText';
 import FieldAmount from 'containers/Admin/components/FieldAmount';
 import FieldSelectNew from 'containers/Admin/components/FieldSelectNew';
+import FieldSwitch from 'containers/Admin/components/FieldSwitch';
 import MuiButton from 'components/MuiButton';
 import Images from './components/Images';
 import {
@@ -133,6 +135,7 @@ export default class Form extends Component {
       ])
         .then(() => {
           this.props.changeReduxForm('Admin_Products_Form', 'discount', '0');
+          this.props.changeReduxForm('Admin_Products_Form', 'is_available', true);
 
           this.setState({ ready: true });
         });
@@ -355,13 +358,25 @@ export default class Form extends Component {
 
             <Grid item xs={12} className={'admin-form_row'} >
               <Grid container spacing={40}>
-                <Grid item xs={12} md={12} className={'admin-form_item'}>
+
+                <Grid item xs={12} md={6} className={'admin-form_item'}>
+                  <Field
+                    name={'article'}
+                    component={FieldText}
+                    label={'Артикль'}
+                    helperText={'Обязательно поле'}
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={6} className={'admin-form_item'}>
                   <Field
                     name={'name'}
                     component={FieldText}
-                    label={'Название'}
+                    label={'Имя'}
+                    helperText={'Необязательно поле'}
                   />
                 </Grid>
+
               </Grid>
             </Grid>
 
@@ -479,6 +494,24 @@ export default class Form extends Component {
                 </Grid>
 
               </Grid>
+            </Grid>
+
+            <Grid item xs={12} className={'admin-form_row'}>
+
+              <Grid container spacing={40}>
+
+                <Grid item xs={12} md={12} className={'admin-form_item admin-form_switch'}>
+
+                  <Field
+                    name={'is_available'}
+                    label={'Наличие товара'}
+                    component={FieldSwitch}
+                  />
+
+                </Grid>
+
+              </Grid>
+
             </Grid>
 
             <Grid item xs={12} className={'admin-form_row admin-form_images-form'} >

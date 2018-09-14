@@ -154,6 +154,11 @@
   &_btn {
     margin-top: 0.5rem !important;
   }
+  &_switch {
+    span {
+      font-family: $font-regular-serif !important;
+    }
+  }
 }
 
 /**

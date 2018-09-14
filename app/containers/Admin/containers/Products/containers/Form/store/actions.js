@@ -244,25 +244,27 @@ export const pullProduct = (product_id) => (dispatch, getState) => new Promise((
       const product = {
         id: data.data.id,
         name: data.data.name,
+        article: data.data.article,
         description: data.data.description,
         category_id: data.data.category.id,
         brand_id: data.data.brand.id,
         season_id: data.data.season.id,
         price: String(amountOutput(data.data.price).value),
         discount: data.data.discount,
+        is_available: data.data.is_available,
       };
 
       const getSizeID = sizes.map((it) => it.id);
       const sizesUsedId = data.data.sizes.map((it) => it.size_id);
       const newSizesAvailable = _.difference(getSizeID, sizesUsedId);
       dispatch(setSizesAvailable(newSizesAvailable));
-      dispatch(setSizesUsed(sizesUsedId))
+      dispatch(setSizesUsed(sizesUsedId));
       const getCompositionID = compositions.map((it) => it.id);
 
       const compositionsUsedId = data.data.compositions.map((it) => it.composition_id);
       const newCompositionsAvailable = _.difference(getCompositionID, compositionsUsedId);
       dispatch(setCompositionsAvailable(newCompositionsAvailable));
-      dispatch(setCompositionsUsed(compositionsUsedId))
+      dispatch(setCompositionsUsed(compositionsUsedId));
 
       dispatch(setSizesProduct(data.data.sizes));
       dispatch(setCompositionsProduct(data.data.compositions));
@@ -399,7 +401,7 @@ export const editProduct = () => (dispatch, getState) => {
       if (data.status !== api.code.OK) return;
 
       dispatch(send({ id: uuid(), status: 'success', title: 'Успешно', message: `Товар ${editProduct.name} был успешно изменен`, timeout: 2500 }));
-      dispatch(replace(`admin/products/${editProduct.id}`));
+      dispatch(replace('/admin/products/'));
     })
     .catch(() => dispatch(send({ id: uuid(), status: 'error', title: 'Ошибка', message: 'Ошибка изменения товара', timeout: 2500 })))
     .finally(() => dispatch(setIsLoading(false)));
