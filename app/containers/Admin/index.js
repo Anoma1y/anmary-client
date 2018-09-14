@@ -13,6 +13,7 @@ import Seasons from './containers/Seasons';
 import Brands from './containers/Brands';
 import Compositions from './containers/Compositions';
 import Products from './containers/Products';
+import News from './containers/News';
 import Navigation from './containers/Navigation';
 import { send } from 'containers/Notification/store/actions';
 import {
@@ -96,6 +97,7 @@ export default class Admin extends Component {
             <Route path={`${this.props.match.url}/seasons`} component={Seasons} />
             <Route path={`${this.props.match.url}/brands`} component={Brands} />
             <Route path={`${this.props.match.url}/products`} component={Products} />
+            <Route path={`${this.props.match.url}/news`} component={News} />
             <Route path={`${this.props.match.url}/compositions`} component={Compositions} />
           </Switch>
         </div>
