@@ -1,1 +1,82 @@
 @import "lib/style/vars.scss";
+
+
+.product-filter-sidebar {
+  width: 100%;
+  &_expansion {
+    box-shadow: none !important;
+  }
+  &-list {
+    &_text {
+      span {
+        font-family: $font-regular-serif;
+        color: $gray-color;
+      }
+    }
+  }
+  &-item {
+    margin-top: 1.5rem;
+    &:first-child {
+      margin-top: 0;
+    }
+    &_head {
+      &__price {
+        padding: 0.85rem 0 0.85rem 1.5rem;
+        cursor: default;
+      }
+      svg {
+        color: darken($gray-color, 20%);
+      }
+    }
+    &_content {
+      padding: 0.5rem 1.5rem !important;
+      &__price {
+        padding: 1rem 1.5rem 0;
+      }
+    }
+    &_header-text {
+      font-family: $font-bold-serif !important;
+      font-size: 1.1rem;
+      color: darken($gray-color, 20%);
+    }
+  }
+  &-price-range {
+    &_item {
+      input {
+        color: $gray-color;
+      }
+    }
+  }
+}
+
+.product-filter-header {
+  &_container {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    align-items: center;
+  }
+  &_item {
+    &__right {
+      text-align: right;
+    }
+  }
+  &-select {
+    font-size: 0.9rem !important;
+    color: darken($gray-color, 20%) !important;
+    &_option {
+      font-size: 0.9rem;
+      color: darken($gray-color, 20%);
+    }
+  }
+  &_count-items {
+    cursor: default;
+    font-family: $font-regular-serif !important;
+    font-size: 0.9rem;
+    color: darken($gray-color, 20%);
+  }
+}
+
+.product-list {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}

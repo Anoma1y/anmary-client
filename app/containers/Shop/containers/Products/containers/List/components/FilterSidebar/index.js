@@ -1,80 +1,143 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  ExpansionPanelActions,
   List,
   ListItem,
   ListItemText,
   TextField,
   Grid
 } from '@material-ui/core';
+import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import NumberFormatNegative from 'containers/Shop/components/NumberFormatNegative';
 
 @connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }))
 export default class FilterSidebar extends Component {
   render() {
     return (
-      <div className={'product-filter'}>
+      <div className={'product-filter-sidebar'}>
 
-        <div className={'product-filter-item'}>
-          <div className={'product-filter-item_head'}>
-            <span className={'product-filter-item_header-text'}>Категории</span>
-          </div>
-          <div className={'product-filter-item_content'}>
-            <List className={'product-filter-list'}>
-              {
-                this.props.Shop_Products.categories.map((category) => (
-                  <ListItem button key={category.id} className={'product-filter-list_item'}>
-                    <ListItemText primary={category.name} className={'product-filter-list_text'} />
-                  </ListItem>
-                ))
-              }
-            </List>
-          </div>
+        <div className={'product-filter-sidebar-item'}>
+          <ExpansionPanel className={'product-filter-sidebar_expansion'}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-filter-sidebar-item_head'}>
+              <span className={'product-filter-sidebar-item_header-text'}>Категория</span>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
+
+              <List className={'product-filter-sidebar-list'}>
+                {
+                  this.props.Shop_Products.categories.map((category) => (
+                    <ListItem button key={category.id} className={'product-filter-sidebar-list_item'}>
+                      <ListItemText primary={category.name} className={'product-filter-sidebar-list_text'} />
+                    </ListItem>
+                  ))
+                }
+              </List>
+
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </div>
 
-        <div className={'product-filter-item'}>
-          <div className={'product-filter-item_head'}>
-            <span className={'product-filter-item_header-text'}>Бренды</span>
-          </div>
-          <div className={'product-filter-item_content'}>
-            <List className={'product-filter-list'}>
-              {
-                this.props.Shop_Products.brands.map((brand) => (
-                  <ListItem button key={brand.id} className={'product-filter-list_item'}>
-                    <ListItemText primary={brand.name} className={'product-filter-list_text'} />
-                  </ListItem>
-                ))
-              }
-            </List>
-          </div>
+        <div className={'product-filter-sidebar-item'}>
+          <ExpansionPanel className={'product-filter-sidebar_expansion'}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-filter-sidebar-item_head'}>
+              <span className={'product-filter-sidebar-item_header-text'}>Бренд</span>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
+
+              <List className={'product-filter-sidebar-list'}>
+                {
+                  this.props.Shop_Products.brands.map((brand) => (
+                    <ListItem button key={brand.id} className={'product-filter-sidebar-list_item'}>
+                      <ListItemText primary={brand.name} className={'product-filter-sidebar-list_text'} />
+                    </ListItem>
+                  ))
+                }
+              </List>
+
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </div>
 
-        <div className={'product-filter-item'}>
-          <div className={'product-filter-item_head'}>
-            <span className={'product-filter-item_header-text'}>Сезоны</span>
-          </div>
-          <div className={'product-filter-item_content'}>
-            <List className={'product-filter-list'}>
-              {
-                this.props.Shop_Products.seasons.map((season) => (
-                  <ListItem button key={season.id} className={'product-filter-list_item'}>
-                    <ListItemText primary={season.name} className={'product-filter-list_text'} />
-                  </ListItem>
-                ))
-              }
-            </List>
-          </div>
+        <div className={'product-filter-sidebar-item'}>
+          <ExpansionPanel className={'product-filter-sidebar_expansion'}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-filter-sidebar-item_head'}>
+              <span className={'product-filter-sidebar-item_header-text'}>Сезон</span>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
+
+              <List className={'product-filter-sidebar-list'}>
+                {
+                  this.props.Shop_Products.seasons.map((season) => (
+                    <ListItem button key={season.id} className={'product-filter-sidebar-list_item'}>
+                      <ListItemText primary={season.name} className={'product-filter-sidebar-list_text'} />
+                    </ListItem>
+                  ))
+                }
+              </List>
+
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </div>
 
-        <div className={'product-filter-item'}>
-          <div className={'product-filter-item_head'}>
-            <span className={'product-filter-item_header-text'}>Цена</span>
+        <div className={'product-filter-sidebar-item'}>
+
+          <ExpansionPanel className={'product-filter-sidebar_expansion'}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-filter-sidebar-item_head'}>
+              <span className={'product-filter-sidebar-item_header-text'}>Размер</span>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
+
+              <List className={'product-filter-sidebar-list'}>
+                {
+                  this.props.Shop_Products.sizes.map((size) => (
+                    <ListItem button key={size.id} className={'product-filter-sidebar-list_item'}>
+                      <ListItemText primary={`${size.ru} (${size.international})`} className={'product-filter-sidebar-list_text'} />
+                    </ListItem>
+                  ))
+                }
+              </List>
+
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+
+        </div>
+
+        <div className={'product-filter-sidebar-item'}>
+
+          <ExpansionPanel className={'product-filter-sidebar_expansion'}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-filter-sidebar-item_head'}>
+              <span className={'product-filter-sidebar-item_header-text'}>Состав</span>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
+
+              <List className={'product-filter-sidebar-list'}>
+                {
+                  this.props.Shop_Products.compositions.map((composition) => (
+                    <ListItem button key={composition.id} className={'product-filter-sidebar-list_item'}>
+                      <ListItemText primary={composition.name} className={'product-filter-sidebar-list_text'} />
+                    </ListItem>
+                  ))
+                }
+              </List>
+
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+
+        </div>
+
+        <div className={'product-filter-sidebar-item'}>
+          <div className={'product-filter-sidebar-item_head product-filter-sidebar-item_head__price'}>
+            <span className={'product-filter-sidebar-item_header-text product-filter-sidebar-item_header-text__price'}>Цена</span>
           </div>
-          <div className={'product-filter-item_content'}>
+          <div className={'product-filter-sidebar-item_content product-filter-sidebar-item_content__price'}>
 
-            <Grid container spacing={40}>
+            <Grid container spacing={40} className={'product-filter-sidebar-price-range'}>
 
-              <Grid item xs={6}>
+              <Grid item xs={6} className={'product-filter-sidebar-price-range_item'}>
                 <TextField
                   fullWidth
                   InputProps={{
@@ -83,7 +146,7 @@ export default class FilterSidebar extends Component {
                   value={this.props.Shop_Products_List.initRangePrice.min}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={6} className={'product-filter-sidebar-price-range_item'}>
                 <TextField
                   fullWidth
                   InputProps={{
