@@ -11,6 +11,7 @@ import Home from './containers/Home';
 import Contact from './containers/Contact';
 import Admin from 'containers/Admin';
 import Auth from 'containers/Auth';
+import NotFound from 'containers/NotFound';
 import './style.scss';
 
 export default class Shop extends Component {
@@ -36,6 +37,7 @@ export default class Shop extends Component {
             <Route path={'/contact'} component={Contact} />
             <Route path={'/admin'} component={Admin} />
             <Route path={'/auth'} component={Auth} />
+            <Route component={NotFound} />
           </Switch>
         </div>
 

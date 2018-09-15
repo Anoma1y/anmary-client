@@ -137,7 +137,7 @@
     .collection_info {
       text-align: center;
       text-transform: uppercase;
-      z-index: 9999;
+      z-index: 999;
       .collection_name {
         margin: 30px;
         padding: 1rem 0;
@@ -219,7 +219,7 @@
       padding: 1rem 0;
       width: 70%;
       background-color: rgba(0, 0, 0, .3);
-      z-index: 9999;
+      z-index: 999;
       h1 {
         font-size: 1.2rem;
         color: $white-color;
@@ -316,7 +316,7 @@
     }
     .catalog_info {
       text-align: center;
-      z-index: 9999;
+      z-index: 999;
       background-color: rgba(0, 0, 0, .5);
       padding: 1.5rem;
       h2 {

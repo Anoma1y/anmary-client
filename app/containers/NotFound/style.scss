@@ -1,0 +1,57 @@
+@import "lib/style/vars.scss";
+
+.error-page {
+  cursor: default;
+  &_number {
+    position: relative;
+  }
+  &_number-four {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    color: $orange-color;
+    transform: perspective(550px) rotateX(70deg) rotateZ(45deg) translateX(120px) translateY(35px);
+    @media only screen and (max-width: 600px) {
+      right: 90px;
+      transform: perspective(550px) rotateX(60deg) rotateZ(45deg) translateX(45px) translateY(-5px);
+    }
+  }
+  h1, h2 {
+    font-family: $font-regular-serif;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    color: $orange-color;
+  }
+  h1 {
+    font-size: 200px;
+    letter-spacing: 30px;
+    @media only screen and (max-width: 600px) {
+      font-size: 100px;
+      letter-spacing: 10px;
+      text-align: left;
+    }
+  }
+  h2 {
+    font-size: 100px;
+    letter-spacing: 10px;
+    @media only screen and (max-width: 600px) {
+      font-size: 50px;
+    }
+  }
+}
+//@media only screen and (max-width: 600px) {
+//  .number-four {
+//    right: 90px;
+//    transform: perspective(550px) rotateX(60deg) rotateZ(45deg) translateX(45px) translateY(-5px);
+//  }
+//  h1 {
+//    font-size: em(100px);
+//    letter-spacing: 10px;
+//    text-align: left;
+//  }
+//  h2 {
+//    font-size: em(50px);
+//  }
+//}

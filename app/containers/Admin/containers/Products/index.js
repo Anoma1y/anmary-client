@@ -17,7 +17,7 @@ import {
 } from './store/actions';
 import './style.scss';
 
-@connect(({ routing }) => ({ routing }), ({
+@connect(null, ({
   pullBrands,
   pullCategories,
   pullSizes,
@@ -32,12 +32,6 @@ export default class Products extends Component {
 
   componentDidMount() {
     this.initialData();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.routing.location.pathname !== prevProps.routing.location.pathname) {
-      this.initialData();
-    }
   }
 
   initialData = () => {

@@ -91,3 +91,167 @@
   padding-top: 1.5rem !important;
   padding-bottom: 1.5rem !important;
 }
+
+
+.product-detail-images {
+  &-thumbnails {
+    width: 100%;
+
+    &_item {
+      margin-top: 1rem;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    &_img {
+      width: 100%;
+      cursor: pointer;
+      object-fit: cover;
+      outline: 2px solid transparent;
+      transition: outline-color 150ms linear;
+      &__selected {
+        outline-color: $lightgray-color;
+      }
+      &:hover {
+        outline-color: $lightgray-color;
+      }
+    }
+  }
+  &-detail {
+    &_img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.product-detail-content {
+  &_item {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    cursor: default;
+    &:first-child {
+      padding-top: 0;
+    }
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+  &_text {
+    margin-left: 0.5rem;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+  &-title {
+    font-family: $font-regular-serif !important;
+    font-size: 1.5rem;
+  }
+  &-price {
+    &_old {
+      font-family: $font-regular-serif !important;
+      font-size: 0.9rem;
+      text-decoration: line-through;
+      &:after {
+        content: ' руб.'
+      }
+    }
+    &_new, &_current {
+      font-family: $font-semibold-serif !important;
+      font-size: 1.5rem;
+      &:after {
+        content: ' руб.'
+      }
+    }
+  }
+  &-available {
+    &_text {
+      font-family: $font-semibold-serif !important;
+      font-size: 0.9rem;
+      color: $green-color;
+      &__not-available {
+        color: $red-color;
+      }
+    }
+  }
+  &-info {
+    display: flex;
+    align-items: center;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    &_title {
+      font-size: 0.8rem;
+      color: darken($gray-color, 10%);
+      font-family: $font-regular-serif;
+      width: 6rem;
+    }
+    &_text {
+      font-size: 1rem;
+      margin-left: 2rem;
+      font-family: $font-regular-serif;
+      color: darken($gray-color, 20%);
+    }
+  }
+  &-size {
+    &_current {
+      font-size: 1.05rem;
+      font-family: $font-semibold-serif !important;
+      margin-left: 0.5rem;
+    }
+    &-headline {
+      font-family: $font-regular-serif !important;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &_info {
+        display: flex;
+      }
+      &_text {
+        width: 6rem;
+        display: flex;
+        color: darken($gray-color, 10%);
+      }
+      &_current {
+        margin-left: 2rem;
+        font-size: 0.9rem;
+      }
+      &_btn {
+        color: $lightblue-color;
+        cursor: pointer;
+        transition: color 200ms linear;
+        &:hover {
+          color: darken($lightblue-color, 15%);
+        }
+      }
+    }
+    &-modal {
+      z-index: 999999 !important;
+      &_wrap {
+        background-color: $white-color;
+      }
+    }
+    &_list {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+    &_item {
+      margin: 0.2rem;
+      color: $white-color !important;
+      background-color: darken($gray-color, 20%) !important;
+      cursor: pointer !important;
+      &:hover {
+        background-color: darken($gray-color, 10%) !important;
+      }
+      &__selected {
+        background-color: $lightblue-color !important;
+      }
+    }
+  }
+  &_expansion {
+    box-shadow: none !important;
+    border-bottom: 1px solid lighten($lightgray-color, 15%);
+    font-family: $font-regular-serif !important;
+  }
+}
