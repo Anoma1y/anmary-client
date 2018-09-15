@@ -47,6 +47,17 @@
       }
     }
   }
+  &-control {
+    padding-top: 2rem !important;
+    &_content {
+      padding: 1rem 1.5rem 0;
+    }
+    &_btn {
+      button {
+        font-size: 0.8rem;
+      }
+    }
+  }
 }
 
 .product-filter-header {

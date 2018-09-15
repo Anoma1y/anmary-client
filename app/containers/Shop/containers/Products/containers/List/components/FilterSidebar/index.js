@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemText,
   TextField,
+  Button,
   Grid
 } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
@@ -158,6 +159,33 @@ export default class FilterSidebar extends Component {
             </Grid>
 
           </div>
+        </div>
+
+        <div className={'product-filter-sidebar-control'}>
+
+          <Grid container spacing={16} className={'product-filter-sidebar-control_content'}>
+
+            <Grid item xs={6} className={'product-filter-sidebar-control_btn'}>
+              <Button
+                fullWidth
+                color={'primary'}
+                variant={'raised'}
+              >
+                Применить
+              </Button>
+            </Grid>
+
+            <Grid item xs={6} className={'product-filter-sidebar-control_btn'}>
+              <Button
+                fullWidth
+                variant={'raised'}
+              >
+                Сбросить
+              </Button>
+            </Grid>
+
+          </Grid>
+
         </div>
 
       </div>
