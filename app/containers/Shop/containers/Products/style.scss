@@ -175,6 +175,12 @@
       }
     }
   }
+  &-composition {
+    &_list {
+      display: flex;
+      flex-direction: column;
+    }
+  }
   &-info {
     display: flex;
     align-items: center;
@@ -241,7 +247,7 @@
       color: $white-color !important;
       background-color: darken($gray-color, 20%) !important;
       cursor: pointer !important;
-      &:hover {
+      &:hover:not(&__selected) {
         background-color: darken($gray-color, 10%) !important;
       }
       &__selected {

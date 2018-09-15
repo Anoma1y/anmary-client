@@ -1,8 +1,31 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
+import { changeMainImage } from '../../store/actions';
 
+@connect(({ Shop_Products_Single }) => ({ Shop_Products_Single }), ({
+  changeMainImage
+}))
 export default class ProductImage extends Component {
+
+  componentDidMount() {
+    const { product } = this.props.Shop_Products_Single;
+
+    this.props.changeMainImage(product.images[0]);
+  }
+
+  handleMainImage = (image) => {
+    const { mainImage } = this.props.Shop_Products_Single;
+
+    if (mainImage.id === image.id) return;
+
+    this.props.changeMainImage(image);
+  };
+
   render() {
+    const { product, mainImage } = this.props.Shop_Products_Single;
+    const HOST = `${process.env.API_HOST}`;
+
     return (
       <Grid container spacing={40} className={'product-detail-images'}>
 
@@ -10,29 +33,21 @@ export default class ProductImage extends Component {
 
           <div className={'product-detail-images-thumbnails_list'}>
 
-            <div className={'product-detail-images-thumbnails_item'}>
-              <img
-                src={'https://i.pinimg.com/736x/af/1c/30/af1c30d6d881d9447dec06149f61d2f9--drawings-of-girls-anime-drawings-girl.jpg'}
-                alt={'Thumbnails'}
-                className={'product-detail-images-thumbnails_img product-detail-images-thumbnails_img__selected'}
-              />
-            </div>
-
-            <div className={'product-detail-images-thumbnails_item'}>
-              <img
-                src={'https://i.pinimg.com/736x/2b/17/10/2b17103c654c4c709ea10868c7d0ea1a--rap-music-thinking-of-you.jpg'}
-                alt={'Thumbnails'}
-                className={'product-detail-images-thumbnails_img'}
-              />
-            </div>
-
-            <div className={'product-detail-images-thumbnails_item'}>
-              <img
-                src={'https://cs8.pikabu.ru/post_img/big/2017/10/11/6/1507710971147487919.jpg'}
-                alt={'Thumbnails'}
-                className={'product-detail-images-thumbnails_img'}
-              />
-            </div>
+            {
+              product.images.map((image) => (
+                <div
+                  key={image.id}
+                  className={'product-detail-images-thumbnails_item'}
+                  onClick={() => this.handleMainImage(image)}
+                >
+                  <img
+                    src={`${HOST}${image.original_uri}`}
+                    alt={'Thumbnails'}
+                    className={`product-detail-images-thumbnails_img${mainImage.id === image.id ? ' product-detail-images-thumbnails_img__selected' : ''}`}
+                  />
+                </div>
+              ))
+            }
 
           </div>
 
@@ -42,7 +57,7 @@ export default class ProductImage extends Component {
           <div className={'product-detail-images-detail_wrapper'}>
             <img
               className={'product-detail-images-detail_img'}
-              src={'https://i.pinimg.com/736x/af/1c/30/af1c30d6d881d9447dec06149f61d2f9--drawings-of-girls-anime-drawings-girl.jpg'}
+              src={`${HOST}${mainImage.original_uri}`}
               alt={'Detail'}
             />
           </div>

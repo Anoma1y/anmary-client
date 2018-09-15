@@ -24,7 +24,7 @@ import './style.scss';
 }))
 export default class Products extends Component {
   state = {
-    ready: true
+    ready: false
   };
 
   componentDidMount() {

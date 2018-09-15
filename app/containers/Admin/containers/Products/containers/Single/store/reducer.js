@@ -4,7 +4,8 @@ import {
 } from './types';
 
 const INITIAL_STATE = {
-  product: {}
+  product: {},
+  mainImage: {}
 };
 
 const HANDLERS = {

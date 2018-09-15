@@ -2,20 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Grid,
-  ExpansionPanelActions,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
   ExpansionPanel,
-  Button,
-  Select,
   Modal,
-
-  MenuItem,
-  Chip, List, ListItem, ListItemText,
+  Button,
+  Chip,
 } from '@material-ui/core';
-import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
+import {
+  ExpandMore as ExpandMoreIcon,
+  ShoppingCart as ShoppingCartIcon
+} from '@material-ui/icons';
+import { changeCurrentSize } from '../../store/actions';
+import { amountOutput } from 'lib/amount';
+import _ from 'lodash';
 
-@connect(({ Shop_Products }) => ({ Shop_Products }))
+@connect(({ Shop_Products, Shop_Products_Single }) => ({ Shop_Products, Shop_Products_Single }), ({
+  changeCurrentSize
+}))
 export default class ProductDetail extends Component {
 
   state = {
@@ -31,6 +35,9 @@ export default class ProductDetail extends Component {
   };
 
   render() {
+    const { compositions, sizes } = this.props.Shop_Products;
+    const { product, currentSize } = this.props.Shop_Products_Single;
+
     return (
       <Grid container spacing={40} className={'product-detail-content'}>
 
@@ -39,8 +46,8 @@ export default class ProductDetail extends Component {
           <div className={'product-detail-content_item'}>
 
             <div className={'product-detail-content-title'}>
-              <span className={'product-detail-content_text product-detail-content-title_name'}>Трусики</span>
-              <span className={'product-detail-content_text product-detail-content-title_article'}>D47-557</span>
+              {product.name.length !== 0 && <span className={'product-detail-content_text product-detail-content-title_name'}>{product.name}</span>}
+              <span className={'product-detail-content_text product-detail-content-title_article'}>{product.article}</span>
             </div>
 
           </div>
@@ -49,14 +56,18 @@ export default class ProductDetail extends Component {
 
             <div className={'product-detail-content-price'}>
 
-              <div className={'product-detail-content-price_sale'}>
-                <span className={'product-detail-content_text product-detail-content-price_old'}>8000</span>
-                <span className={'product-detail-content_text product-detail-content-price_new'}>7000</span>
-              </div>
-
-              {/* <span className={'product-detail-content-price_current'}> */}
-              {/* 8000 */}
-              {/* </span> */}
+              {
+                product.discount !== 0 ? (
+                  <div className={'product-detail-content-price_sale'}>
+                    <span className={'product-detail-content_text product-detail-content-price_old'}>{amountOutput(product.price).value}</span>
+                    <span className={'product-detail-content_text product-detail-content-price_new'}>{amountOutput(product.total_price).value}</span>
+                  </div>
+                ) : (
+                  <span className={'product-detail-content-price_current'}>
+                    {amountOutput(product.total_price).value}
+                  </span>
+                )
+              }
 
             </div>
           </div>
@@ -64,9 +75,18 @@ export default class ProductDetail extends Component {
           <div className={'product-detail-content_item'}>
 
             <div className={'product-detail-content-available'}>
-              <span className={'product-detail-content-available_text product-detail-content-available_text__not-available'}>
-                Нет в наличии
-              </span>
+              {
+                product.is_available ? (
+                  <span className={'product-detail-content-available_text'}>
+                    В наличии
+                  </span>
+                ) : (
+                  <span className={'product-detail-content-available_text product-detail-content-available_text__not-available'}>
+                    Нет в наличии
+                  </span>
+                )
+              }
+
             </div>
 
           </div>
@@ -80,7 +100,7 @@ export default class ProductDetail extends Component {
               </div>
 
               <div className={'product-detail-content-info_text'}>
-                Панцу
+                {product.category.name}
               </div>
 
             </div>
@@ -92,7 +112,7 @@ export default class ProductDetail extends Component {
               </div>
 
               <div className={'product-detail-content-info_text'}>
-                Хохлы
+                {product.brand.name}
               </div>
 
             </div>
@@ -104,7 +124,7 @@ export default class ProductDetail extends Component {
               </div>
 
               <div className={'product-detail-content-info_text'}>
-                Трое в лодке, не считая хохла
+                {product.season.name}
               </div>
 
             </div>
@@ -118,7 +138,11 @@ export default class ProductDetail extends Component {
               <div className={'product-detail-content-size-headline'}>
                 <div className={'product-detail-content-size-headline_info'}>
                   <span className={'product-detail-content-size-headline_text'}>Размер:</span>
-                  <span className={'product-detail-content-size-headline_current'}>60 (4XL)</span>
+                  <span className={'product-detail-content-size-headline_current'}>
+                    {
+                      currentSize && `${currentSize.ru} (${currentSize.international})`
+                    }
+                  </span>
                 </div>
                 <div className={'product-detail-content-size-headline_btn'}>
                   <span
@@ -140,36 +164,42 @@ export default class ProductDetail extends Component {
               </div>
 
               <div className={'product-detail-content-size_list'}>
-
                 {
-                  this.props.Shop_Products.sizes.map((size) =>
-                    (<Chip
-                      className={'product-detail-content-size_item'}
-                      key={size.id}
-                      label={`${size.ru} (${size.international})`}
-                    />))
-                }
+                  product.sizes.map((size) => {
+                    const product_size = _.find(sizes, { id: size.size_id });
 
+                    return (
+                      <Chip
+                        className={`product-detail-content-size_item${currentSize && (currentSize.id === product_size.id) ? ' product-detail-content-size_item__selected' : ''}`}
+                        key={product_size.id}
+                        onClick={() => this.props.changeCurrentSize(product_size)}
+                        label={`${product_size.ru} (${product_size.international})`}
+                      />
+                    );
+                  })
+                }
               </div>
 
             </div>
 
           </div>
 
-          <div className={'product-detail-content_item'}>
+          {
+            product.description.length !== 0 && (
+              <div className={'product-detail-content_item'}>
 
-            <ExpansionPanel className={'product-detail-content_expansion'}>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-detail-content-item_head'}>
-                <span className={'product-detail-content-headline'}>Описание</span>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails className={'product-detail-content-item_content'}>
+                <ExpansionPanel className={'product-detail-content_expansion'}>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-detail-content-item_head'}>
+                    <span className={'product-detail-content-headline'}>Описание</span>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails className={'product-detail-content-item_content'}>
+                    {product.description}
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
 
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet assumenda atque, autem commodi cupiditate dolorem doloremque doloribus dolorum eaque et fuga illo in incidunt laboriosam natus nemo, nulla numquam officia officiis perspiciatis placeat quidem quis quod reiciendis reprehenderit repudiandae soluta sunt, tempore unde veniam! Corporis culpa eum ipsum similique sit.
-
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-
-          </div>
+              </div>
+            )
+          }
 
           <div className={'product-detail-content_item'}>
 
@@ -178,17 +208,22 @@ export default class ProductDetail extends Component {
                 <span className={'product-detail-content-headline'}>Состав</span>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails className={'product-detail-content-item_content'}>
-
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet assumenda atque, autem commodi cupiditate dolorem doloremque doloribus dolorum eaque et fuga illo in incidunt laboriosam natus nemo, nulla numquam officia officiis perspiciatis placeat quidem quis quod reiciendis reprehenderit repudiandae soluta sunt, tempore unde veniam! Corporis culpa eum ipsum similique sit.
-
+                <div className={'product-detail-content-composition_list'}>
+                  {
+                    product.compositions.map((composition) => {
+                      return (
+                        <span
+                          key={composition.id}
+                          className={'product-detail-content-composition_item'}
+                        >
+                          {_.find(compositions, { id: composition.composition_id }).name} - {composition.value}%
+                        </span>
+                      );
+                    })
+                  }
+                </div>
               </ExpansionPanelDetails>
             </ExpansionPanel>
-
-          </div>
-
-          <div className={'product-detail-content_item'}>
-
-
 
           </div>
 

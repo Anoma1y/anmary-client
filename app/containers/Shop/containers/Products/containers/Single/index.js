@@ -1,23 +1,35 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { CircularProgress, Grid } from '@material-ui/core';
 import ProductImage from './components/ProductImage';
 import ProductDetail from './components/ProductDetail';
+import {
+  pullProduct,
+  resetProductSingle
+} from './store/actions';
 
+@connect(null, ({
+  pullProduct,
+  resetProductSingle
+}))
 export default class Single extends Component {
 
   state = {
-    ready: true // todo: true -> false
-  }
+    ready: false
+  };
 
   componentDidMount() {
+    const { id } = this.props.match.params;
 
+    this.props.pullProduct(id)
+      .then(() => this.setState({ ready: true }));
   }
 
   componentWillUnmount() {
-
+    this.props.resetProductSingle();
   }
 
-  renderLoader = () => <CircularProgress size={24} className={'admin_loading'} />;
+  renderLoader = () => <CircularProgress size={24} className={'shop_loading'} />;
 
   renderContent = () => (
 
@@ -40,7 +52,7 @@ export default class Single extends Component {
       </Grid>
 
     </Grid>
-  )
+  );
 
   render() {
     return this.state.ready ? this.renderContent() : this.renderLoader();
