@@ -1,16 +1,37 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Carousel from 'nuka-carousel';
 import {
   Grid,
-  Button
 } from '@material-ui/core';
 import BlockInfo from './components/BlockInfo';
+import ProductList from './components/ProductList';
 import {
-  Favorite as FavoriteIcon,
-  ShoppingCart as ShoppingCartIcon
-} from '@material-ui/icons';
+  pullProducts,
+  resetProductsList
+} from './store/actions';
 
+@connect(null, ({
+  pullProducts,
+  resetProductsList
+}))
 export default class Home extends Component {
+
+  state = {
+    readyProductList: false
+  };
+
+  componentDidMount() {
+    this.props.pullProducts()
+      .then(() => this.setState({ readyProductList: true }));
+  }
+
+  componentWillUnmount() {
+    this.props.resetProductsList();
+  }
+
+  renderLoading = () => null;
+
   render() {
     return (
       <Grid container>
@@ -47,143 +68,9 @@ export default class Home extends Component {
 
         <Grid item xs={12} className={'container'}>
 
-          <Grid container className={'new-products'}>
-            <Grid item xs={12} className={'new-shop_products_list'}>
-
-              <Grid container spacing={24}>
-
-                <Grid item sm={6} md={4} lg={3}>
-                  <div className={'product-card'}>
-                    <div className={'product-card_img'}>
-                      <img src={'https://qfos.ru/wp-content/uploads/2018/04/Aog6.jpg'} alt={'IMG-PRODUCT'} />
-
-                      <a href={'#'} className={'product-card_learn-more'}>
-                        Подробнее
-                      </a>
-                    </div>
-
-                    <div className={'product-card-content'}>
-                      <div className={'product-card-info'}>
-                        <a href={'#'} className={'product-card_name'}>
-                          Converse All Star Hi Plimsolls
-                        </a>
-
-                        <div className={'product-card_price'}>
-                          <span className={'product-card_price__old'}>4 275 руб.</span>
-                          <span className={'product-card_price__new'}>4 750 руб.</span>
-                        </div>
-
-                        <div className={'product-card_discount'}>
-                          -10%
-                        </div>
-
-                      </div>
-                      <div className={'product-card_favorite'}>
-                        <FavoriteIcon />
-                      </div>
-                    </div>
-                  </div>
-                </Grid>
-                <Grid item sm={6} md={4} lg={3}>
-                  <div className={'product-card'}>
-                    <div className={'product-card_img'}>
-                      <img src={'https://qfos.ru/wp-content/uploads/2018/04/Aog6.jpg'} alt={'IMG-PRODUCT'} />
-
-                      <a href={'#'} className={'product-card_learn-more'}>
-                        Подробнее
-                      </a>
-                    </div>
-
-                    <div className={'product-card-content'}>
-                      <div className={'product-card-info'}>
-                        <a href={'#'} className={'product-card_name'}>
-                          Converse All Star Hi Plimsolls
-                        </a>
-
-                        <div className={'product-card_price'}>
-                          <span className={'product-card_price__old'}>4 275 руб.</span>
-                          <span className={'product-card_price__new'}>4 750 руб.</span>
-                        </div>
-
-                        <div className={'product-card_discount'}>
-                          -10%
-                        </div>
-
-                      </div>
-                      <div className={'product-card_favorite'}>
-                        <FavoriteIcon />
-                      </div>
-                    </div>
-                  </div>
-                </Grid>
-                <Grid item sm={6} md={4} lg={3}>
-                  <div className={'product-card'}>
-                    <div className={'product-card_img'}>
-                      <img src={'https://qfos.ru/wp-content/uploads/2018/04/Aog6.jpg'} alt={'IMG-PRODUCT'} />
-
-                      <a href={'#'} className={'product-card_learn-more'}>
-                        Подробнее
-                      </a>
-                    </div>
-
-                    <div className={'product-card-content'}>
-                      <div className={'product-card-info'}>
-                        <a href={'#'} className={'product-card_name'}>
-                          Converse All Star Hi Plimsolls
-                        </a>
-
-                        <div className={'product-card_price'}>
-                          <span className={'product-card_price__old'}>4 275 руб.</span>
-                          <span className={'product-card_price__new'}>4 750 руб.</span>
-                        </div>
-
-                        <div className={'product-card_discount'}>
-                          -10%
-                        </div>
-
-                      </div>
-                      <div className={'product-card_favorite'}>
-                        <FavoriteIcon />
-                      </div>
-                    </div>
-                  </div>
-                </Grid>
-                <Grid item sm={6} md={4} lg={3}>
-                  <div className={'product-card'}>
-                    <div className={'product-card_img'}>
-                      <img src={'https://qfos.ru/wp-content/uploads/2018/04/Aog6.jpg'} alt={'IMG-PRODUCT'} />
-
-                      <a href={'#'} className={'product-card_learn-more'}>
-                        Подробнее
-                      </a>
-                    </div>
-
-                    <div className={'product-card-content'}>
-                      <div className={'product-card-info'}>
-                        <a href={'#'} className={'product-card_name'}>
-                          Converse All Star Hi Plimsolls
-                        </a>
-
-                        <div className={'product-card_price'}>
-                          <span className={'product-card_price__old'}>4 275 руб.</span>
-                          <span className={'product-card_price__new'}>4 750 руб.</span>
-                        </div>
-
-                        <div className={'product-card_discount'}>
-                          -10%
-                        </div>
-
-                      </div>
-                      <div className={'product-card_favorite'}>
-                        <FavoriteIcon />
-                      </div>
-                    </div>
-                  </div>
-                </Grid>
-              </Grid>
-
-            </Grid>
-          </Grid>
+          {
+            this.state.readyProductList ? <ProductList /> : this.renderLoading()
+          }
 
         </Grid>
 

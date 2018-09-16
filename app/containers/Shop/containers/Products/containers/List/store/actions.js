@@ -6,10 +6,15 @@ import {
   CHANGE_PAGE,
   CHANGE_NUM_ON_PAGE,
   SET_TOTAL_RECORDS,
+  CHANGE_FILTER_CATEGORY_ID,
+  CHANGE_FILTER_BRAND_ID,
+  CHANGE_FILTER_SEASON_ID,
+  CHANGE_FILTER_SIZE_ID,
+  CHANGE_FILTER_COMPOSITION_ID,
+  CHANGE_FILTER_PRICE,
   RESET,
   RESET_FILTER,
 } from './types';
-
 import { api } from 'lib/api';
 import { reset as resetReduxForm } from 'redux-form';
 import { send } from 'containers/Notification/store/actions';
@@ -21,7 +26,6 @@ import {
   removeEmpty,
   serializeParams
 } from 'lib/utils';
-import moment from 'moment';
 import uuid from 'uuid/v1';
 import _ from 'lodash';
 
@@ -48,6 +52,39 @@ export const changeNumOnPage = (value) => ({
 export const setTotalRecords = (value) => ({
   type: SET_TOTAL_RECORDS,
   payload: value,
+});
+
+export const changeFilterCategoryId = (value) => ({
+  type: CHANGE_FILTER_CATEGORY_ID,
+  payload: value,
+});
+
+export const changeFilterBrandId = (value) => ({
+  type: CHANGE_FILTER_BRAND_ID,
+  payload: value,
+});
+
+export const changeFilterSeasonId = (value) => ({
+  type: CHANGE_FILTER_SEASON_ID,
+  payload: value,
+});
+
+export const changeFilterSizeId = (value) => ({
+  type: CHANGE_FILTER_SIZE_ID,
+  payload: value,
+});
+
+export const changeFilterCompositionId = (value) => ({
+  type: CHANGE_FILTER_COMPOSITION_ID,
+  payload: value,
+});
+
+export const changeFilterPrice = (key, value) => ({
+  type: CHANGE_FILTER_PRICE,
+  payload: {
+    key,
+    value
+  },
 });
 
 export const setIsLoading = (value) => ({

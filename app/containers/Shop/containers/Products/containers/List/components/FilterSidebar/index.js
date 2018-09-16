@@ -4,7 +4,6 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
-  ExpansionPanelActions,
   List,
   ListItem,
   ListItemText,
