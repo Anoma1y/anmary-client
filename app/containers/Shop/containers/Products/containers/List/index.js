@@ -47,48 +47,48 @@ export default class List extends Component {
   renderLoader = () => <CircularProgress size={24} className={'admin_loading'} />;
 
   renderContent = () => (
-      <Grid item xs={12} className={'container'}>
+    <Grid item xs={12} className={'container'}>
 
-        <Grid container spacing={40}>
+      <Grid container spacing={40}>
 
-          <Grid item xs={12} sm={12} md={3} lg={3}>
+        <Grid item xs={12} sm={12} md={3} lg={3}>
 
-            <FilterSidebar />
+          <FilterSidebar />
 
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={9} lg={9}>
+
+          <Grid container>
+            <Grid item xs={12}>
+
+              <FilterHeader />
+
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} sm={12} md={9} lg={9}>
+          <Grid container>
+            <Grid item xs={12}>
 
-            <Grid container>
-              <Grid item xs={12}>
+              <ProductList />
 
-                <FilterHeader />
-
-              </Grid>
             </Grid>
+          </Grid>
 
-            <Grid container>
-              <Grid item xs={12}>
+          <Grid container>
+            <Grid item xs={12}>
 
-                <ProductList />
+              <Pagination />
 
-              </Grid>
             </Grid>
-
-            <Grid container>
-              <Grid item xs={12}>
-
-                <Pagination />
-
-              </Grid>
-            </Grid>
-
           </Grid>
 
         </Grid>
 
       </Grid>
-    )
+
+    </Grid>
+  )
 
   render() {
     return this.state.ready ? this.renderContent() : this.renderLoader();

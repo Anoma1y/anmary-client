@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   Grid,
   Select,
 } from '@material-ui/core';
 
+@connect(({ Shop_Products_List }) => ({ Shop_Products_List }))
 export default class FilterHeader extends Component {
-
   render() {
+    const {
+      page,
+      num_on_page,
+      total_records,
+      products: {
+        length: items_on_page
+      }
+    } = this.props.Shop_Products_List;
+    const currentPage = page + 1;
+    const fromPage = (num_on_page * (currentPage - 1)) + 1;
+    const toPage = (fromPage - 1) + items_on_page;
+
     return (
       <div className={'product-filter-header'}>
 
@@ -16,20 +29,20 @@ export default class FilterHeader extends Component {
 
             <Select
               autoWidth
-              value={10}
+              value={1}
               native
               className={'product-filter-header-select product-filter-header_sort'}
             >
-              <option className={'product-filter-header-select_option'} value={10}>По новизне</option>
-              <option className={'product-filter-header-select_option'} value={20}>По скидкам</option>
-              <option className={'product-filter-header-select_option'} value={30}>По убыванию цены</option>
-              <option className={'product-filter-header-select_option'} value={40}>По возрастанию цены</option>
+              <option className={'product-filter-header-select_option'} value={1}>По новизне</option>
+              <option className={'product-filter-header-select_option'} value={2}>По скидкам</option>
+              <option className={'product-filter-header-select_option'} value={3}>По убыванию цены</option>
+              <option className={'product-filter-header-select_option'} value={4}>По возрастанию цены</option>
             </Select>
 
           </Grid>
 
           <Grid item xs={4} className={'product-filter-header_item product-filter-header_item__right'}>
-            <span className={'product-filter-header_count-items'}>Показано с 1 по 10 из 20 </span>
+            <span className={'product-filter-header_count-items'}>Показано с {fromPage} по {toPage} из {total_records}</span>
           </Grid>
 
         </Grid>

@@ -441,10 +441,18 @@
     font-family: $font-semibold-serif !important;
     font-size: 1.1rem;
     cursor: default;
+    &__old, &__new, &__current {
+      &:after {
+        content: ' руб.'
+      }
+    }
     &__old {
       font-size: 0.8rem;
       font-family: $font-semibold-serif !important;
       text-decoration: line-through;
+      &:after {
+        content: ' руб.'
+      }
     }
     &__new {
       margin-left: 0.7rem;

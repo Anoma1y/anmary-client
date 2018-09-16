@@ -14,11 +14,12 @@ import Auth from 'containers/Auth';
 import NotFound from 'containers/NotFound';
 import './style.scss';
 
+// todo добавить кэш для пула (категорий, размеров и т.п.) в списке продуктов или сделать пул тут
 export default class Shop extends Component {
 
   state = {
     ready: true
-  }
+  };
 
   renderLoader = () => <CircularProgress size={70} className={'page_loading'} />;
 

@@ -6,12 +6,10 @@ import {
   ExpansionPanelSummary,
   ExpansionPanel,
   Modal,
-  Button,
   Chip,
 } from '@material-ui/core';
 import {
   ExpandMore as ExpandMoreIcon,
-  ShoppingCart as ShoppingCartIcon
 } from '@material-ui/icons';
 import { changeCurrentSize } from '../../store/actions';
 import { amountOutput } from 'lib/amount';
@@ -37,6 +35,7 @@ export default class ProductDetail extends Component {
   render() {
     const { compositions, sizes } = this.props.Shop_Products;
     const { product, currentSize } = this.props.Shop_Products_Single;
+    const product_sizes = _.sortBy(product.sizes, [(o) => o.size_id]);
 
     return (
       <Grid container spacing={40} className={'product-detail-content'}>
@@ -165,15 +164,15 @@ export default class ProductDetail extends Component {
 
               <div className={'product-detail-content-size_list'}>
                 {
-                  product.sizes.map((size) => {
-                    const product_size = _.find(sizes, { id: size.size_id });
+                  product_sizes.map((size) => {
+                    const findSize = _.find(sizes, { id: size.size_id });
 
                     return (
                       <Chip
-                        className={`product-detail-content-size_item${currentSize && (currentSize.id === product_size.id) ? ' product-detail-content-size_item__selected' : ''}`}
-                        key={product_size.id}
-                        onClick={() => this.props.changeCurrentSize(product_size)}
-                        label={`${product_size.ru} (${product_size.international})`}
+                        className={`product-detail-content-size_item${currentSize && (currentSize.id === findSize.id) ? ' product-detail-content-size_item__selected' : ''}`}
+                        key={findSize.id}
+                        onClick={() => this.props.changeCurrentSize(findSize)}
+                        label={`${findSize.ru} (${findSize.international})`}
                       />
                     );
                   })

@@ -12,7 +12,7 @@ import {
 
 const INITIAL_FILTER = {
   page: 0,
-  num_on_page: 10,
+  num_on_page: 9,
   total_records: 0,
 };
 
