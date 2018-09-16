@@ -189,7 +189,7 @@ export default class ProductDetail extends Component {
 
                 <ExpansionPanel className={'product-detail-content_expansion'}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-detail-content-item_head'}>
-                    <span className={'product-detail-content-headline'}>Описание</span>
+                    <span className={'product-detail-content_expansion-title'}>Описание</span>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails className={'product-detail-content-item_content'}>
                     {product.description}
@@ -204,7 +204,7 @@ export default class ProductDetail extends Component {
 
             <ExpansionPanel className={'product-detail-content_expansion'}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-detail-content-item_head'}>
-                <span className={'product-detail-content-headline'}>Состав</span>
+                <span className={'product-detail-content_expansion-title'}>Состав</span>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails className={'product-detail-content-item_content'}>
                 <div className={'product-detail-content-composition_list'}>

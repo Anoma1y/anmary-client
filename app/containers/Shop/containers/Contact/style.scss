@@ -24,8 +24,8 @@
   &-form {
     &_header {
       text-align: center;
-      font-size: 1.5rem;
-      font-family: $font-regular-serif;
+      font-size: 1.3rem;
+      font-family: $font-medium-serif;
       color: darken($gray-color, 20%);
       cursor: default;
     }
@@ -34,7 +34,9 @@
       margin-bottom: 1rem;
       input, textarea, label {
         color: darken($gray-color, 20%);
+
         font-family: $font-regular-serif !important;
+        font-size: 0.9rem;
         @include placeholder {
           color: darken($gray-color, 20%);
           font-size: 0.9rem;
@@ -89,21 +91,22 @@
       }
     }
     svg {
+      font-size: 1.1rem;
       color: darken($gray-color, 20%);
     }
     &_header {
       margin-left: 1rem;
       font-family: $font-regular-serif;
-      font-size: 1.1rem;
-      color: darken($gray-color, 20%);
+      font-size: 0.8rem;
+      color: $gray-color;
     }
     &_content {
       margin-top: 1rem;
     }
     &_text {
-      font-family: $font-regular-serif !important;
+      font-family: $font-light-serif !important;
       font-size: 1rem;
-      color: darken($gray-color, 30%);
+      color: darken($gray-color, 40%);
       &__selected {
         color: $lightblue-color;
       }
