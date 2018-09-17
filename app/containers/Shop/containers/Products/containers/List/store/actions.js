@@ -1,6 +1,6 @@
 import {
   SET_PRODUCTS,
-  SET_INIT_RANGE_PRICE,
+  SET_FILTER_PRICE,
   SET_IS_LOADING,
   SET_IS_LOADING_TABLE,
   CHANGE_PAGE,
@@ -39,8 +39,8 @@ export const changePage = (value) => ({
   payload: value,
 });
 
-export const setInitRangePrice = (value) => ({
-  type: SET_INIT_RANGE_PRICE,
+export const setFilterPrice = (value) => ({
+  type: SET_FILTER_PRICE,
   payload: value,
 });
 
@@ -117,12 +117,12 @@ export const pullProducts = () => (dispatch, getState) => new Promise((resolve, 
         min_price
       } = data.data;
 
-      const initRangePrice = {
+      const initFilterPrice = {
         max: amountOutput(max_price).value,
         min: amountOutput(min_price).value
       };
 
-      dispatch(setInitRangePrice(initRangePrice));
+      dispatch(setFilterPrice(initFilterPrice));
 
       dispatch(setProducts(records));
       dispatch(setTotalRecords(total_records));

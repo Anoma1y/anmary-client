@@ -1,6 +1,6 @@
 import {
   SET_PRODUCTS,
-  SET_INIT_RANGE_PRICE,
+  SET_FILTER_PRICE,
   SET_IS_LOADING,
   SET_IS_LOADING_TABLE,
   CHANGE_PAGE,
@@ -33,10 +33,6 @@ const INITIAL_FILTER = {
 
 const INITIAL_STATE = {
   products: [],
-  initRangePrice: {
-    min: 0,
-    max: 0
-  },
   isLoading: false,
   isLoadingTable: false,
   ...INITIAL_FILTER
@@ -51,9 +47,9 @@ const HANDLERS = {
     ...state,
     page: payload
   }),
-  [SET_INIT_RANGE_PRICE]: (state, { payload }) => ({
+  [SET_FILTER_PRICE]: (state, { payload }) => ({
     ...state,
-    initRangePrice: payload
+    filter_price: payload
   }),
   [CHANGE_NUM_ON_PAGE]: (state, { payload }) => ({
     ...state,

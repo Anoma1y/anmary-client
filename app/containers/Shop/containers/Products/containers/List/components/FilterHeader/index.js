@@ -33,10 +33,11 @@ export default class FilterHeader extends Component {
               native
               className={'product-filter-header-select product-filter-header_sort'}
             >
-              <option className={'product-filter-header-select_option'} value={1}>По новизне</option>
-              <option className={'product-filter-header-select_option'} value={2}>По скидкам</option>
-              <option className={'product-filter-header-select_option'} value={3}>По убыванию цены</option>
-              <option className={'product-filter-header-select_option'} value={4}>По возрастанию цены</option>
+              <option className={'product-filter-header-select_option'} value={1}>По дате (сначало новые)</option>
+              <option className={'product-filter-header-select_option'} value={2}>По дате (сначало старые)</option>
+              <option className={'product-filter-header-select_option'} value={3}>По скидкам</option>
+              <option className={'product-filter-header-select_option'} value={4}>По цене (по убыванию)</option>
+              <option className={'product-filter-header-select_option'} value={5}>По цене (по возрастанию)</option>
             </Select>
 
           </Grid>

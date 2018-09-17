@@ -143,7 +143,7 @@ export default class FilterSidebar extends Component {
                   InputProps={{
                     inputComponent: NumberFormatNegative,
                   }}
-                  value={this.props.Shop_Products_List.initRangePrice.min}
+                  value={this.props.Shop_Products_List.filter_price.min}
                 />
               </Grid>
               <Grid item xs={6} className={'product-filter-sidebar-price-range_item'}>
@@ -152,7 +152,7 @@ export default class FilterSidebar extends Component {
                   InputProps={{
                     inputComponent: NumberFormatNegative,
                   }}
-                  value={this.props.Shop_Products_List.initRangePrice.max}
+                  value={this.props.Shop_Products_List.filter_price.max}
                 />
               </Grid>
             </Grid>

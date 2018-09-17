@@ -2,18 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Grid,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
-  List as MList,
-  ListSubheader,
-  ListItem,
-  ListItemText,
   CircularProgress,
 } from '@material-ui/core';
-import {
-  ExpandMore as ExpandMoreIcon
-} from '@material-ui/icons';
 import {
   pullProducts,
   resetProductsList,
@@ -33,7 +23,7 @@ export default class List extends Component {
 
   state = {
     ready: false
-  }
+  };
 
   componentDidMount() {
     this.props.pullProducts()
