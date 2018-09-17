@@ -12,6 +12,7 @@ import {
   CHANGE_FILTER_SIZE_ID,
   CHANGE_FILTER_COMPOSITION_ID,
   CHANGE_FILTER_PRICE,
+  CHANGE_FILTER_SORT,
   RESET,
   RESET_FILTER,
 } from './types';
@@ -28,7 +29,8 @@ const INITIAL_FILTER = {
   filter_price: {
     min: 0,
     max: 0
-  }
+  },
+  sorting: 1,
 };
 
 const INITIAL_STATE = {
@@ -46,6 +48,10 @@ const HANDLERS = {
   [CHANGE_PAGE]: (state, { payload }) => ({
     ...state,
     page: payload
+  }),
+  [CHANGE_FILTER_SORT]: (state, { payload }) => ({
+    ...state,
+    sorting: payload
   }),
   [SET_FILTER_PRICE]: (state, { payload }) => ({
     ...state,

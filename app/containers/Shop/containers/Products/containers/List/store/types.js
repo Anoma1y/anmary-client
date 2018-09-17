@@ -10,6 +10,9 @@ export const CHANGE_FILTER_SEASON_ID = 'Shop_Products_List/CHANGE_FILTER_SEASON_
 export const CHANGE_FILTER_SIZE_ID = 'Shop_Products_List/CHANGE_FILTER_SIZE_ID';
 export const CHANGE_FILTER_COMPOSITION_ID = 'Shop_Products_List/CHANGE_FILTER_COMPOSITION_ID';
 export const CHANGE_FILTER_PRICE = 'Shop_Products_List/CHANGE_FILTER_PRICE';
+
+export const CHANGE_FILTER_SORT = 'Shop_Products_List/CHANGE_FILTER_SORT';
+
 export const SET_TOTAL_RECORDS = 'Shop_Products_List/SET_TOTAL_RECORDS';
 export const RESET = 'Shop_Products_List/RESET';
 export const RESET_FILTER = 'Shop_Products_List/RESET_FILTER';

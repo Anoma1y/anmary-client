@@ -4,9 +4,15 @@ import {
   Grid,
   Select,
 } from '@material-ui/core';
+import { changeFilterSort } from '../../store/actions';
 
-@connect(({ Shop_Products_List }) => ({ Shop_Products_List }))
+@connect(({ Shop_Products_List }) => ({ Shop_Products_List }), ({
+  changeFilterSort
+}))
 export default class FilterHeader extends Component {
+
+  handleSortingChange = (e) => this.props.changeFilterSort(e.target.value);
+
   render() {
     const {
       page,
@@ -29,8 +35,9 @@ export default class FilterHeader extends Component {
 
             <Select
               autoWidth
-              value={1}
+              value={this.props.Shop_Products_List.sorting}
               native
+              onChange={this.handleSortingChange}
               className={'product-filter-header-select product-filter-header_sort'}
             >
               <option className={'product-filter-header-select_option'} value={1}>По дате (сначало новые)</option>

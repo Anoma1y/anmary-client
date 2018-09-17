@@ -13,9 +13,34 @@ import {
 } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import NumberFormatNegative from 'containers/Shop/components/NumberFormatNegative';
+import {
+  changeFilterPrice
+} from '../../store/actions';
+import _ from 'lodash';
 
-@connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }))
+@connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }), ({
+  changeFilterPrice
+}))
 export default class FilterSidebar extends Component {
+
+  handleFilterDebounce = _.debounce(() => {
+    console.log('apply filter');
+  }, 1000);
+
+  handleChangePrice = (event, key) => {
+    const {
+      filter_price: { min, max }
+    } = this.props.Shop_Products_List;
+    const { value } = event.target;
+
+    if ((key === 'min' && (Number(value) > Number(max))) || (key === 'max' && (Number(value) < Number(min)))) {
+      return;
+    }
+
+    this.props.changeFilterPrice(key, value);
+    this.handleFilterDebounce();
+  };
+
   render() {
     return (
       <div className={'product-filter-sidebar'}>
@@ -143,6 +168,7 @@ export default class FilterSidebar extends Component {
                   InputProps={{
                     inputComponent: NumberFormatNegative,
                   }}
+                  onChange={(e) => this.handleChangePrice(e, 'min')}
                   value={this.props.Shop_Products_List.filter_price.min}
                 />
               </Grid>
@@ -152,6 +178,7 @@ export default class FilterSidebar extends Component {
                   InputProps={{
                     inputComponent: NumberFormatNegative,
                   }}
+                  onChange={(e) => this.handleChangePrice(e, 'max')}
                   value={this.props.Shop_Products_List.filter_price.max}
                 />
               </Grid>
