@@ -12,7 +12,8 @@ import {
   Add as AddIcon,
   Edit as EditIcon,
   AttachFile as AttachFileIcon,
-  Close as CloseIcon
+  Close as CloseIcon,
+  Favorite as FavoriteIcon
 } from '@material-ui/icons';
 import {
   Grid,
@@ -49,6 +50,7 @@ import {
   changeCompositionValue,
   addCompositionProduct,
   removeCompositionProduct,
+  setDefaultImage,
 } from './store/actions';
 import { getValuesDeep } from 'lib/utils';
 import _ from 'lodash';
@@ -87,19 +89,17 @@ const validate = values => {
     pullCompositions,
     removeImage,
     addProduct,
-
     editProduct,
     resetFormProduct,
     changeReduxForm,
-
     addSizeProduct,
     changeCurrentSize,
     removeSizeProduct,
-
     changeCurrentComposition,
     changeCompositionValue,
     addCompositionProduct,
     removeCompositionProduct,
+    setDefaultImage
   }))
 @reduxForm({ form: 'Admin_Products_Form', validate, enableReinitialize: true })
 export default class Form extends Component {
@@ -547,11 +547,28 @@ export default class Form extends Component {
                           <p className={'image-attach_file-name'}>{FILE_NAME}</p>
                         </a>
                         <div className={'image-attach_btn'}>
-                          <Button
-                            onClick={() => this.props.removeImage(file.id)}
-                          >
-                            <CloseIcon /> Удалить
-                          </Button>
+                          <Grid container>
+                            <Grid item xs={12}>
+                              <Button
+                                fullWidth
+                                onClick={() => this.props.removeImage(file.id)}
+                              >
+                                <CloseIcon /> Удалить
+                              </Button>
+                            </Grid>
+                            {
+                              (!file.is_default && this.props.Admin_Products_Form.images.length > 1) && (
+                                <Grid item xs={12}>
+                                  <Button
+                                    fullWidth
+                                    onClick={() => this.props.setDefaultImage(file.id)}
+                                  >
+                                    <FavoriteIcon /> Сделать главным
+                                  </Button>
+                                </Grid>
+                              )
+                            }
+                          </Grid>
                         </div>
                       </div>
                     )

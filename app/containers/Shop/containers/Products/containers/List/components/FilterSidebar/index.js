@@ -14,12 +14,24 @@ import {
 import { ExpandMore as ExpandMoreIcon } from '@material-ui/icons';
 import NumberFormatNegative from 'containers/Shop/components/NumberFormatNegative';
 import {
-  changeFilterPrice
+  changeFilterPrice,
+  changeFilterCategoryId,
+  changeFilterBrandId,
+  changeFilterSeasonId,
+  changeFilterCompositionId,
+  changeFilterSizeId,
+  resetFilter
 } from '../../store/actions';
 import _ from 'lodash';
 
 @connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }), ({
-  changeFilterPrice
+  changeFilterPrice,
+  changeFilterCategoryId,
+  changeFilterBrandId,
+  changeFilterSeasonId,
+  changeFilterCompositionId,
+  changeFilterSizeId,
+  resetFilter
 }))
 export default class FilterSidebar extends Component {
 
@@ -38,10 +50,18 @@ export default class FilterSidebar extends Component {
     }
 
     this.props.changeFilterPrice(key, value);
-    this.handleFilterDebounce();
+    // this.handleFilterDebounce();
   };
 
   render() {
+    const {
+      category_id,
+      brand_id,
+      season_id,
+      size_id,
+      composition_id,
+    } = this.props.Shop_Products_List;
+
     return (
       <div className={'product-filter-sidebar'}>
 
@@ -52,11 +72,19 @@ export default class FilterSidebar extends Component {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
 
-              <List className={'product-filter-sidebar-list'}>
+              <List className={'product-filter-sidebar-list'} component="nav">
                 {
                   this.props.Shop_Products.categories.map((category) => (
-                    <ListItem button key={category.id} className={'product-filter-sidebar-list_item'}>
-                      <ListItemText primary={category.name} className={'product-filter-sidebar-list_text'} />
+                    <ListItem
+                      button
+                      key={category.id}
+                      onClick={() => this.props.changeFilterCategoryId(category.id)}
+                      className={`product-filter-sidebar-list_item${category_id === category.id ? ' product-filter-sidebar-list_item__selected' : ''}`}
+                    >
+                      <ListItemText
+                        primary={category.name}
+                        className={'product-filter-sidebar-list_text'}
+                      />
                     </ListItem>
                   ))
                 }
@@ -76,7 +104,12 @@ export default class FilterSidebar extends Component {
               <List className={'product-filter-sidebar-list'}>
                 {
                   this.props.Shop_Products.brands.map((brand) => (
-                    <ListItem button key={brand.id} className={'product-filter-sidebar-list_item'}>
+                    <ListItem
+                      button
+                      key={brand.id}
+                      onClick={() => this.props.changeFilterBrandId(brand.id)}
+                      className={`product-filter-sidebar-list_item${brand_id === brand.id ? ' product-filter-sidebar-list_item__selected' : ''}`}
+                    >
                       <ListItemText primary={brand.name} className={'product-filter-sidebar-list_text'} />
                     </ListItem>
                   ))
@@ -97,7 +130,12 @@ export default class FilterSidebar extends Component {
               <List className={'product-filter-sidebar-list'}>
                 {
                   this.props.Shop_Products.seasons.map((season) => (
-                    <ListItem button key={season.id} className={'product-filter-sidebar-list_item'}>
+                    <ListItem
+                      button
+                      key={season.id}
+                      onClick={() => this.props.changeFilterSeasonId(season.id)}
+                      className={`product-filter-sidebar-list_item${season_id === season.id ? ' product-filter-sidebar-list_item__selected' : ''}`}
+                    >
                       <ListItemText primary={season.name} className={'product-filter-sidebar-list_text'} />
                     </ListItem>
                   ))
@@ -119,7 +157,12 @@ export default class FilterSidebar extends Component {
               <List className={'product-filter-sidebar-list'}>
                 {
                   this.props.Shop_Products.sizes.map((size) => (
-                    <ListItem button key={size.id} className={'product-filter-sidebar-list_item'}>
+                    <ListItem
+                      button
+                      key={size.id}
+                      onClick={() => this.props.changeFilterSizeId(size.id)}
+                      className={`product-filter-sidebar-list_item${size_id === size.id ? ' product-filter-sidebar-list_item__selected' : ''}`}
+                    >
                       <ListItemText primary={`${size.ru} (${size.international})`} className={'product-filter-sidebar-list_text'} />
                     </ListItem>
                   ))
@@ -142,7 +185,12 @@ export default class FilterSidebar extends Component {
               <List className={'product-filter-sidebar-list'}>
                 {
                   this.props.Shop_Products.compositions.map((composition) => (
-                    <ListItem button key={composition.id} className={'product-filter-sidebar-list_item'}>
+                    <ListItem
+                      button
+                      key={composition.id}
+                      onClick={() => this.props.changeFilterCompositionId(composition.id)}
+                      className={`product-filter-sidebar-list_item${composition_id === composition.id ? ' product-filter-sidebar-list_item__selected' : ''}`}
+                    >
                       <ListItemText primary={composition.name} className={'product-filter-sidebar-list_text'} />
                     </ListItem>
                   ))
@@ -205,6 +253,7 @@ export default class FilterSidebar extends Component {
               <Button
                 fullWidth
                 variant={'raised'}
+                onClick={this.props.resetFilter}
               >
                 Сбросить
               </Button>

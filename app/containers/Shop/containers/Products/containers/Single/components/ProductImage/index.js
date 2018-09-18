@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import { changeMainImage } from '../../store/actions';
+import _ from 'lodash';
 
 @connect(({ Shop_Products_Single }) => ({ Shop_Products_Single }), ({
   changeMainImage
@@ -9,9 +10,10 @@ import { changeMainImage } from '../../store/actions';
 export default class ProductImage extends Component {
 
   componentDidMount() {
-    const { product } = this.props.Shop_Products_Single;
+    const { images } = this.props.Shop_Products_Single.product;
+    const mainImage = _.find(images, { is_default: true }) || images[0];
 
-    this.props.changeMainImage(product.images[0]);
+    this.props.changeMainImage(mainImage);
   }
 
   handleMainImage = (image) => {
@@ -23,8 +25,9 @@ export default class ProductImage extends Component {
   };
 
   render() {
-    const { product, mainImage } = this.props.Shop_Products_Single;
+    const { product: { images }, mainImage } = this.props.Shop_Products_Single;
     const HOST = `${process.env.API_HOST}`;
+    const imagesThumb = _.sortBy(images, [(o) => !o.is_default]);
 
     return (
       <Grid container spacing={40} className={'product-detail-images'}>
@@ -34,7 +37,7 @@ export default class ProductImage extends Component {
           <div className={'product-detail-images-thumbnails_list'}>
 
             {
-              product.images.map((image) => (
+              imagesThumb.map((image) => (
                 <div
                   key={image.id}
                   className={'product-detail-images-thumbnails_item'}

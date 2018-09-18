@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import { Favorite as FavoriteIcon } from '@material-ui/icons';
 import { amountOutput } from 'lib/amount';
+import _ from 'lodash';
 
 @connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }))
 export default class ProductList extends Component {
@@ -13,12 +14,13 @@ export default class ProductList extends Component {
   renderItem = (product) => {
     const HOST = process.env.API_HOST;
     const { id, images, category, name, article, price, discount, total_price } = product;
+    const mainImage = _.find(images, { is_default: true }) || images[0];
 
     return (
       <Grid item xs={12} sm={6} md={4} lg={4} key={product.id} className={'product-list_item'}>
         <div className={'product-card'}>
           <div className={'product-card_img'}>
-            <img src={`${HOST}${images[0].original_uri}`} alt={'Product'} />
+            <img src={`${HOST}${mainImage.original_uri}`} alt={'Product'} />
             <Link to={`/product/${id}`} className={'product-card_learn-more'}>
               Подробнее
             </Link>

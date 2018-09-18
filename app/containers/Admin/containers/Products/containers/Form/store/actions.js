@@ -406,3 +406,40 @@ export const editProduct = () => (dispatch, getState) => {
     .catch(() => dispatch(send({ id: uuid(), status: 'error', title: 'Ошибка', message: 'Ошибка изменения товара', timeout: 2500 })))
     .finally(() => dispatch(setIsLoading(false)));
 };
+
+export const setDefaultImage = (image_id) => (dispatch, getState) => {
+  const { images } = getState().Admin_Products_Form;
+  const find_old_image = _.find(images, { is_default: true });
+
+  if (!find_old_image) {
+    dispatch(setIsLoading(true));
+    api.images.set_default(image_id)
+      .then((data) => {
+
+        if (data.status !== api.code.OK) return;
+
+        const oldImages = images.filter((image) => image.id !== image_id);
+
+        dispatch(setImages([data.data, ...oldImages]));
+        dispatch(setIsLoading(false));
+      });
+  } else {
+    dispatch(setIsLoading(true));
+    api.images.change_default(find_old_image.id, image_id)
+      .then((data) => {
+        if (data.status !== api.code.OK) return;
+
+        const oldImages = images.filter((image) => {
+          if (image.id === image_id || image.id === find_old_image.id) {
+            return false;
+          }
+          return true;
+        });
+
+        const { old_image, new_image } = data.data;
+        dispatch(setImages([new_image, old_image, ...oldImages]));
+        dispatch(setIsLoading(false));
+      });
+  }
+
+};

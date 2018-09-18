@@ -1,6 +1,5 @@
 @import "lib/style/vars.scss";
 
-
 .product-filter-sidebar {
   width: 100%;
   &_expansion {
@@ -12,6 +11,11 @@
         font-size: 0.9rem;
         font-family: $font-light-serif !important;
         color: $gray-color;
+      }
+    }
+    &_item {
+      &__selected {
+        background-color: rgba(0, 0, 0, 0.08) !important;
       }
     }
   }

@@ -141,7 +141,6 @@ export const pullProducts = () => (dispatch, getState) => new Promise((resolve, 
 export const resetFilterAction = () => ({ type: RESET_FILTER });
 
 export const resetFilter = () => (dispatch) => {
-  dispatch(resetReduxForm('Products_Filter'));
   dispatch(resetFilterAction());
   dispatch(pullProducts(0));
 };
