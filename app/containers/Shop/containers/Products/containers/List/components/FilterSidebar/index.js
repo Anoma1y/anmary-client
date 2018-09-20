@@ -20,10 +20,12 @@ import {
   changeFilterSeasonId,
   changeFilterCompositionId,
   changeFilterSizeId,
-  resetFilter
+  resetFilter,
+  applyFilter,
 } from '../../store/actions';
 import _ from 'lodash';
 
+// todo: добавить закрытие всех панелей после сброса
 @connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }), ({
   changeFilterPrice,
   changeFilterCategoryId,
@@ -31,7 +33,8 @@ import _ from 'lodash';
   changeFilterSeasonId,
   changeFilterCompositionId,
   changeFilterSizeId,
-  resetFilter
+  resetFilter,
+  applyFilter,
 }))
 export default class FilterSidebar extends Component {
 
@@ -66,13 +69,26 @@ export default class FilterSidebar extends Component {
       <div className={'product-filter-sidebar'}>
 
         <div className={'product-filter-sidebar-item'}>
-          <ExpansionPanel className={'product-filter-sidebar_expansion'}>
+          <ExpansionPanel
+            className={'product-filter-sidebar_expansion'}
+            onChange={(event, expanded) => !expanded && this.props.changeFilterCategoryId(null)}
+          >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-filter-sidebar-item_head'}>
               <span className={'product-filter-sidebar-item_header-text'}>Категория</span>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
 
               <List className={'product-filter-sidebar-list'} component="nav">
+                <ListItem
+                  button
+                  onClick={() => this.props.changeFilterCategoryId(null)}
+                  className={`product-filter-sidebar-list_item${category_id === null ? ' product-filter-sidebar-list_item__selected' : ''}`}
+                >
+                  <ListItemText
+                    primary={'Все'}
+                    className={'product-filter-sidebar-list_text'}
+                  />
+                </ListItem>
                 {
                   this.props.Shop_Products.categories.map((category) => (
                     <ListItem
@@ -95,13 +111,26 @@ export default class FilterSidebar extends Component {
         </div>
 
         <div className={'product-filter-sidebar-item'}>
-          <ExpansionPanel className={'product-filter-sidebar_expansion'}>
+          <ExpansionPanel
+            className={'product-filter-sidebar_expansion'}
+            onChange={(event, expanded) => !expanded && this.props.changeFilterBrandId(null)}
+          >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-filter-sidebar-item_head'}>
               <span className={'product-filter-sidebar-item_header-text'}>Бренд</span>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
 
               <List className={'product-filter-sidebar-list'}>
+                <ListItem
+                  button
+                  onClick={() => this.props.changeFilterBrandId(null)}
+                  className={`product-filter-sidebar-list_item${brand_id === null ? ' product-filter-sidebar-list_item__selected' : ''}`}
+                >
+                  <ListItemText
+                    primary={'Все'}
+                    className={'product-filter-sidebar-list_text'}
+                  />
+                </ListItem>
                 {
                   this.props.Shop_Products.brands.map((brand) => (
                     <ListItem
@@ -121,13 +150,26 @@ export default class FilterSidebar extends Component {
         </div>
 
         <div className={'product-filter-sidebar-item'}>
-          <ExpansionPanel className={'product-filter-sidebar_expansion'}>
+          <ExpansionPanel
+            className={'product-filter-sidebar_expansion'}
+            onChange={(event, expanded) => !expanded && this.props.changeFilterSeasonId(null)}
+          >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-filter-sidebar-item_head'}>
               <span className={'product-filter-sidebar-item_header-text'}>Сезон</span>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
 
               <List className={'product-filter-sidebar-list'}>
+                <ListItem
+                  button
+                  onClick={() => this.props.changeFilterSeasonId(null)}
+                  className={`product-filter-sidebar-list_item${season_id === null ? ' product-filter-sidebar-list_item__selected' : ''}`}
+                >
+                  <ListItemText
+                    primary={'Все'}
+                    className={'product-filter-sidebar-list_text'}
+                  />
+                </ListItem>
                 {
                   this.props.Shop_Products.seasons.map((season) => (
                     <ListItem
@@ -148,13 +190,26 @@ export default class FilterSidebar extends Component {
 
         <div className={'product-filter-sidebar-item'}>
 
-          <ExpansionPanel className={'product-filter-sidebar_expansion'}>
+          <ExpansionPanel
+            className={'product-filter-sidebar_expansion'}
+            onChange={(event, expanded) => !expanded && this.props.changeFilterSizeId(null)}
+          >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-filter-sidebar-item_head'}>
               <span className={'product-filter-sidebar-item_header-text'}>Размер</span>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
 
               <List className={'product-filter-sidebar-list'}>
+                <ListItem
+                  button
+                  onClick={() => this.props.changeFilterSizeId(null)}
+                  className={`product-filter-sidebar-list_item${size_id === null ? ' product-filter-sidebar-list_item__selected' : ''}`}
+                >
+                  <ListItemText
+                    primary={'Все'}
+                    className={'product-filter-sidebar-list_text'}
+                  />
+                </ListItem>
                 {
                   this.props.Shop_Products.sizes.map((size) => (
                     <ListItem
@@ -176,13 +231,26 @@ export default class FilterSidebar extends Component {
 
         <div className={'product-filter-sidebar-item'}>
 
-          <ExpansionPanel className={'product-filter-sidebar_expansion'}>
+          <ExpansionPanel
+            className={'product-filter-sidebar_expansion'}
+            onChange={(event, expanded) => !expanded && this.props.changeFilterCompositionId(null)}
+          >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-filter-sidebar-item_head'}>
               <span className={'product-filter-sidebar-item_header-text'}>Состав</span>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
 
               <List className={'product-filter-sidebar-list'}>
+                <ListItem
+                  button
+                  onClick={() => this.props.changeFilterCompositionId(null)}
+                  className={`product-filter-sidebar-list_item${composition_id === null ? ' product-filter-sidebar-list_item__selected' : ''}`}
+                >
+                  <ListItemText
+                    primary={'Все'}
+                    className={'product-filter-sidebar-list_text'}
+                  />
+                </ListItem>
                 {
                   this.props.Shop_Products.compositions.map((composition) => (
                     <ListItem
@@ -244,6 +312,7 @@ export default class FilterSidebar extends Component {
                 fullWidth
                 color={'primary'}
                 variant={'raised'}
+                onClick={this.props.applyFilter}
               >
                 Применить
               </Button>

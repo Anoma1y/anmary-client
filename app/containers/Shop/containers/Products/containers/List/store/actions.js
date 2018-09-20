@@ -146,44 +146,44 @@ export const resetFilter = () => (dispatch) => {
 };
 
 export const applyFilter = (pageParam, numOnPageParam) => (dispatch, getState) => {
-  // const {
-  //   form: {
-  //     Products_Filter: {
-  //       syncError,
-  //       values
-  //     }
-  //   },
-  //   Admin_Products_List: {
-  //     page = pageParam,
-  //     num_on_page = numOnPageParam
-  //   }
-  // } = getState();
-  //
-  // if (syncError) return;
+  const {
+    page = pageParam,
+    num_on_page = numOnPageParam,
+    category_id,
+    brand_id,
+    season_id,
+    size_id,
+    composition_id,
+    filter_price,
+    sorting,
+  } = getState().Shop_Products_List;
 
-  // const filter = {
-  //   ...values,
-  //   has_discount: (values && values.has_discount !== undefined) ? values.has_discount : undefined,
-  //   sum_from: (values && values.sum_from) ? amountInput(values.sum_from.replace(/,/g, '')) : undefined,
-  //   sum_to: (values && values.sum_to) ? amountInput(values.sum_to.replace(/,/g, '')) : undefined,
-  // };
+  const filter = {
+    category: category_id,
+    brand: brand_id,
+    season: season_id,
+    size: size_id,
+    composition: composition_id,
+    sorting,
+    sum_from: typeof filter_price.min === 'number' ? amountInput(filter_price.min) : amountInput(filter_price.min.replace(/,/g, '')),
+    sum_to: typeof filter_price.max === 'number' ? amountInput(filter_price.max) : amountInput(filter_price.max.replace(/,/g, '')),
+  };
 
-  // const filter_data = serializeParams(removeEmpty(filter));
+  const filter_data = serializeParams(removeEmpty(filter));
 
-  // dispatch(setIsLoading(true));
-  // dispatch(setIsLoadingTable(true));
-  // api.product.getList(page, num_on_page, filter_data)
-  //   .then((data) => {
-  //     if (data.status !== api.code.OK) return;
-  //
-  //     const { records, total_records } = data.data;
-  //
-  //     dispatch(setProducts(records));
-  //     dispatch(changePage(_.isNumber(pageParam) ? pageParam : 0));
-  //     dispatch(setTotalRecords(total_records));
-  //   })
-  //   .finally(() => {
-  //     dispatch(setIsLoading(false));
-  //     dispatch(setIsLoadingTable(false));
-  //   });
+  dispatch(setIsLoading(true));
+
+  api.product.getList(page, num_on_page, filter_data)
+    .then((data) => {
+      if (data.status !== api.code.OK) return;
+
+      const { records, total_records } = data.data;
+
+      dispatch(setProducts(records));
+      dispatch(changePage(_.isNumber(pageParam) ? pageParam : 0));
+      dispatch(setTotalRecords(total_records));
+    })
+    .finally(() => {
+      dispatch(setIsLoading(false));
+    });
 };
