@@ -8,8 +8,8 @@ module.exports = require('./base.config')({
     ],
 
     output: {
-        filename: '[name].[chunkhash].js',
-        chunkFilename: '[name].[chunkhash].chunk.js'
+        filename: 'js/[name].[chunkhash].js',
+        chunkFilename: 'js/[name].[chunkhash].chunk.js'
     },
 
     plugins: [
