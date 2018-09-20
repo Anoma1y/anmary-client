@@ -28,7 +28,7 @@ export const pullProducts = () => (dispatch) => new Promise((resolve, reject) =>
   const filter_data = serializeParams(removeEmpty(filter));
 
   dispatch(setIsLoading(true));
-  api.product.getRandomList(filter_data, 4)
+  api.product.getListV1(filter_data, 4)
     .then((data) => {
       if (data.status !== api.code.OK) return;
 

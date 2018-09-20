@@ -15,6 +15,10 @@ export default {
     }
   },
 
+  check(key) {
+    return storage.getItem(key) !== null;
+  },
+
   /**
    * Метод для извлечения данных из локального хранилища
    * @param key - ключ, по которому будут извлекаться данные

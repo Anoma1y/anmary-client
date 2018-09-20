@@ -22,8 +22,8 @@ export default class Products {
     return this.http.get(`${config.GET_LIST}?page=${page}&num_on_page=${num_on_page}${filter === '' ? filter : `&${filter}`}`);
   }
 
-  getRandomList(filter = '', limit = 4) {
-    return this.http.get(`${config.GET_RANDOM_LIST}?limit=${limit}${filter === '' ? filter : `&${filter}`}`);
+  getListV1(filter = '', limit = 4) {
+    return this.http.get(`${config.GET_LIST_V1}?limit=${limit}${filter === '' ? filter : `&${filter}`}`);
   }
 
   getSingle(product_id) {

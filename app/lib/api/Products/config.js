@@ -2,7 +2,7 @@ export default {
   ADD: '/product',
   EDIT: '/product',
   GET_LIST: '/product',
-  GET_RANDOM_LIST: '/product/random',
+  GET_LIST_V1: '/product/v1',
   GET_SINGLE: '/product',
 };
 

@@ -10,8 +10,11 @@ import {
   pullCompositions,
   pullSizes,
   pullSeasons,
+  setStorageData,
   resetProducts,
 } from './store/actions';
+import moment from 'moment';
+import Storage from 'lib/storage';
 import './style.scss';
 
 @connect(null, ({
@@ -20,6 +23,7 @@ import './style.scss';
   pullSizes,
   pullCompositions,
   pullSeasons,
+  setStorageData,
   resetProducts,
 }))
 export default class Products extends Component {
@@ -28,7 +32,22 @@ export default class Products extends Component {
   };
 
   componentDidMount() {
-    this.initialData();
+
+    if (Storage.check('product_last_update')) {
+
+      const last_update_time = Storage.get('product_last_update');
+      const current_time = moment().unix();
+      const cache_time = 2 * 60;
+
+      if ((current_time - last_update_time) < cache_time) {
+        this.props.setStorageData()
+          .then(() => this.setState({ ready: true }))
+          .catch(() => this.initialData());
+      } else {
+        this.initialData();
+      }
+    }
+
   }
 
   componentWillUnmount() {
@@ -36,6 +55,7 @@ export default class Products extends Component {
   }
 
   initialData = () => {
+
     Promise.all([
       this.props.pullBrands(),
       this.props.pullCategories(),
@@ -43,7 +63,10 @@ export default class Products extends Component {
       this.props.pullSizes(),
       this.props.pullCompositions(),
     ])
-      .then(() => this.setState({ ready: true }));
+      .then(() => {
+        Storage.set('product_last_update', moment().unix());
+        this.setState({ ready: true });
+      });
   };
 
   renderLoader = () => <CircularProgress size={24} className={'shop_loading'} />;
