@@ -4,16 +4,15 @@ import {
   Grid,
   TablePagination,
 } from '@material-ui/core';
+import { applyFilter } from '../../store/actions';
 
-@connect(({ Shop_Products_List }) => ({ Shop_Products_List }))
+@connect(({ Shop_Products_List }) => ({ Shop_Products_List }), ({
+  applyFilter
+}))
 export default class Pagination extends Component {
 
-  state = {
-    page: 0,
-  };
-
   handleChangePage = (event, page) => {
-    this.setState({ page });
+    this.props.applyFilter(page)
   };
 
   render() {

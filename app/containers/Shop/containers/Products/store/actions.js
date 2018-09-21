@@ -44,7 +44,7 @@ export const setStorageData = () => (dispatch, getState) => new Promise((resolve
   dispatch(setBrands(Storage.get('product_brands')));
   dispatch(setSeasons(Storage.get('product_seasons')));
 
-  const { 
+  const {
     brands,
     seasons,
     categories,
@@ -55,15 +55,22 @@ export const setStorageData = () => (dispatch, getState) => new Promise((resolve
 
   const time = setInterval(() => {
 
-    if (brands.length !== 0 && seasons.length !== 0 && categories.length !== 0 && sizes.length !== 0 && compositions.length !== 0) {
-      clearInterval(time);
-      resolve();
-    }
-    if (reject_time > 20) {
-      reject();
-    }
-    reject_time += 1;
+    try {
+      if (brands.length !== 0 && seasons.length !== 0 && categories.length !== 0 && sizes.length !== 0 && compositions.length !== 0) {
+        clearInterval(time);
+        resolve();
+      }
 
+      if (reject_time > 20) {
+        reject();
+      }
+
+      reject_time += 1;
+
+    } catch (e) {
+      clearInterval(time);
+      reject(e);
+    }
   }, 100);
 });
 

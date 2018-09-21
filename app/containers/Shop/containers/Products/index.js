@@ -32,10 +32,9 @@ export default class Products extends Component {
   };
 
   componentDidMount() {
-
     if (Storage.check('product_last_update')) {
-
       const last_update_time = Storage.get('product_last_update');
+
       const current_time = moment().unix();
       const cache_time = 2 * 60;
 
@@ -43,11 +42,12 @@ export default class Products extends Component {
         this.props.setStorageData()
           .then(() => this.setState({ ready: true }))
           .catch(() => this.initialData());
-      } else {
-        this.initialData();
+        return;
       }
+      this.initialData();
+      return;
     }
-
+    this.initialData();
   }
 
   componentWillUnmount() {

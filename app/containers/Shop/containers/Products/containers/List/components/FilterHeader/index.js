@@ -4,14 +4,24 @@ import {
   Grid,
   Select,
 } from '@material-ui/core';
-import { changeFilterSort } from '../../store/actions';
+import {
+  changeFilterSort,
+  applyFilter
+} from '../../store/actions';
+import Sorting from 'lib/sorting';
 
 @connect(({ Shop_Products_List }) => ({ Shop_Products_List }), ({
-  changeFilterSort
+  changeFilterSort,
+  applyFilter
 }))
 export default class FilterHeader extends Component {
 
-  handleSortingChange = (e) => this.props.changeFilterSort(e.target.value);
+  handleSortingChange = (e) => {
+    const { value } = e.target;
+
+    this.props.changeFilterSort(value);
+    this.props.applyFilter(0, 9, value);
+  };
 
   render() {
     const {
@@ -40,11 +50,17 @@ export default class FilterHeader extends Component {
               onChange={this.handleSortingChange}
               className={'product-filter-header-select product-filter-header_sort'}
             >
-              <option className={'product-filter-header-select_option'} value={1}>По дате (сначало новые)</option>
-              <option className={'product-filter-header-select_option'} value={2}>По дате (сначало старые)</option>
-              <option className={'product-filter-header-select_option'} value={3}>По скидкам</option>
-              <option className={'product-filter-header-select_option'} value={4}>По цене (по убыванию)</option>
-              <option className={'product-filter-header-select_option'} value={5}>По цене (по возрастанию)</option>
+              {
+                Sorting.map((sort) => (
+                  <option
+                    key={sort.id}
+                    value={sort.id}
+                    className={'product-filter-header-select_option'}
+                  >
+                    {sort.label}
+                  </option>
+                ))
+              }
             </Select>
 
           </Grid>

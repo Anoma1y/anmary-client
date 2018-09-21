@@ -27,7 +27,7 @@ import {
   removeEmpty,
   serializeParams
 } from 'lib/utils';
-import uuid from 'uuid/v1';
+import SortingData from 'lib/sorting';
 import _ from 'lodash';
 
 export const setProducts = (value) => ({
@@ -145,7 +145,7 @@ export const resetFilter = () => (dispatch) => {
   dispatch(pullProducts(0));
 };
 
-export const applyFilter = (pageParam, numOnPageParam) => (dispatch, getState) => {
+export const applyFilter = (pageParam, numOnPageParam, sortingId) => (dispatch, getState) => {
   const {
     page = pageParam,
     num_on_page = numOnPageParam,
@@ -155,7 +155,7 @@ export const applyFilter = (pageParam, numOnPageParam) => (dispatch, getState) =
     size_id,
     composition_id,
     filter_price,
-    sorting,
+    sorting = sortingId,
   } = getState().Shop_Products_List;
 
   const filter = {
@@ -164,7 +164,8 @@ export const applyFilter = (pageParam, numOnPageParam) => (dispatch, getState) =
     season: season_id,
     size: size_id,
     composition: composition_id,
-    sorting,
+    sort: _.find(SortingData, { id: Number(sorting) }).order,
+    type_order: _.find(SortingData, { id: Number(sorting) }).type,
     sum_from: typeof filter_price.min === 'number' ? amountInput(filter_price.min) : amountInput(filter_price.min.replace(/,/g, '')),
     sum_to: typeof filter_price.max === 'number' ? amountInput(filter_price.max) : amountInput(filter_price.max.replace(/,/g, '')),
   };
@@ -172,8 +173,7 @@ export const applyFilter = (pageParam, numOnPageParam) => (dispatch, getState) =
   const filter_data = serializeParams(removeEmpty(filter));
 
   dispatch(setIsLoading(true));
-
-  api.product.getList(page, num_on_page, filter_data)
+  api.product.getList(pageParam, num_on_page, filter_data)
     .then((data) => {
       if (data.status !== api.code.OK) return;
 
