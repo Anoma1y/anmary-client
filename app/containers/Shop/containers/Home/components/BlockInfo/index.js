@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   Notifications as NotificationsIcon
 } from '@material-ui/icons';
+import {
+  changeSubscribeContact,
+  applySubscribe
+} from '../../store/actions';
 
+@connect(({ Shop_Home }) => ({ Shop_Home }), ({
+  changeSubscribeContact,
+  applySubscribe
+}))
 export default class BlockInfo extends Component {
   render() {
     return (
@@ -41,13 +50,22 @@ export default class BlockInfo extends Component {
           <div className={'information-block subscribe'}>
             <div className={'information-block_overlay'} />
 
-            <form action={'#'} className={'subscribe-form'}>
+            <form
+              action={'#'}
+              className={'subscribe-form'}
+              onSubmit={(event) => {
+                event.preventDefault();
+                this.props.applySubscribe();
+              }}
+            >
               <div className={'subscribe-form_input'}>
                 <input
                   type={'text'}
                   placeholder={'E-Mail или телефон'}
+                  value={this.props.Shop_Home.subscribe_contact}
+                  onChange={(event) => this.props.changeSubscribeContact(event.target.value)}
                 />
-                <span className={'subscribe-form_error'}> </span>
+                <span className={'subscribe-form_error'}>{this.props.Shop_Home.subscribe_error}</span>
               </div>
               <div className={'subscribe-form_btn'}>
                 <button>
