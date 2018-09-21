@@ -12,6 +12,7 @@ import { api } from 'lib/api';
 import Storage from 'lib/storage';
 import moment from 'moment';
 import uuid from 'uuid/v1';
+import _ from 'lodash';
 
 export const changeLogin = (value) => ({
   type: CHANGE_EMAIL,
@@ -68,6 +69,24 @@ export const signin = () => (dispatch, getState) => {
       const expiration_time = ((currentTime * 1000) + (expires_in * 1000)) / 1000;
 
       Storage.set('members', { token, expiration_time });
+
+      api.profile.getProfile(token)
+        .then((data) => {
+          if (data.status !== api.code.OK) {
+            dispatch(resetAuthSignin());
+            dispatch(replace('/'));
+            return;
+          }
+
+          const permissions = _.uniq(data.data.roles.map((role) => role.permissions).reduce((a, b) => a.concat(b)));
+          const role = _.find(data.data.roles, { name: 'root' });
+
+          if (role) {
+            Storage.set('is_superuser', true);
+          }
+
+          Storage.set('permissions', { permissions });
+        })
 
       dispatch(resetAuthSignin());
       dispatch(replace('/'));

@@ -18,7 +18,7 @@ export default class Products {
     });
   }
 
-  getList(page, num_on_page, filter) {
+  getList(page, num_on_page, filter, params) {
     return this.http.get(`${config.GET_LIST}?page=${page}&num_on_page=${num_on_page}${filter === '' ? filter : `&${filter}`}`);
   }
 

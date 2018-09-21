@@ -17,6 +17,7 @@ import {
   RESET_FILTER,
 } from './types';
 import { api } from 'lib/api';
+import { replace } from 'react-router-redux';
 import { reset as resetReduxForm } from 'redux-form';
 import { send } from 'containers/Notification/store/actions';
 import {
@@ -25,6 +26,7 @@ import {
 } from 'lib/amount';
 import {
   removeEmpty,
+  parseParams,
   serializeParams
 } from 'lib/utils';
 import SortingData from 'lib/sorting';
@@ -105,14 +107,16 @@ export const setIsLoadingTable = (value) => ({
 
 export const resetProductsList = () => ({ type: RESET });
 
-export const pullProducts = () => (dispatch, getState) => new Promise((resolve, reject) => {
+export const pullProducts = (params) => (dispatch, getState) => new Promise((resolve, reject) => {
   const {
     page,
     num_on_page,
   } = getState().Shop_Products_List;
 
+  const filter = serializeParams(parseParams(params));
+
   dispatch(setIsLoadingTable(true));
-  api.product.getList(page, num_on_page, '')
+  api.product.getList(page, num_on_page, filter)
     .then((data) => {
       if (data.status !== api.code.OK) reject();
 
@@ -140,9 +144,12 @@ export const pullProducts = () => (dispatch, getState) => new Promise((resolve, 
 
 export const resetFilterAction = () => ({ type: RESET_FILTER });
 
-export const resetFilter = () => (dispatch) => {
+export const resetFilter = () => (dispatch, getState) => {
   dispatch(resetFilterAction());
-  dispatch(pullProducts(0));
+  dispatch(pullProducts(''));
+  if (getState().routing.location.search) {
+    dispatch(replace('/product'));
+  }
 };
 
 export const applyFilter = (pageParam, numOnPageParam, sortingId) => (dispatch, getState) => {
@@ -157,8 +164,10 @@ export const applyFilter = (pageParam, numOnPageParam, sortingId) => (dispatch, 
     filter_price,
     sorting = sortingId,
   } = getState().Shop_Products_List;
+  const { search } = getState().routing.location;
 
   const filter = {
+    ...parseParams(search),
     category: category_id,
     brand: brand_id,
     season: season_id,

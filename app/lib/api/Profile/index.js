@@ -6,7 +6,16 @@ export default class Auth {
     this.http = http;
   }
 
-  getProfile() {
+  getProfile(token) {
+
+    if (token) {
+      return this.http.get(config.GET_PROFILE, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    }
+
     return this.http.get(config.GET_PROFILE);
   }
 }

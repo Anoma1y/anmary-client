@@ -1,0 +1,3 @@
+export default {
+  SUBSCRIBE: '/subscribe'
+}

@@ -56,6 +56,8 @@ export const dataURLtoFile = (base64, filename) => {
 };
 
 export const parseParams = (str) => {
+  if (str.length === 0) return null;
+
   const query = {};
   const pairs = (str[0] === '?' ? str.substr(1) : str).split('&');
   for (let i = 0; i < pairs.length; i++) {

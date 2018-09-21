@@ -11,6 +11,7 @@ import CompositionApiModule from './Composition';
 import RolesApiModule from './Roles';
 import ProfileApiModule from './Profile';
 import ProductsApiModule from './Products';
+import SubscribeApiModule from './Subscribe';
 import CompoundsApiModule from './Compounds';
 import ProportionApiModule from './Proportion';
 import NewsApiModule from './News';
@@ -44,6 +45,7 @@ class Api {
     this.size = new SizeApiModule(this.http);
     this.profile = new ProfileApiModule(this.http);
     this.product = new ProductsApiModule(this.http);
+    this.subscribe = new SubscribeApiModule(this.http);
     this.proportion = new ProportionApiModule(this.http);
   }
 

@@ -14,7 +14,7 @@ import FilterHeader from './components/FilterHeader';
 import ProductList from './components/ProductList';
 import Pagination from './components/Pagination';
 
-@connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }), ({
+@connect(({ routing, Shop_Products, Shop_Products_List }) => ({ routing, Shop_Products, Shop_Products_List }), ({
   pullProducts,
   resetProductsList,
   resetFilter
@@ -26,7 +26,9 @@ export default class List extends Component {
   };
 
   componentDidMount() {
-    this.props.pullProducts()
+    const { search } = this.props.routing.location;
+
+    this.props.pullProducts(search)
       .then(() => this.setState({ ready: true }));
   }
 

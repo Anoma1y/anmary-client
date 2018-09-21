@@ -17,7 +17,7 @@ import moment from 'moment';
 import Storage from 'lib/storage';
 import './style.scss';
 
-@connect(null, ({
+@connect(({routing}) => ({ routing }), ({
   pullBrands,
   pullCategories,
   pullSizes,
@@ -48,6 +48,12 @@ export default class Products extends Component {
       return;
     }
     this.initialData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.routing.location.pathname !== prevProps.routing.location.pathname) {
+      this.initialData();
+    }
   }
 
   componentWillUnmount() {

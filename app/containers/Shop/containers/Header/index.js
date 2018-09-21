@@ -6,6 +6,7 @@ import {
   Search as SearchIcon,
 } from '@material-ui/icons';
 import './style.scss';
+import Storage from 'lib/storage';
 
 export default class Header extends Component {
 
@@ -33,6 +34,8 @@ export default class Header extends Component {
   };
 
   render() {
+    const isAdmin = Storage.get('is_superuser');
+
     return (
       <header className={`header${this.state.headerScrolled ? ' scrolled' : ''}`}>
         <div className={'header_inner'}>
@@ -45,9 +48,9 @@ export default class Header extends Component {
             <ul>
               <li><Link to={'/'}>Главная</Link></li>
               <li><Link to={'/product'}>Каталог</Link></li>
-              <li><a href={'#'}>accessories</a></li>
-              <li><Link to={'/admin'}>lingerie</Link></li>
+              <li><Link to={'/news'}>Новости</Link></li>
               <li><Link to={'/contact'}>Контакты</Link></li>
+              {isAdmin && <li><Link to={'/admin'}>Админ</Link></li>}
             </ul>
           </nav>
           <div className={'header-content'}>

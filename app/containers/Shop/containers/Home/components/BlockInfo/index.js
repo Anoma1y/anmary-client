@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Notifications as NotificationsIcon
 } from '@material-ui/icons';
@@ -9,7 +10,7 @@ export default class BlockInfo extends Component {
       <section>
         <div className={'information-blocks'}>
           <div className={'information-block new_collections'}>
-            <a href={'#'} className={'new_collections_image'}>
+            <Link to={'/product?last_season=1'} className={'new_collections_image'}>
               <div className={'collection_info'}>
                 <div className={'collection_name'}>
                   <h2>Осень/Зима</h2>
@@ -18,24 +19,24 @@ export default class BlockInfo extends Component {
                 </div>
               </div>
               <div className={'information-block_overlay'} />
-            </a>
+            </Link>
           </div>
           <div className={'information-block season_sale'}>
-            <a href={'#'} className={'season_sale_info'}>
+            <Link to={'/product?has_discount=1'} className={'season_sale_info'}>
               <p>Сезонная распродажа</p>
               <h1>Sale</h1>
-            </a>
+            </Link>
           </div>
           <div className={'information-block new_arrivals'}>
 
-            <a href={'#'} className={'new_arrivals_image'}>
+            <Link to={'/product'} className={'new_arrivals_image'}>
               <div className={'arrivals_info'}>
                 <div className={'collection_name'}>
                   <h1>Последнее поступление</h1>
                 </div>
               </div>
               <div className={'information-block_overlay'} />
-            </a>
+            </Link>
           </div>
           <div className={'information-block subscribe'}>
             <div className={'information-block_overlay'} />
@@ -43,8 +44,8 @@ export default class BlockInfo extends Component {
             <form action={'#'} className={'subscribe-form'}>
               <div className={'subscribe-form_input'}>
                 <input
-                  type={'email'}
-                  placeholder="email@example.com"
+                  type={'text'}
+                  placeholder={'E-Mail или телефон'}
                 />
                 <span className={'subscribe-form_error'}> </span>
               </div>
@@ -58,12 +59,12 @@ export default class BlockInfo extends Component {
 
           </div>
           <div className={'information-block all_catalog'}>
-            <a href={'#'} className={'all_catalog_image'}>
+            <Link to={'/product'} className={'all_catalog_image'}>
               <div className={'catalog_info'}>
                 <h2>Большой выбор женской одежды</h2>
               </div>
               <div className={'information-block_overlay'} />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
