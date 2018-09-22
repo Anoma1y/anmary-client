@@ -65,13 +65,13 @@ export default class Header extends Component {
             </div>
             <div className={'header-shopping'}>
               <div className={'header-shopping_item'}>
-                <span className={'header-shopping_count'}>2</span>
+                {/*<span className={'header-shopping_count'}>2</span>*/}
                 <div className={'header-shopping_icon'}>
                   <ShoppingCartIcon />
                 </div>
               </div>
               <div className={'header-shopping_item'}>
-                <span className={'header-shopping_count'}>13</span>
+                {/*<span className={'header-shopping_count'}>13</span>*/}
                 <div className={'header-shopping_icon'}>
                   <FavoriteIcon />
                 </div>

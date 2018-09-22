@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import BlockInfo from './components/BlockInfo';
 import ProductList from './components/ProductList';
+import Slider from './components/Slider';
 import {
   pullProducts,
   resetProductsList
@@ -36,21 +37,9 @@ export default class Home extends Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Carousel
-            autoplay
-            autoplayInterval={3000}
-            initialSlideHeight={800}
-            pauseOnHover={false}
-            renderCenterRightControls={() => null}
-            renderCenterLeftControls={() => null}
-            renderBottomCenterControls={() => null}
-            transitionMode={'fade'}
-            wrapAround
-          >
-            <img src={'http://dualmonitorswallpaper.com/wp-content/uploads/2018/02/anime-scenery-background-dual-wide-9.jpg'} />
-            <img src={'http://dualmonitorswallpaper.com/wp-content/uploads/2018/02/anime-scenery-background-dual-wide-9.jpg'} />
-            <img src={'http://dualmonitorswallpaper.com/wp-content/uploads/2018/02/anime-scenery-background-dual-wide-9.jpg'} />
-          </Carousel>
+          <Slider
+            autoTime={3000}
+          />
         </Grid>
 
         <Grid item xs={12} className={'container'}>

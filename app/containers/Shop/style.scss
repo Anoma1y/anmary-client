@@ -215,7 +215,7 @@
     }
     .arrivals_info {
       text-align: center;
-      font-family: $font-regular-serif;
+      font-family: $font-light;
       padding: 1rem 0;
       width: 70%;
       background-color: rgba(0, 0, 0, .3);
@@ -317,10 +317,10 @@
     .catalog_info {
       text-align: center;
       z-index: 999;
-      background-color: rgba(0, 0, 0, .5);
+      background-color: rgba(0, 0, 0, .4);
       padding: 1.5rem;
       h2 {
-        font-family: $font-regular-serif;
+        font-family: $font-light;
         font-size: 18px;
         color: $white-color;
         font-weight: 800;
