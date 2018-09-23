@@ -14,6 +14,7 @@ import ProductsApiModule from './Products';
 import SubscribeApiModule from './Subscribe';
 import CompoundsApiModule from './Compounds';
 import ProportionApiModule from './Proportion';
+import FeedbackApiModule from './Feedback';
 import NewsApiModule from './News';
 
 class Api {
@@ -47,6 +48,7 @@ class Api {
     this.product = new ProductsApiModule(this.http);
     this.subscribe = new SubscribeApiModule(this.http);
     this.proportion = new ProportionApiModule(this.http);
+    this.feedback = new FeedbackApiModule(this.http);
   }
 
   /**
