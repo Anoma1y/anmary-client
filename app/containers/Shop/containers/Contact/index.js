@@ -121,7 +121,7 @@ export default class Contact extends Component {
                     </div>
 
                     <div className={'contact-info_content'}>
-                      <span className={'contact-info_text'}>696969, Санкт-Петербург, м. Черная Речка, улица Пушкина, дом Колотушкина</span>
+                      <span className={'contact-info_text'}>197183, Санкт-Петербург, м. Черная Речка, улица Академика Крылока, дом 4</span>
                     </div>
                   </div>
 
@@ -145,7 +145,7 @@ export default class Contact extends Component {
                     </div>
 
                     <div className={'contact-info_content'}>
-                      <span className={'contact-info_text contact-info_text__selected'}>8 800 555 35 35</span>
+                      <span className={'contact-info_text contact-info_text__selected'}>+7-(904)-619-10-24</span>
                     </div>
                   </div>
 
@@ -157,7 +157,7 @@ export default class Contact extends Component {
                     </div>
 
                     <div className={'contact-info_content'}>
-                      <span className={'contact-info_text contact-info_text__selected'}>example@mail.ru</span>
+                      <span className={'contact-info_text contact-info_text__selected'}>nt-nt@mail.ru</span>
                     </div>
                   </div>
 
