@@ -7,19 +7,18 @@ import {
   CHANGE_NUM_ON_PAGE,
   CHANGE_FILTER_SORT,
   SET_TOTAL_RECORDS,
-  CHANGE_FILTER_CATEGORY_ID,
-  CHANGE_FILTER_BRAND_ID,
-  CHANGE_FILTER_SEASON_ID,
-  CHANGE_FILTER_SIZE_ID,
-  CHANGE_FILTER_COMPOSITION_ID,
+
   CHANGE_FILTER_PRICE,
+
+  SET_FILTER_VALUE,
+  APPEND_FILTER_VALUE,
+  REMOVE_FILTER_VALUE,
+
   RESET,
   RESET_FILTER,
 } from './types';
 import { api } from 'lib/api';
 import { replace } from 'react-router-redux';
-import { reset as resetReduxForm } from 'redux-form';
-import { send } from 'containers/Notification/store/actions';
 import {
   amountOutput,
   amountInput
@@ -35,6 +34,30 @@ import _ from 'lodash';
 export const setProducts = (value) => ({
   type: SET_PRODUCTS,
   payload: value,
+});
+
+export const setFilterValue = (key, value) => ({
+  type: SET_FILTER_VALUE,
+  payload: {
+    key,
+    value
+  },
+});
+
+export const appendFilterValue = (key, value) => ({
+  type: APPEND_FILTER_VALUE,
+  payload: {
+    key,
+    value
+  },
+});
+
+export const removeFilterValue = (key, value) => ({
+  type: REMOVE_FILTER_VALUE,
+  payload: {
+    key,
+    value
+  },
 });
 
 export const changePage = (value) => ({
@@ -59,31 +82,6 @@ export const changeNumOnPage = (value) => ({
 
 export const setTotalRecords = (value) => ({
   type: SET_TOTAL_RECORDS,
-  payload: value,
-});
-
-export const changeFilterCategoryId = (value) => ({
-  type: CHANGE_FILTER_CATEGORY_ID,
-  payload: value,
-});
-
-export const changeFilterBrandId = (value) => ({
-  type: CHANGE_FILTER_BRAND_ID,
-  payload: value,
-});
-
-export const changeFilterSeasonId = (value) => ({
-  type: CHANGE_FILTER_SEASON_ID,
-  payload: value,
-});
-
-export const changeFilterSizeId = (value) => ({
-  type: CHANGE_FILTER_SIZE_ID,
-  payload: value,
-});
-
-export const changeFilterCompositionId = (value) => ({
-  type: CHANGE_FILTER_COMPOSITION_ID,
   payload: value,
 });
 
@@ -154,13 +152,12 @@ export const resetFilter = () => (dispatch, getState) => {
 
 export const applyFilter = (pageParam, numOnPageParam, sortingId) => (dispatch, getState) => {
   const {
-    page = pageParam,
     num_on_page = numOnPageParam,
-    category_id,
-    brand_id,
-    season_id,
-    size_id,
-    composition_id,
+    filter_category,
+    filter_brand,
+    filter_season,
+    filter_size,
+    filter_composition,
     filter_price,
     sorting = sortingId,
   } = getState().Shop_Products_List;
@@ -168,11 +165,11 @@ export const applyFilter = (pageParam, numOnPageParam, sortingId) => (dispatch, 
 
   const filter = {
     ...parseParams(search),
-    category: category_id,
-    brand: brand_id,
-    season: season_id,
-    size: size_id,
-    composition: composition_id,
+    category: filter_category.length !== 0 ? filter_category : null,
+    brand: filter_brand.length !== 0 ? filter_brand : null,
+    season: filter_season.length !== 0 ? filter_season : null,
+    size: filter_size.length !== 0 ? filter_size : null,
+    composition: filter_composition.length !== 0 ? filter_composition : null,
     sort: _.find(SortingData, { id: Number(sorting) }).order,
     type_order: _.find(SortingData, { id: Number(sorting) }).type,
     sum_from: typeof filter_price.min === 'number' ? amountInput(filter_price.min) : amountInput(filter_price.min.replace(/,/g, '')),

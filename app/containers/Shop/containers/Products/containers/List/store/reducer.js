@@ -6,13 +6,11 @@ import {
   CHANGE_PAGE,
   CHANGE_NUM_ON_PAGE,
   SET_TOTAL_RECORDS,
-  CHANGE_FILTER_CATEGORY_ID,
-  CHANGE_FILTER_BRAND_ID,
-  CHANGE_FILTER_SEASON_ID,
-  CHANGE_FILTER_SIZE_ID,
-  CHANGE_FILTER_COMPOSITION_ID,
   CHANGE_FILTER_PRICE,
   CHANGE_FILTER_SORT,
+  SET_FILTER_VALUE,
+  REMOVE_FILTER_VALUE,
+  APPEND_FILTER_VALUE,
   RESET,
   RESET_FILTER,
 } from './types';
@@ -21,11 +19,11 @@ const INITIAL_FILTER = {
   page: 0,
   num_on_page: 9,
   total_records: 0,
-  category_id: null,
-  brand_id: null,
-  season_id: null,
-  size_id: null,
-  composition_id: null,
+  filter_category: [],
+  filter_brand: [],
+  filter_season: [],
+  filter_size: [],
+  filter_composition: [],
   filter_price: {
     min: 0,
     max: 0
@@ -41,6 +39,19 @@ const INITIAL_STATE = {
 };
 
 const HANDLERS = {
+
+  [SET_FILTER_VALUE]: (state, { payload }) => ({
+    ...state,
+    [`filter_${payload.key}`]: payload.value
+  }),
+  [APPEND_FILTER_VALUE]: (state, { payload }) => ({
+    ...state,
+    [`filter_${payload.key}`]: [...state[`filter_${payload.key}`], payload.value]
+  }),
+  [REMOVE_FILTER_VALUE]: (state, { payload }) => ({
+    ...state,
+    [`filter_${payload.key}`]: state[`filter_${payload.key}`].filter((item) => item !== payload.value)
+  }),
   [SET_PRODUCTS]: (state, { payload }) => ({
     ...state,
     products: payload
@@ -72,26 +83,6 @@ const HANDLERS = {
   [SET_IS_LOADING_TABLE]: (state, { payload }) => ({
     ...state,
     isLoadingTable: payload
-  }),
-  [CHANGE_FILTER_BRAND_ID]: (state, { payload }) => ({
-    ...state,
-    brand_id: payload
-  }),
-  [CHANGE_FILTER_CATEGORY_ID]: (state, { payload }) => ({
-    ...state,
-    category_id: payload
-  }),
-  [CHANGE_FILTER_COMPOSITION_ID]: (state, { payload }) => ({
-    ...state,
-    composition_id: payload
-  }),
-  [CHANGE_FILTER_SEASON_ID]: (state, { payload }) => ({
-    ...state,
-    season_id: payload
-  }),
-  [CHANGE_FILTER_SIZE_ID]: (state, { payload }) => ({
-    ...state,
-    size_id: payload
   }),
   [CHANGE_FILTER_PRICE]: (state, { payload }) => ({
     ...state,
