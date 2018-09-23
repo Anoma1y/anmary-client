@@ -43,7 +43,10 @@ export default class SidebarFilterPanel extends Component {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={'product-filter-sidebar-item_content'}>
 
-          <List className={'product-filter-sidebar-list'} component={'nav'}>
+          <List
+            className={`product-filter-sidebar-list${data.length > 4 ? ' product-filter-sidebar-list__scroll' : ''}`}
+            component={'nav'}
+          >
             <ListItem
               button
               onClick={() => this.props.setFilterValue(dataItem, [])}

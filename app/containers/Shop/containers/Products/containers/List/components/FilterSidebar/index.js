@@ -73,7 +73,7 @@ export default class FilterSidebar extends Component {
           <SidebarFilterPanel
             data={this.props.Shop_Products.sizes}
             dataItem={'size'}
-            label={'Рарзмер'}
+            label={'Размер'}
             alterName={{
               main: 'ru',
               additional: 'international'
