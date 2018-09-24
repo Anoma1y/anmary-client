@@ -53,6 +53,7 @@ export default class Feedback extends Component {
           <Field
             name={'contact_name'}
             component={FieldText}
+            disabled={isSent}
             label={'Имя'}
             helperText={'Необязательно поле'}
             placeholder={'Иван Иванов'}
@@ -65,6 +66,7 @@ export default class Feedback extends Component {
           <Field
             name={'contact_address'}
             component={FieldText}
+            disabled={isSent}
             label={'Почта или телефон'}
             placeholder={'mail@example.com / +88005553535'}
           />
@@ -76,6 +78,7 @@ export default class Feedback extends Component {
           <Field
             name={'text'}
             component={FieldTextArea}
+            disabled={isSent}
             label={'Вопрос'}
             placeholder={'Вопрос?'}
           />
