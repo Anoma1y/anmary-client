@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = (options) => ({
   entry: options.entry,
@@ -19,14 +21,14 @@ module.exports = (options) => ({
         }
       },
       {
-        test: /\.scss$/,
+        test: /\.(sa|sc|c)ss$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.css$/,
-        include: /node_modules/,
-        use: ['style-loader', 'css-loader'],
+        use:  [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ]
       },
       {
         test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
@@ -71,6 +73,10 @@ module.exports = (options) => ({
   plugins: options.plugins.concat([
     new webpack.ProvidePlugin({
       fetch: 'exports-loader?self.fetch!whatwg-fetch'
+    }),
+    new MiniCssExtractPlugin({
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
     }),
     new Dotenv(),
   ]),
