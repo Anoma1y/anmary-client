@@ -10,7 +10,8 @@ import {
 } from '@material-ui/core/styles';
 import App from './App';
 
-const ROOT_ID = document.getElementById('app');
+const MOUNT_NODE = document.getElementById('app');
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -22,13 +23,18 @@ const theme = createMuiTheme({
   },
 });
 
-ReactDOM.render(
-  <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
-      <ConnectedRouter history={history}>
-        <App />
-      </ConnectedRouter>
-    </MuiThemeProvider>
-  </Provider>,
-  ROOT_ID
-);
+const render = () => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <MuiThemeProvider theme={theme}>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </MuiThemeProvider>
+    </Provider>,
+    MOUNT_NODE
+  );
+};
+
+render();
+

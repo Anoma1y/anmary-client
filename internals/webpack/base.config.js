@@ -20,32 +20,58 @@ module.exports = (options) => ({
       },
       {
         test: /\.scss$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' },
-          { loader: 'sass-loader' },
-        ],
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.css$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' }
-        ],
-        include: [/node_modules/]
+        include: /node_modules/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
+        use: 'file-loader',
       },
       {
         test: /\.svg$/,
         loader: 'svg-inline-loader'
-      }
+      },
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              query: {
+                gifsicle: {
+                  interlaced: true
+                },
+                mozjpeg: {
+                  progressive: true
+                },
+                optipng: {
+                  optimizationLevel: 7
+                },
+                pngquant: {
+                  quality: '65-90',
+                  speed: 4
+                }
+              }
+            },
+          },
+        ],
+      },
+      {
+        test: /\.html$/,
+        use: 'html-loader'
+      },
     ]
   },
   plugins: options.plugins.concat([
-    // new webpack.DefinePlugin({
-    //   'process.env': {
-    //     NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-    //   }
-    // }),
+    new webpack.ProvidePlugin({
+      fetch: 'exports-loader?self.fetch!whatwg-fetch'
+    }),
     new Dotenv(),
   ]),
   resolve: {
@@ -53,10 +79,19 @@ module.exports = (options) => ({
     extensions: [
       '.js',
       '.jsx',
-      '.css'
+      '.css',
+      '.scss'
     ],
   },
   devtool: options.devtool,
   target: options.target || 'web',
-  devServer: options.devserver
+  devServer: options.devserver,
+  performance: options.performance || {},
+  optimization: {
+    namedModules: true,
+    splitChunks: {
+      name: 'vendor',
+      minChunks: 2
+    }
+  }
 });

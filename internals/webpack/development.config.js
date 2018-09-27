@@ -1,25 +1,29 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 module.exports = require('./base.config')({
   devtool: 'eval-source-map',
-
-  entry: {
-    main: [
-      path.join(process.cwd(), 'app/index.js')
-    ]
-  },
+  mode: 'development',
+  entry: [
+    'eventsource-polyfill', // Necessary for hot reloading with IE
+    'webpack-hot-middleware/client?reload=true',
+    path.join(process.cwd(), 'app/index.js') // Start with js/app.js
+  ],
   output: {
     filename: '[name].js',
     chunkFilename: '[name].chunk.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.HotModuleReplacementPlugin(), // Tell webpack we want hot reloading
     new HtmlWebpackPlugin({
       inject: true,
       template: 'public/index.html'
+    }),
+    new CircularDependencyPlugin({
+      exclude: /a\.js|node_modules/, // exclude node_modules
+      failOnError: false // show a warning when there is a circular dependency
     })
   ],
   babel: {
@@ -42,5 +46,8 @@ module.exports = require('./base.config')({
     historyApiFallback: true,
     contentBase: path.resolve(process.cwd() + '/public'),
     watchContentBase: true
+  },
+  performance: {
+    hints: false
   }
 });
