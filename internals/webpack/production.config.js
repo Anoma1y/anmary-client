@@ -11,8 +11,8 @@ module.exports = require('./base.config')({
     filename: 'js/[name].[chunkhash].js',
     chunkFilename: 'js/[name].[chunkhash].chunk.js'
   },
-
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new HtmlWebpackPlugin({
       template: 'public/index.html',
       minify: {
@@ -20,7 +20,7 @@ module.exports = require('./base.config')({
         collapseWhitespace: true,
         removeRedundantAttributes: true,
         useShortDoctype: true,
-        removeEmptyAttributes: true,
+        remoteEmptyAttributes: true,
         removeStyleLinkTypeAttributes: true,
         keepClosingSlash: true,
         minifyJS: true,
@@ -28,10 +28,8 @@ module.exports = require('./base.config')({
         minifyURLs: true,
       },
       inject: true
-    }),
-
+    })
   ],
-
   babel: {
       presets: [
           ['env', { modules: false }],
@@ -47,9 +45,6 @@ module.exports = require('./base.config')({
           'transform-decorators-legacy',
           'transform-runtime',
       ]
-  },
-  performance: {
-    assetFilter: (assetFilename) => !(/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename)),
   },
   devserver: {}
 });
