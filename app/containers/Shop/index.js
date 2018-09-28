@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import {
-  CircularProgress,
-  Grid
-} from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import Header from './containers/Header';
 import Footer from './containers/Footer';
 import Products from './containers/Products';
@@ -15,7 +12,6 @@ import Auth from 'containers/Auth';
 import NotFound from 'containers/NotFound';
 import './style.scss';
 
-// todo добавить кэш для пула (категорий, размеров и т.п.) в списке продуктов или сделать пул тут
 export default class Shop extends Component {
 
   state = {
