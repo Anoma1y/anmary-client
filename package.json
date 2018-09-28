@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --config=internals/webpack/development.config.js --mode=development --port 8080",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --env=development --config=internals/webpack/development.config.js --mode=development --port 8080",
     "build:clean": "rimraf ./build",
     "build:public": "node ./internals/helpers/CopyToBuild.js",
-    "build": "yarn run build:clean && yarn build:public && webpack --config=internals/webpack/production.config.js --mode=production",
+    "build": "yarn build:clean && yarn build:public && cross-env NODE_ENV=production webpack --env=production --config=internals/webpack/production.config.js --mode=production --color -p --progress --hide-modules --display-optimization-bailout",
     "generate:reducers": "node ./internals/helpers/AutocombineReducers.js"
   },
   "author": "",
@@ -42,6 +42,8 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "add-asset-html-webpack-plugin": "^3.0.1",
+    "autoprefixer": "^9.1.5",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -54,7 +56,10 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
+    "circular-dependency-plugin": "^5.0.2",
+    "clean-webpack-plugin": "^0.1.19",
     "copy-dir": "^0.3.0",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
     "empty": "^0.10.1",
     "eslint": "^4.19.1",
@@ -63,12 +68,27 @@
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "eventsource-polyfill": "^0.9.6",
+    "exports-loader": "^0.7.0",
+    "file-loader": "^2.0.0",
+    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "^4.3.1",
+    "imports-loader": "^0.8.0",
+    "mini-css-extract-plugin": "^0.4.3",
     "node-sass": "^4.9.0",
+    "null-loader": "^0.1.1",
+    "postcss-loader": "^3.0.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
-  }
+    "webpack-dev-middleware": "^3.4.0",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-hot-middleware": "^2.24.2"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
 }
