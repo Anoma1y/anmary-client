@@ -2,6 +2,7 @@ import {
   SET_IMAGE,
   SET_IS_LOADING,
   SET_NEWS,
+  REMOVE_IMAGE,
   RESET,
 } from './types';
 import { replace } from 'react-router-redux';
@@ -23,6 +24,8 @@ export const setIsLoading = (value) => ({
   type: SET_IS_LOADING,
   payload: value,
 });
+
+export const removeImage = () => ({ type: REMOVE_IMAGE });
 
 export const resetFormNews = () => ({ type: RESET });
 

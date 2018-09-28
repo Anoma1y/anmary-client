@@ -5,14 +5,12 @@ import React, {
 import { connect } from 'react-redux';
 import {
   Field,
-  change as changeReduxForm,
   reduxForm
 } from 'redux-form';
 import {
   Add as AddIcon,
   Edit as EditIcon,
-  AttachFile as AttachFileIcon,
-  Close as CloseIcon,
+  AttachFile as AttachFileIcon, Close as CloseIcon,
 } from '@material-ui/icons';
 import {
   Grid,
@@ -31,6 +29,7 @@ import {
   resetFormNews,
   addNews,
   editNews,
+  removeImage,
 } from './store/actions';
 import { getValuesDeep } from 'lib/utils';
 
@@ -63,7 +62,7 @@ const validate = values => {
     resetFormNews,
     addNews,
     editNews,
-    changeReduxForm,
+    removeImage,
   }))
 @reduxForm({ form: 'Admin_News_Form', validate, enableReinitialize: true })
 export default class Form extends Component {
@@ -121,6 +120,18 @@ export default class Form extends Component {
           }
           <p className={'image-attach_file-name'}>{FILE_NAME}</p>
         </a>
+        <div className={'image-attach_btn'}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                onClick={() => this.props.removeImage(file.id)}
+              >
+                <CloseIcon /> Удалить
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
       </div>
     )
   }

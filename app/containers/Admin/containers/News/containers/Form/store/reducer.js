@@ -2,6 +2,7 @@ import {
   SET_IMAGE,
   SET_IS_LOADING,
   SET_NEWS,
+  REMOVE_IMAGE,
   RESET,
 } from './types';
 
@@ -19,6 +20,10 @@ const HANDLERS = {
   [SET_IMAGE]: (state, { payload }) => ({
     ...state,
     image: payload
+  }),
+  [REMOVE_IMAGE]: (state) => ({
+    ...state,
+    image: {}
   }),
   [SET_IS_LOADING]: (state, { payload }) => ({
     ...state,
