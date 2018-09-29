@@ -7,8 +7,6 @@ import Products from './containers/Products';
 import News from './containers/News';
 import Home from './containers/Home';
 import Contact from './containers/Contact';
-import Admin from 'containers/Admin';
-import Auth from 'containers/Auth';
 import NotFound from 'containers/NotFound';
 import './style.scss';
 
@@ -34,8 +32,6 @@ export default class Shop extends Component {
             <Route path={'/product'} component={Products} />
             <Route path={'/news'} component={News} />
             <Route path={'/contact'} component={Contact} />
-            <Route path={'/admin'} component={Admin} />
-            <Route path={'/auth'} component={Auth} />
             <Route component={NotFound} />
           </Switch>
         </div>

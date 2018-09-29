@@ -72,13 +72,6 @@ export default class News extends Component {
   renderContent = () => (
     <section className={'news'}>
       <Grid item xs={12} className={'container'}>
-        <div className={'section-title-container'}>
-          <div className={'section_subtitle'}>только лучшее</div>
-          <div className={'section_title'}>новости</div>
-        </div>
-      </Grid>
-
-      <Grid item xs={12} className={'container'}>
         <Grid container spacing={40}>
           <Grid item xs={12}>
             {
@@ -90,7 +83,8 @@ export default class News extends Component {
 
       </Grid>
     </section>
-  )
+  );
+  
   renderLoader = () => <CircularProgress size={24} className={'shop_loading'} />;
 
   render() {

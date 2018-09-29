@@ -16,12 +16,6 @@ export default class Contact extends Component {
   render() {
     return (
       <section className={'contact'}>
-        <Grid item xs={12} className={'container'}>
-          <div className={'section-title-container'}>
-            <div className={'section_subtitle'}>только лучшее</div>
-            <div className={'section_title'}>контакты</div>
-          </div>
-        </Grid>
 
         <Grid item xs={12} className={'container'}>
 
