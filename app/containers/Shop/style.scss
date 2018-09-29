@@ -8,8 +8,6 @@
   width: 100%;
 }
 
-
-
 .content-wrapper {
   width: 100%;
   margin: 0 auto;
@@ -17,9 +15,7 @@
 
   padding-top: 7.5rem;
 }
-//.slider {
-//  margin-top: 7.5rem;
-//}
+
 .header-wrapper {
   width: 100%;
   flex: none;
@@ -68,7 +64,8 @@
 }
 
 .information-blocks {
-  max-width: 1290px;
+  //max-width: 1290px;
+  width: 100%;
   margin: 0 auto;
   color: $white-color;
   display: grid;

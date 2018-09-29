@@ -18,10 +18,16 @@
       font-family: $font-semibold-serif;
       font-size: 4rem;
       color: #3c3c3c;
+      @media screen and (max-width: $break-490) {
+        font-size: 2rem;
+      }
     }
   }
   &_nav {
     margin-top: 1rem;
+    @media screen and (max-width: $break-sm) {
+      display: none;
+    }
     ul {
       li {
         display: inline-block;
@@ -56,6 +62,9 @@
         }
         img {
           width: 1.8rem;
+          @media screen and (max-width: $break-420) {
+            width: 1.3rem;
+          }
         }
       }
     }
@@ -66,5 +75,9 @@
     font-family: $font-thin-serif;
     font-size: 0.75rem;
     color: lighten(#3c3c3c, 5%);
+    @media screen and (max-width: $break-490) {
+      font-size: 0.5rem;
+      color: $black-color;
+    }
   }
 }
