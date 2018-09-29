@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import Storage from 'lib/storage';
 import './style.scss';
 
 export default class Footer extends Component {
   render() {
-    const isAdmin = Storage.get('is_superuser');
-
     return (
       <footer className={'footer'}>
         <div className={'footer_logo'}>
@@ -19,7 +16,6 @@ export default class Footer extends Component {
             <li><Link to={'/product'}>Каталог</Link></li>
             <li><Link to={'/news'}>Новости</Link></li>
             <li><Link to={'/contact'}>Контакты</Link></li>
-            {isAdmin && <li><Link to={'/admin'}>Админ</Link></li>}
           </ul>
         </nav>
         <div className={'footer_pay'}>

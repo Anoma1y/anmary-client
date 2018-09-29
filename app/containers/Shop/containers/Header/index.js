@@ -4,15 +4,21 @@ import {
   ShoppingCart as ShoppingCartIcon,
   Favorite as FavoriteIcon,
   Search as SearchIcon,
+  Menu as MobileMenuIcon,
+  Close as MobileMenuClose,
 } from '@material-ui/icons';
+import {
+  Grid,
+  Drawer
+} from '@material-ui/core';
 import './style.scss';
-import Storage from 'lib/storage';
 
 export default class Header extends Component {
 
   state = {
-    headerScrolled: false
-  }
+    headerScrolled: false,
+    mobileMenuIsOpen: false
+  };
 
   componentDidMount() {
     window.addEventListener('scroll', this.updateDimensions);
@@ -34,8 +40,6 @@ export default class Header extends Component {
   };
 
   render() {
-    const isAdmin = Storage.get('is_superuser');
-
     return (
       <header className={`header${this.state.headerScrolled ? ' scrolled' : ''}`}>
         <div className={'header_inner'}>
@@ -44,13 +48,12 @@ export default class Header extends Component {
               <img src={'/static/images/logo.svg'} alt={'Logo'} />
             </Link>
           </div>
-          <nav className={'main_nav'}>
+          <nav className={'main-nav'}>
             <ul>
               <li><Link to={'/'}>Главная</Link></li>
               <li><Link to={'/product'}>Каталог</Link></li>
               <li><Link to={'/news'}>Новости</Link></li>
               <li><Link to={'/contact'}>Контакты</Link></li>
-              {isAdmin && <li><Link to={'/admin'}>Админ</Link></li>}
             </ul>
           </nav>
           <div className={'header-content'}>
@@ -76,6 +79,63 @@ export default class Header extends Component {
                   <FavoriteIcon />
                 </div>
               </div>
+            </div>
+            <div className={'mobile-main-nav'}>
+              <button
+                className={'mobile-main-nav_trigger'}
+                onClick={() => this.setState({ mobileMenuIsOpen: true })}
+              >
+                <MobileMenuIcon />
+              </button>
+              <Drawer
+                anchor={'right'}
+                open={this.state.mobileMenuIsOpen}
+                onClose={() => this.setState({ mobileMenuIsOpen: false })}
+                className={'mobile-main-nav_drawer'}
+              >
+                <div className={'mobile-main-nav_wrapper'}>
+                  <div className={'mobile-main-nav_inner mobile-main-nav_close'}>
+                    <button
+                      className={'mobile-main-nav_trigger mobile-main-nav_trigger__right'}
+                      onClick={() => this.setState({ mobileMenuIsOpen: false })}
+                    >
+                      <MobileMenuClose />
+                    </button>
+                  </div>
+                  <div className={'mobile-main-nav_inner mobile-main-nav_logo'}>
+                    <Link to={'/'}>
+                      <img
+                        src={'/static/images/logo.svg'}
+                        alt={'Mobile Logo'}
+                      />
+                    </Link>
+                  </div>
+                  <div className={'mobile-main-nav_inner mobile-main-nav_search'}>
+                    <form action={'#'}>
+                      <input
+                        type={'text'}
+                        className={'header-search_input mobile-main-nav-search_input'}
+                        required={'required'}
+                      />
+                      <div className={'header-search_icon mobile-main-nav-search_icon'}>
+                        <SearchIcon />
+                      </div>
+                      <button
+                        type={'submit'}
+                        className={'header-search_btn mobile-main-nav-search_btn'}
+                      />
+                    </form>
+                  </div>
+                  <nav className={'mobile-main-nav_inner mobile-main-nav_nav'}>
+                    <ul>
+                      <li><Link to={'/'}>Главная</Link></li>
+                      <li><Link to={'/product'}>Каталог</Link></li>
+                      <li><Link to={'/news'}>Новости</Link></li>
+                      <li><Link to={'/contact'}>Контакты</Link></li>
+                    </ul>
+                  </nav>
+                </div>
+              </Drawer>
             </div>
           </div>
         </div>
