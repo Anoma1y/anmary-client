@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import './style.scss';
 import {
   Grid,
-  Button,
-  TextField
 } from '@material-ui/core';
 import GoogleMap from './components/Map';
 import Feedback from './components/Feedback';

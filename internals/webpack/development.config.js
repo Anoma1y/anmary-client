@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = require('./base.config')({
   devtool: 'eval-source-map',
-
+  mode: 'development',
   entry: {
     main: [
       path.join(process.cwd(), 'app/index.js')
@@ -42,5 +42,8 @@ module.exports = require('./base.config')({
     historyApiFallback: true,
     contentBase: path.resolve(process.cwd() + '/public'),
     watchContentBase: true
+  },
+  performance: {
+    hints: false
   }
 });

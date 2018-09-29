@@ -12,7 +12,6 @@ import {
   resetFilter,
   applyFilter,
 } from '../../store/actions';
-import _ from 'lodash';
 
 // todo: добавить закрытие всех панелей после сброса
 @connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }), ({
@@ -21,10 +20,6 @@ import _ from 'lodash';
   applyFilter,
 }))
 export default class FilterSidebar extends Component {
-
-  handleFilterDebounce = _.debounce(() => {
-    console.log('apply filter');
-  }, 1000);
 
   handleChangePrice = (event, key) => {
     const {
@@ -37,7 +32,6 @@ export default class FilterSidebar extends Component {
     }
 
     this.props.changeFilterPrice(key, value);
-    // this.handleFilterDebounce();
   };
 
   render() {
