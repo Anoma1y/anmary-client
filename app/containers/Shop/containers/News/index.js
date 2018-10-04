@@ -67,7 +67,17 @@ export default class News extends Component {
         </div>
       </article>
     );
-  }
+  };
+
+  renderEmptyNews = () => (
+    <Grid container>
+      <Grid item xs={12}>
+        <div className={'news-empty'}>
+          <h3 className={'news-empty_content'}>Новостей нет</h3>
+        </div>
+      </Grid>
+    </Grid>
+  );
 
   renderContent = () => (
     <section className={'news'}>
@@ -75,8 +85,10 @@ export default class News extends Component {
         <Grid container spacing={40}>
           <Grid item xs={12}>
             {
-              this.props.Shop_News.news.length !== 0 && this.props.Shop_News.news
-                .map((newsItem) => this.renderNewsCard(newsItem))
+              this.props.Shop_News.news.length === 0 ?
+                this.renderEmptyNews() :
+                this.props.Shop_News.news
+                  .map((newsItem) => this.renderNewsCard(newsItem))
             }
           </Grid>
         </Grid>
@@ -84,7 +96,7 @@ export default class News extends Component {
       </Grid>
     </section>
   );
-  
+
   renderLoader = () => <CircularProgress size={24} className={'shop_loading'} />;
 
   render() {
