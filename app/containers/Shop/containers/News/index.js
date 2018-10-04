@@ -97,7 +97,7 @@ export default class News extends Component {
     </section>
   );
 
-  renderLoader = () => <CircularProgress size={24} className={'shop_loading'} />;
+  renderLoader = () => <CircularProgress size={35} className={'shop_loading'} />;
 
   render() {
     return this.state.ready ? this.renderContent() : this.renderLoader();

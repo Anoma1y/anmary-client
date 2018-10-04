@@ -11,6 +11,7 @@ import {
 import {
   ExpandMore as ExpandMoreIcon,
 } from '@material-ui/icons';
+import SizeInfo from '../../components/SizeInfo';
 import { changeCurrentSize } from '../../store/actions';
 import { amountOutput } from 'lib/amount';
 import _ from 'lodash';
@@ -156,7 +157,9 @@ export default class ProductDetail extends Component {
                     className={'product-detail-content-size-modal'}
                   >
                     <div className={'product-detail-content-size-modal_wrap'}>
-                      Тут размеры будут
+
+                      <SizeInfo />
+
                     </div>
                   </Modal>
                 </div>

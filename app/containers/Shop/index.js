@@ -26,7 +26,7 @@ export default class Shop extends Component {
           <Header />
         </div>
 
-        <div className={'content-wrapper'}>
+        <div className={'content-wrapper shop'}>
           <Switch>
             <Route exact path={'/'} component={Home} />
             <Route path={'/product'} component={Products} />

@@ -36,7 +36,7 @@ export default class List extends Component {
     this.props.resetProductsList();
   }
 
-  renderLoader = () => <CircularProgress size={24} className={'admin_loading'} />;
+  renderLoader = () => <CircularProgress size={24} className={'product-content_loading'} />;
 
   renderContent = () => (
     <Grid item xs={12} className={'container'}>
@@ -60,9 +60,11 @@ export default class List extends Component {
           </Grid>
 
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={'product-content'}>
 
-              <ProductList />
+              {
+                this.state.ready ? <ProductList /> : this.renderLoader()
+              }
 
             </Grid>
           </Grid>
@@ -83,7 +85,7 @@ export default class List extends Component {
   )
 
   render() {
-    return this.state.ready ? this.renderContent() : this.renderLoader();
+    return this.renderContent();
   }
 
 }

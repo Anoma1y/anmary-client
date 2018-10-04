@@ -34,7 +34,7 @@ p, h1,h2,h3,h4,h5,h6 {
 }
 
 ::-webkit-scrollbar {
-  background: $white-color;
+  background: transparent;
   &-thumb {
     background-color: rgba(0, 0, 0, 0.3);
     transition: background-color 100ms ease;

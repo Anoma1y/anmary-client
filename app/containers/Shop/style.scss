@@ -36,6 +36,16 @@
   transition: padding-left 0.2s ease;
 }
 
+.shop {
+  position: relative;
+}
+
+.shop_loading {
+  position: absolute;
+  top: 10rem;
+  left: calc(50% - #{$loading-size / 2});
+}
+
 .container {
   max-width: 1290px !important;
   margin: 0 auto !important;
