@@ -38,7 +38,7 @@ export default class Home extends Component {
       <Grid container>
         <Grid item xs={12}>
           <Slider
-            autoTime={3000}
+            autoTime={5000}
           />
         </Grid>
 
