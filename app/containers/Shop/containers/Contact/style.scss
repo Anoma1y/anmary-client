@@ -34,12 +34,17 @@
       margin-bottom: 1rem;
       input, textarea, label {
         color: darken($gray-color, 20%);
-
         font-family: $font-regular-serif !important;
         font-size: 0.9rem;
+        @media screen and (max-width: $break-490) {
+          font-size: 0.8rem;
+        }
         @include placeholder {
           color: darken($gray-color, 20%);
           font-size: 0.9rem;
+          @media screen and (max-width: $break-490) {
+            font-size: 0.8rem;
+          }
         }
       }
     }

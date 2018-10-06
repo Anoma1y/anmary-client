@@ -127,7 +127,8 @@ export const pullProducts = (params) => (dispatch, getState) => new Promise((res
 
       const initFilterPrice = {
         max: amountOutput(max_price).value,
-        min: amountOutput(min_price).value
+        min: 0
+        // min: amountOutput(min_price).value
       };
 
       dispatch(setFilterPrice(initFilterPrice));

@@ -1,5 +1,29 @@
 @import "lib/style/vars.scss";
 
+.news {
+  &-empty {
+    text-align: center;
+    cursor: default;
+    position: relative;
+    &_content {
+      font-family: $font-light;
+      font-size: 1.9rem;
+      color: darken($gray-color, 10%);
+    }
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 125%;
+      left: 50%;
+      width: 50%;
+      height: 1px;
+      transform: translateX(-50%);
+      background-color: rgba(darken($gray-color, 10%), 0.3);
+    }
+  }
+}
+
 .news-card {
   display: inline-block;
   margin-right: 15px;

@@ -75,7 +75,7 @@ export default class Products extends Component {
       });
   };
 
-  renderLoader = () => <CircularProgress size={24} className={'shop_loading'} />;
+  renderLoader = () => <CircularProgress size={35} className={'shop_loading'} />;
 
   renderContent = () => (
     <Grid container className={'shop product'}>

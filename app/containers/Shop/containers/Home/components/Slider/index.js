@@ -52,9 +52,9 @@ export default class Slider extends Component {
         transitionMode={'fade'}
         wrapAround
       >
-        <img onLoad={this.handleLoadImage} src={'http://dualmonitorswallpaper.com/wp-content/uploads/2018/02/anime-scenery-background-dual-wide-9.jpg'} />
-        <img onLoad={this.handleLoadImage} src={'http://dualmonitorswallpaper.com/wp-content/uploads/2018/02/anime-scenery-background-dual-wide-9.jpg'} />
-        <img onLoad={this.handleLoadImage} src={'http://dualmonitorswallpaper.com/wp-content/uploads/2018/02/anime-scenery-background-dual-wide-9.jpg'} />
+        <img onLoad={this.handleLoadImage} src={'/static/images/slider/first.jpg'} />
+        <img onLoad={this.handleLoadImage} src={'/static/images/slider/second.jpg'} />
+        <img onLoad={this.handleLoadImage} src={'/static/images/slider/third.jpg'} />
       </Carousel>
     );
   }
