@@ -156,11 +156,7 @@ export default class ProductDetail extends Component {
                     onClose={this.handleSizeModalClose}
                     className={'product-detail-content-size-modal'}
                   >
-                    <div className={'product-detail-content-size-modal_wrap'}>
-
-                      <SizeInfo />
-
-                    </div>
+                    <SizeInfo />
                   </Modal>
                 </div>
               </div>
