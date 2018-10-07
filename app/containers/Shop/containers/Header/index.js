@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   ShoppingCart as ShoppingCartIcon,
   Favorite as FavoriteIcon,
@@ -8,11 +9,18 @@ import {
   Close as MobileMenuClose,
 } from '@material-ui/icons';
 import {
-  Grid,
   Drawer
 } from '@material-ui/core';
+import {
+  changeSearchValue,
+  applySearch
+} from 'containers/Shop/store/actions';
 import './style.scss';
 
+@connect(({ Shop }) => ({ Shop }), ({
+  changeSearchValue,
+  applySearch
+}))
 export default class Header extends Component {
 
   state = {
@@ -39,6 +47,16 @@ export default class Header extends Component {
     }
   };
 
+  handleChangeSearchValue = (event) => this.props.changeSearchValue(event.target.value);
+
+  handleApplySearch = () => {
+    const { search } = this.props.Shop;
+
+    if (search.length > 0 && search.length <= 100) {
+      this.props.applySearch();
+    }
+  }
+
   render() {
     return (
       <header className={`header${this.state.headerScrolled ? ' scrolled' : ''}`}>
@@ -58,12 +76,27 @@ export default class Header extends Component {
           </nav>
           <div className={'header-content'}>
             <div className={'header-search'}>
-              <form action={'#'}>
-                <input type={'text'} className={'header-search_input'} required={'required'} />
+              <form
+                action={'#'}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  this.handleApplySearch();
+                }}
+              >
+                <input
+                  type={'text'}
+                  className={'header-search_input'}
+                  required={'required'}
+                  value={this.props.Shop.search}
+                  onChange={this.handleChangeSearchValue}
+                />
                 <div className={'header-search_icon'}>
                   <SearchIcon />
                 </div>
-                <button type={'submit'} className={'header-search_btn'} />
+                <button
+                  type={'submit'}
+                  className={'header-search_btn'}
+                />
               </form>
             </div>
             <div className={'header-shopping'}>
@@ -111,11 +144,19 @@ export default class Header extends Component {
                     </Link>
                   </div>
                   <div className={'mobile-main-nav_inner mobile-main-nav_search'}>
-                    <form action={'#'}>
+                    <form
+                      action={'#'}
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        this.handleApplySearch();
+                      }}
+                    >
                       <input
                         type={'text'}
                         className={'header-search_input mobile-main-nav-search_input'}
                         required={'required'}
+                        value={this.props.Shop.search}
+                        onChange={this.handleChangeSearchValue}
                       />
                       <div className={'header-search_icon mobile-main-nav-search_icon'}>
                         <SearchIcon />

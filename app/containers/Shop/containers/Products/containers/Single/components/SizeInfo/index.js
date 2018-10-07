@@ -19,6 +19,7 @@ export default class SizeInfo extends Component {
         <Grid item xs={12} className={'size-info_wrapper'}>
 
           <Table className={'size-info-table'}>
+            <caption className={'size-info_caption'}>Таблица размеров</caption>
             <TableHead className={'size-info-head'}>
               <TableRow className={'size-info-head_row'}>
                 <TableCell className={'size-info-head_cell'}>Российский размер</TableCell>

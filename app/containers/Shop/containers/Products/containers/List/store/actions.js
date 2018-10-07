@@ -112,7 +112,7 @@ export const pullProducts = (params) => (dispatch, getState) => new Promise((res
   } = getState().Shop_Products_List;
 
   const filter = serializeParams(parseParams(params));
-
+  console.log(filter)
   dispatch(setIsLoadingTable(true));
   api.product.getList(page, num_on_page, filter)
     .then((data) => {
@@ -122,13 +122,11 @@ export const pullProducts = (params) => (dispatch, getState) => new Promise((res
         records,
         total_records,
         max_price,
-        min_price
       } = data.data;
 
       const initFilterPrice = {
         max: amountOutput(max_price).value,
         min: 0
-        // min: amountOutput(min_price).value
       };
 
       dispatch(setFilterPrice(initFilterPrice));

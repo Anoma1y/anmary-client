@@ -18,6 +18,17 @@
   &:focus {
     outline: none !important;
   }
+  &_caption {
+    font-size: 1.3rem;
+    font-family: $font-regular-serif;
+    margin: .5em 0 .75em;
+    @media screen and (max-width: $break-991) {
+      font-size: 1rem;
+    }
+  }
+  &-table {
+
+  }
   &-head {
     &_row {
       height: 0 !important;
@@ -25,6 +36,7 @@
     &_cell {
       text-align: center !important;
       font-family: $font-regular-serif;
+      font-size: 0.7rem;
       padding: 0.2rem 0 0.2rem 0 !important;
     }
   }
