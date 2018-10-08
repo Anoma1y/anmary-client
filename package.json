@@ -21,6 +21,7 @@
     "classnames": "^2.2.6",
     "cyrillic-to-translit-js": "^2.1.0",
     "dotenv-webpack": "^1.5.7",
+    "encodeurl": "^1.0.2",
     "history": "^4.7.2",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",

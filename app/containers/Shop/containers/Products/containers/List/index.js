@@ -26,15 +26,26 @@ export default class List extends Component {
   };
 
   componentDidMount() {
-    const { search } = this.props.routing.location;
+    this.initialData();
+  }
 
-    this.props.pullProducts(search)
-      .then(() => this.setState({ ready: true }));
+  componentDidUpdate(prevProps) {
+    if (this.props.routing.location.search !== prevProps.routing.location.search) {
+      this.initialData();
+    }
   }
 
   componentWillUnmount() {
     this.props.resetProductsList();
   }
+
+  initialData = () => {
+    const { search } = this.props.routing.location;
+
+    this.props.pullProducts(search)
+      .then(() => this.setState({ ready: true }))
+      .catch(() => this.setState({ ready: true }));
+  };
 
   renderLoader = () => <CircularProgress size={24} className={'product-content_loading'} />;
 

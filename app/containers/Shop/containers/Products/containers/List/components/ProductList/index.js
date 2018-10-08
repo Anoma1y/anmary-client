@@ -11,6 +11,14 @@ import _ from 'lodash';
 @connect(({ Shop_Products, Shop_Products_List }) => ({ Shop_Products, Shop_Products_List }))
 export default class ProductList extends Component {
 
+  renderEmptyProducts = () => (
+    <Grid item xs={12} className={'product-list-empty'}>
+      <div className={'product-list-empty_content'}>
+        Нет товаров
+      </div>
+    </Grid>
+  )
+
   renderItem = (product) => {
     const HOST = process.env.API_HOST;
     const { id, images, category, name, article, price, discount, total_price } = product;
@@ -68,7 +76,7 @@ export default class ProductList extends Component {
     return (
       <Grid container spacing={40} className={'product-list'}>
         {
-          products.map((product) => this.renderItem(product))
+          products.length !== 0 ? products.map((product) => this.renderItem(product)) : this.renderEmptyProducts()
         }
       </Grid>
     );

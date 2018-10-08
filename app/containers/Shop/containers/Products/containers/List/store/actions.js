@@ -112,17 +112,24 @@ export const pullProducts = (params) => (dispatch, getState) => new Promise((res
   } = getState().Shop_Products_List;
 
   const filter = serializeParams(parseParams(params));
-  console.log(filter)
   dispatch(setIsLoadingTable(true));
   api.product.getList(page, num_on_page, filter)
     .then((data) => {
-      if (data.status !== api.code.OK) reject();
+      if (data.status !== api.code.OK) {
+        reject();
+        return;
+      }
 
       const {
         records,
         total_records,
         max_price,
       } = data.data;
+
+      if (!records) {
+        reject();
+        return;
+      }
 
       const initFilterPrice = {
         max: amountOutput(max_price).value,

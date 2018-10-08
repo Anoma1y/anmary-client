@@ -29,12 +29,13 @@ export default class FilterHeader extends Component {
       num_on_page,
       total_records,
       products: {
-        length: items_on_page
+        items_on_page
       }
     } = this.props.Shop_Products_List;
+
     const currentPage = page + 1;
     const fromPage = (num_on_page * (currentPage - 1)) + 1;
-    const toPage = (fromPage - 1) + items_on_page;
+    const toPage = (fromPage - 1) + (items_on_page ? items_on_page.length : 0);
 
     return (
       <div className={'product-filter-header'}>
