@@ -17,7 +17,7 @@ import {
 } from 'containers/Shop/store/actions';
 import './style.scss';
 
-@connect(({ Shop }) => ({ Shop }), ({
+@connect(({ routing, Shop }) => ({ routing, Shop }), ({
   changeSearchValue,
   applySearch
 }))
@@ -55,9 +55,11 @@ export default class Header extends Component {
     if (search.length > 0 && search.length <= 100) {
       this.props.applySearch();
     }
-  }
+  };
 
   render() {
+    const { pathname } = this.props.routing.location;
+
     return (
       <header className={`header${this.state.headerScrolled ? ' scrolled' : ''}`}>
         <div className={'header_inner'}>
@@ -67,11 +69,39 @@ export default class Header extends Component {
             </Link>
           </div>
           <nav className={'main-nav'}>
-            <ul>
-              <li><Link to={'/'}>Главная</Link></li>
-              <li><Link to={'/product'}>Каталог</Link></li>
-              <li><Link to={'/news'}>Новости</Link></li>
-              <li><Link to={'/contact'}>Контакты</Link></li>
+            <ul className={'main-nav-list'}>
+              <li className={'main-nav-list_item'}>
+                <Link
+                  to={'/'}
+                  className={`main-nav_link${pathname === '/' ? ' main-nav_link__active' : ''}`}
+                >
+                  Главная
+                </Link>
+              </li>
+              <li className={'main-nav-list_item'}>
+                <Link
+                  to={'/product'}
+                  className={`main-nav_link${pathname === '/product' ? ' main-nav_link__active' : ''}`}
+                >
+                  Каталог
+                </Link>
+              </li>
+              <li className={'main-nav-list_item'}>
+                <Link
+                  to={'/news'}
+                  className={`main-nav_link${pathname === '/news' ? ' main-nav_link__active' : ''}`}
+                >
+                  Новости
+                </Link>
+              </li>
+              <li className={'main-nav-list_item'}>
+                <Link
+                  to={'/contact'}
+                  className={`main-nav_link${pathname === '/contact' ? ' main-nav_link__active' : ''}`}
+                >
+                  Контакты
+                </Link>
+              </li>
             </ul>
           </nav>
           <div className={'header-content'}>
@@ -168,11 +198,39 @@ export default class Header extends Component {
                     </form>
                   </div>
                   <nav className={'mobile-main-nav_inner mobile-main-nav_nav'}>
-                    <ul>
-                      <li><Link to={'/'}>Главная</Link></li>
-                      <li><Link to={'/product'}>Каталог</Link></li>
-                      <li><Link to={'/news'}>Новости</Link></li>
-                      <li><Link to={'/contact'}>Контакты</Link></li>
+                    <ul className={'mobile-main-nav-list'}>
+                      <li className={'mobile-main-nav-list_item'}>
+                        <Link
+                          to={'/'}
+                          className={`mobile-main-nav_link${pathname === '/' ? ' mobile-main-nav_link__active' : ''}`}
+                        >
+                          Главная
+                        </Link>
+                      </li>
+                      <li className={'mobile-main-nav-list_item'}>
+                        <Link
+                          to={'/product'}
+                          className={`mobile-main-nav_link${pathname === '/product' ? ' mobile-main-nav_link__active' : ''}`}
+                        >
+                          Каталог
+                        </Link>
+                      </li>
+                      <li className={'mobile-main-nav-list_item'}>
+                        <Link
+                          to={'/news'}
+                          className={`mobile-main-nav_link${pathname === '/news' ? ' mobile-main-nav_link__active' : ''}`}
+                        >
+                          Новости
+                        </Link>
+                      </li>
+                      <li className={'mobile-main-nav-list_item'}>
+                        <Link
+                          to={'/contact'}
+                          className={`mobile-main-nav_link${pathname === '/contact' ? ' mobile-main-nav_link__active' : ''}`}
+                        >
+                          Контакты
+                        </Link>
+                      </li>
                     </ul>
                   </nav>
                 </div>

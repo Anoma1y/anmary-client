@@ -37,13 +37,13 @@ export default class Single extends Component {
 
       <Grid container spacing={40} className={'product-detail'}>
 
-        <Grid item xs={6} className={'product-detail_column product-detail-left'}>
+        <Grid item xs={12} sm={6} md={6} lg={6} className={'product-detail_column product-detail-left'}>
 
           <ProductImage />
 
         </Grid>
 
-        <Grid item xs={6} className={'product-detail_column product-detail-right'}>
+        <Grid item xs={12} sm={6} md={6} lg={6} className={'product-detail_column product-detail-right'}>
 
           <ProductDetail />
 

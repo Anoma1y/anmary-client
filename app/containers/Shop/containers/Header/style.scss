@@ -169,27 +169,32 @@
   &_wrapper {
     width: 290px;
   }
-  &_nav {
-    ul, li, a {
-      width: 100%;
-    }
-    li {
+
+  &-list, &-list_item, &_link {
+    width: 100%;
+  }
+
+  &-list {
+    &_item {
       margin-top: 1rem;
       &:first-child {
         margin-top: 0;
       }
     }
-    a {
-      display: block;
-      text-align: right;
-      font-family: $font-light-serif;
-      font-size: 1rem;
-      text-transform: uppercase;
-      color: darken($gray-color, 15%);
-      transition: color 200ms ease;
-      &:hover {
-        color: $gray-color;
-      }
+  }
+  &_link {
+    display: block;
+    text-align: right;
+    font-family: $font-light-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: darken($gray-color, 15%);
+    transition: color 200ms ease;
+    &:hover {
+      color: $gray-color;
+    }
+    &__active {
+      color: $lightblue-color !important;
     }
   }
   @media screen and (min-width: $break-md){
@@ -201,25 +206,27 @@
   @media screen and (max-width: $break-md){
     display: none;
   }
-  ul {
+  &_link {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: $gray-color;
+    letter-spacing: 0.2rem;
+    transition: color 0.2s ease;
+    &:hover {
+      color: $lightgray-color;
+    }
+    &__active {
+      color: $lightblue-color !important;
+    }
+  }
+  &-list {
     list-style-type: none;
     font-family: $font-light-serif;
-    li {
+    &_item {
       display: inline-block;
       margin-right: 50px;
       &:last-child {
         margin-right: 0;
-      }
-      a {
-        font-size: 12px;
-        text-transform: uppercase;
-        color: $gray-color;
-        font-weight: 600;
-        letter-spacing: 0.2em;
-        transition: color 0.2s ease;
-        &:hover {
-          color: $lightgray-color;
-        }
       }
     }
   }
