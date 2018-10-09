@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Grid,
+  Button,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
   ExpansionPanel,
@@ -31,6 +32,20 @@ export default class ProductDetail extends Component {
 
   handleSizeModalClose = () => {
     this.setState({ sizeModalOpen: false });
+  };
+
+  handleAddToCart = () => {
+    const { product, currentSize } = this.props.Shop_Products_Single;
+
+    if (!currentSize) {
+      this.setState({ cartError: 'Выберите размер' });
+    }
+
+    const productCart = {
+      id: product.id,
+      size: currentSize.id
+    };
+
   };
 
   render() {
@@ -223,6 +238,26 @@ export default class ProductDetail extends Component {
               </ExpansionPanelDetails>
             </ExpansionPanel>
 
+          </div>
+
+          <div className={'product-detail-content_item'}>
+            <Grid container spacing={40} justify={'space-around'}>
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+                <button
+                  className={'product-detail-content_btn product-detail-content_btn__add-to-cart'}
+                  onClick={this.handleAddToCart}
+                >
+                  Добавить в корзину
+                </button>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+                <button
+                  className={'product-detail-content_btn product-detail-content_btn__add-to_favorite'}
+                >
+                  Отложить
+                </button>
+              </Grid>
+            </Grid>
           </div>
 
         </Grid>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { replace } from 'react-router-redux';
 import { connect } from 'react-redux';
 import {
   ShoppingCart as ShoppingCartIcon,
@@ -9,7 +10,9 @@ import {
   Close as MobileMenuClose,
 } from '@material-ui/icons';
 import {
-  Drawer
+  Drawer,
+  IconButton,
+  Badge,
 } from '@material-ui/core';
 import {
   changeSearchValue,
@@ -18,6 +21,7 @@ import {
 import './style.scss';
 
 @connect(({ routing, Shop }) => ({ routing, Shop }), ({
+  replace,
   changeSearchValue,
   applySearch
 }))
@@ -131,16 +135,26 @@ export default class Header extends Component {
             </div>
             <div className={'header-shopping'}>
               <div className={'header-shopping_item'}>
-                {/*<span className={'header-shopping_count'}>2</span>*/}
-                <div className={'header-shopping_icon'}>
-                  <ShoppingCartIcon />
-                </div>
+
+                <IconButton
+                  onClick={() => this.props.replace('/cart')}
+                >
+                  <Badge badgeContent={0} color={'primary'}>
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
+
               </div>
               <div className={'header-shopping_item'}>
-                {/*<span className={'header-shopping_count'}>13</span>*/}
-                <div className={'header-shopping_icon'}>
-                  <FavoriteIcon />
-                </div>
+
+                <IconButton
+                  onClick={() => this.props.replace('/favorite')}
+                >
+                  <Badge badgeContent={0} color={'primary'}>
+                    <FavoriteIcon />
+                  </Badge>
+                </IconButton>
+
               </div>
             </div>
             <div className={'mobile-main-nav'}>

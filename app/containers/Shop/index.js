@@ -5,6 +5,8 @@ import Header from './containers/Header';
 import Footer from './containers/Footer';
 import Products from './containers/Products';
 import News from './containers/News';
+import Favorite from './containers/Favorite';
+import Cart from './containers/Cart';
 import Home from './containers/Home';
 import Contact from './containers/Contact';
 import NotFound from 'containers/NotFound';
@@ -31,6 +33,8 @@ export default class Shop extends Component {
             <Route exact path={'/'} component={Home} />
             <Route path={'/product'} component={Products} />
             <Route path={'/news'} component={News} />
+            <Route path={'/cart'} component={Cart} />
+            <Route path={'/favorite'} component={Favorite} />
             <Route path={'/contact'} component={Contact} />
             <Route component={NotFound} />
           </Switch>
