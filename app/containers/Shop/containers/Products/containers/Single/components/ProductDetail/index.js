@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import {
   Grid,
   Button,
+  Dialog,
+  DialogContentText,
+  DialogContent,
+  DialogActions,
+  DialogTitle,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
   ExpansionPanel,
@@ -13,6 +18,8 @@ import {
 } from '@material-ui/core';
 import {
   ExpandMore as ExpandMoreIcon,
+  Done as DoneIcon,
+  Close as CloseIcon,
 } from '@material-ui/icons';
 import SizeInfo from '../../components/SizeInfo';
 import { changeCurrentSize } from '../../store/actions';
@@ -27,36 +34,41 @@ export default class ProductDetail extends Component {
 
   state = {
     sizeModalOpen: false,
+    dialogOpen: false,
+    addType: 'cart',
+    addToError: null
   };
 
-  handleSizeModalOpen = () => {
-    this.setState({ sizeModalOpen: true });
-  };
+  handleSizeModalOpen = () => this.setState({ sizeModalOpen: true });
 
-  handleSizeModalClose = () => {
-    this.setState({ sizeModalOpen: false });
-  };
+  handleSizeModalClose = () => this.setState({ sizeModalOpen: false });
 
-  handleAddToCart = () => {
+  handleDialogClose = () => this.setState({ dialogOpen: false });
+
+  handleDialogOpen = () => this.setState({ dialogOpen: true });
+
+  handleAddTo = (type) => {
     const { product, currentSize } = this.props.Shop_Products_Single;
-    const { sizes } = this.props.Shop_Products;
 
     if (!currentSize) {
-      this.setState({ cartError: 'Выберите размер' });
+      this.setState({ addToError: 'Выберите размер' });
+      this.handleDialogOpen();
       return;
     }
 
-    const cart = Storage.get('cart') || [];
+    const addToType = Storage.get(type) || [];
 
-    if (cart) {
-      const isProductInCart = _.find(cart, { size: { id: parseInt(currentSize) } }) && _.find(cart, { product: { id: parseInt(product.id) } });
+    if (addToType) {
+      const isProductInCart = _.find(addToType, { size: { id: parseInt(currentSize) } }) && _.find(addToType, { product: { id: parseInt(product.id) } });
 
       if (isProductInCart) {
-        this.setState({ cartError: 'Выбранный размер уже есть в корзине' });
+        this.setState({ addToError: `Выбранный размер уже есть в ${type === 'cart' ? 'корзине' : 'избранном'}` });
+        this.handleDialogOpen();
         return;
       }
     }
 
+    const { sizes } = this.props.Shop_Products;
     const productCart = {
       product: {
         id: product.id,
@@ -73,7 +85,12 @@ export default class ProductDetail extends Component {
       size: _.find(sizes, { id: parseInt(currentSize) })
     };
 
-    // Storage.set('cart', [...cart, productCart]);
+    this.handleDialogOpen();
+    this.setState({
+      addType: type,
+      addToError: null
+    });
+    // Storage.set(type, [...addToType, productCart]);
   };
 
   render() {
@@ -247,7 +264,7 @@ export default class ProductDetail extends Component {
               <Grid item xs={12} sm={6} md={6} lg={6}>
                 <button
                   className={'product-detail-content_btn product-detail-content_btn__add-to-cart'}
-                  onClick={this.handleAddToCart}
+                  onClick={() => this.handleAddTo('cart')}
                 >
                   Добавить в корзину
                 </button>
@@ -255,11 +272,38 @@ export default class ProductDetail extends Component {
               <Grid item xs={12} sm={6} md={6} lg={6}>
                 <button
                   className={'product-detail-content_btn product-detail-content_btn__add-to_favorite'}
+                  onClick={() => this.handleAddTo('favorite')}
                 >
                   Отложить
                 </button>
               </Grid>
             </Grid>
+
+            <Dialog
+              open={this.state.dialogOpen}
+              onClose={this.handleDialogClose}
+            >
+              <DialogTitle>
+                { !this.state.addToError ? <DoneIcon /> : <CloseIcon /> }
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  {
+                    !this.state.addToError ? `Товар был добавлен в ${this.state.addType === 'cart' ? 'корзину' : 'избранное'}!` : this.state.addToError
+                  }
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={this.handleDialogClose}
+                  color={'primary'}
+                  autoFocus
+                >
+                  ОК
+                </Button>
+              </DialogActions>
+            </Dialog>
+
           </div>
 
         </Grid>
