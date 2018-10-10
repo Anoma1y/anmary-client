@@ -8,7 +8,7 @@ import {
 const INITIAL_STATE = {
   product: {},
   mainImage: {},
-  currentSize: null
+  currentSize: ''
 };
 
 const HANDLERS = {

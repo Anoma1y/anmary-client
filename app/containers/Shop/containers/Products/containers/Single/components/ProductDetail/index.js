@@ -7,6 +7,8 @@ import {
   ExpansionPanelSummary,
   ExpansionPanel,
   Modal,
+  Select,
+  MenuItem,
   Chip,
 } from '@material-ui/core';
 import {
@@ -15,6 +17,7 @@ import {
 import SizeInfo from '../../components/SizeInfo';
 import { changeCurrentSize } from '../../store/actions';
 import { amountOutput } from 'lib/amount';
+import Storage from 'lib/storage';
 import _ from 'lodash';
 
 @connect(({ Shop_Products, Shop_Products_Single }) => ({ Shop_Products, Shop_Products_Single }), ({
@@ -36,16 +39,41 @@ export default class ProductDetail extends Component {
 
   handleAddToCart = () => {
     const { product, currentSize } = this.props.Shop_Products_Single;
+    const { sizes } = this.props.Shop_Products;
 
     if (!currentSize) {
       this.setState({ cartError: 'Выберите размер' });
+      return;
+    }
+
+    const cart = Storage.get('cart') || [];
+
+    if (cart) {
+      const isProductInCart = _.find(cart, { size: { id: parseInt(currentSize) } }) && _.find(cart, { product: { id: parseInt(product.id) } });
+
+      if (isProductInCart) {
+        this.setState({ cartError: 'Выбранный размер уже есть в корзине' });
+        return;
+      }
     }
 
     const productCart = {
-      id: product.id,
-      size: currentSize.id
+      product: {
+        id: product.id,
+        name: product.name,
+        article: product.article,
+        category: product.category.name,
+        brand: product.brand.name,
+        is_available: product.is_available,
+        price: product.price,
+        discount: product.discount,
+        total_price: product.total_price,
+        image: _.find(product.images, { is_default: true }) || product.images[0]
+      },
+      size: _.find(sizes, { id: parseInt(currentSize) })
     };
 
+    // Storage.set('cart', [...cart, productCart]);
   };
 
   render() {
@@ -141,58 +169,32 @@ export default class ProductDetail extends Component {
               <div className={'product-detail-content-info_text'}>
                 {product.season.name}
               </div>
-
             </div>
-
           </div>
 
           <div className={'product-detail-content_item'}>
 
             <div className={'product-detail-content-size'}>
 
-              <div className={'product-detail-content-size-headline'}>
-                <div className={'product-detail-content-size-headline_info'}>
-                  <span className={'product-detail-content-size-headline_text'}>Размер:</span>
-                  <span className={'product-detail-content-size-headline_current'}>
-                    {
-                      currentSize && `${currentSize.ru} (${currentSize.international})`
-                    }
-                  </span>
-                </div>
-                <div className={'product-detail-content-size-headline_btn'}>
-                  <span
-                    className={'product-detail-content-size-headline_btn-text'}
-                    onClick={this.handleSizeModalOpen}
-                  >
-                    Таблица размеров
-                  </span>
-                  <Modal
-                    open={this.state.sizeModalOpen}
-                    onClose={this.handleSizeModalClose}
-                    className={'product-detail-content-size-modal'}
-                  >
-                    <SizeInfo />
-                  </Modal>
-                </div>
-              </div>
-
-              <div className={'product-detail-content-size_list'}>
+              <Select
+                fullWidth
+                onChange={(e) => this.props.changeCurrentSize(e.target.value)}
+                displayEmpty
+                value={currentSize}
+              >
+                <MenuItem value={''} disabled>Выберите размер</MenuItem>
                 {
                   product_sizes.map((size) => {
                     const findSize = _.find(sizes, { id: size.size_id });
 
                     return (
-                      <Chip
-                        className={`product-detail-content-size_item${currentSize && (currentSize.id === findSize.id) ? ' product-detail-content-size_item__selected' : ''}`}
-                        key={findSize.id}
-                        onClick={() => this.props.changeCurrentSize(findSize)}
-                        label={`${findSize.ru} (${findSize.international})`}
-                      />
+                      <MenuItem key={findSize.id} value={findSize.id}>
+                        {`${findSize.ru} (${findSize.international})`}
+                      </MenuItem>
                     );
                   })
                 }
-              </div>
-
+              </Select>
             </div>
 
           </div>
