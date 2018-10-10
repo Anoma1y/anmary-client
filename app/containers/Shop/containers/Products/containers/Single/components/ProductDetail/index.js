@@ -51,7 +51,7 @@ export default class ProductDetail extends Component {
     const { product, currentSize } = this.props.Shop_Products_Single;
 
     if (!currentSize) {
-      this.setState({ addToError: 'Выберите размер' });
+      this.setState({ addToError: 'Выберите размер!' });
       this.handleDialogOpen();
       return;
     }
@@ -62,7 +62,7 @@ export default class ProductDetail extends Component {
       const isProductInCart = _.find(addToType, { size: { id: parseInt(currentSize) } }) && _.find(addToType, { product: { id: parseInt(product.id) } });
 
       if (isProductInCart) {
-        this.setState({ addToError: `Выбранный размер уже есть в ${type === 'cart' ? 'корзине' : 'избранном'}` });
+        this.setState({ addToError: `Выбранный размер уже есть в ${type === 'cart' ? 'корзине' : 'избранном'}!` });
         this.handleDialogOpen();
         return;
       }
@@ -94,6 +94,7 @@ export default class ProductDetail extends Component {
   };
 
   render() {
+    const { addToError, addType } = this.state;
     const { compositions, sizes } = this.props.Shop_Products;
     const { product, currentSize } = this.props.Shop_Products_Single;
     const product_sizes = _.sortBy(product.sizes, [(o) => o.size_id]);
@@ -282,21 +283,25 @@ export default class ProductDetail extends Component {
             <Dialog
               open={this.state.dialogOpen}
               onClose={this.handleDialogClose}
+              className={'product-detail-content-dialog'}
             >
-              <DialogTitle>
-                { !this.state.addToError ? <DoneIcon /> : <CloseIcon /> }
+              <DialogTitle className={'product-detail-content-dialog_title'}>
+                <div className={`product-detail-content-dialog_icon${addToError ? ' product-detail-content-dialog_icon__warning' : ''}`}>
+                  { !addToError ? <DoneIcon /> : <CloseIcon /> }
+                </div>
               </DialogTitle>
-              <DialogContent>
-                <DialogContentText>
+              <DialogContent className={'product-detail-content-dialog_content'}>
+                <DialogContentText className={'product-detail-content-dialog_text'}>
                   {
-                    !this.state.addToError ? `Товар был добавлен в ${this.state.addType === 'cart' ? 'корзину' : 'избранное'}!` : this.state.addToError
+                    !addToError ? `Товар был добавлен в ${addType === 'cart' ? 'корзину' : 'избранное'}!` : addToError
                   }
                 </DialogContentText>
               </DialogContent>
-              <DialogActions>
+              <DialogActions className={'product-detail-content-dialog_action'}>
                 <Button
                   onClick={this.handleDialogClose}
                   color={'primary'}
+                  variant={'raised'}
                   autoFocus
                 >
                   ОК

@@ -216,6 +216,26 @@
       margin-left: 0;
     }
   }
+  &-dialog {
+    &_icon {
+      color: $black-color;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        font-size: 2.5rem;
+      }
+      &__warning {
+        color: $red-color;
+      }
+    }
+    &_content {
+      min-width: 320px;
+    }
+    &_text {
+      font-family: $font-regular-serif !important;
+    }
+  }
   &-title {
     &_name, &_article {
       font-family: $font-light-serif !important;
