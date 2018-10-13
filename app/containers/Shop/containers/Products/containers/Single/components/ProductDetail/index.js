@@ -23,12 +23,14 @@ import {
 } from '@material-ui/icons';
 import SizeInfo from '../../components/SizeInfo';
 import { changeCurrentSize } from '../../store/actions';
+import { changeCountItems } from 'containers/Shop/containers/Header/store/actions';
 import { amountOutput } from 'lib/amount';
 import Storage from 'lib/storage';
 import _ from 'lodash';
 
-@connect(({ Shop_Products, Shop_Products_Single }) => ({ Shop_Products, Shop_Products_Single }), ({
-  changeCurrentSize
+@connect(({ Shop_Products, Shop_Header, Shop_Products_Single }) => ({ Shop_Products, Shop_Header, Shop_Products_Single }), ({
+  changeCurrentSize,
+  changeCountItems
 }))
 export default class ProductDetail extends Component {
 
@@ -90,7 +92,12 @@ export default class ProductDetail extends Component {
       addType: type,
       addToError: null
     });
-    // Storage.set(type, [...addToType, productCart]);
+
+    const { count_items } = this.props.Shop_Header;
+    const type_count_items = count_items[type] + 1;
+
+    this.props.changeCountItems(type, type_count_items);
+    Storage.set(type, [...addToType, productCart]);
   };
 
   render() {
@@ -107,7 +114,7 @@ export default class ProductDetail extends Component {
           <div className={'product-detail-content_item'}>
 
             <div className={'product-detail-content-title'}>
-              {product.name.length !== 0 && <span className={'product-detail-content_text product-detail-content-title_name'}>{product.name}</span>}
+              <span className={'product-detail-content_text product-detail-content-title_name'}>{product.name.length !== 0 ? product.name : product.category.name}</span>
               <span className={'product-detail-content_text product-detail-content-title_article'}>{product.article}</span>
             </div>
 
@@ -192,34 +199,42 @@ export default class ProductDetail extends Component {
 
           <div className={'product-detail-content_item'}>
 
-            <div className={'product-detail-content-size'}>
+            <div className={'product-detail-content-selects'}>
 
-              <Select
-                fullWidth
-                onChange={(e) => this.props.changeCurrentSize(e.target.value)}
-                displayEmpty
-                value={currentSize}
-              >
-                <MenuItem value={''} disabled>Выберите размер</MenuItem>
-                {
-                  product_sizes.map((size) => {
-                    const findSize = _.find(sizes, { id: size.size_id });
+              <div className={'product-detail-content-selects_title'}>
+                Размер
+              </div>
 
-                    return (
-                      <MenuItem key={findSize.id} value={findSize.id}>
-                        {`${findSize.ru} (${findSize.international})`}
-                      </MenuItem>
-                    );
-                  })
-                }
-              </Select>
+              <div className={'product-detail-content-selects_content'}>
+                <Select
+                  fullWidth
+                  onChange={(e) => this.props.changeCurrentSize(e.target.value)}
+                  displayEmpty
+                  value={currentSize}
+                  className={'product-detail-content-selects_select'}
+                >
+                  <MenuItem value={''} disabled>Выберите размер</MenuItem>
+                  {
+                    product_sizes.map((size) => {
+                      const findSize = _.find(sizes, { id: size.size_id });
+
+                      return (
+                        <MenuItem key={findSize.id} value={findSize.id}>
+                          {`${findSize.ru} (${findSize.international})`}
+                        </MenuItem>
+                      );
+                    })
+                  }
+                </Select>
+              </div>
+
             </div>
 
           </div>
 
           {
             product.description.length !== 0 && (
-              <div className={'product-detail-content_item'}>
+              <div className={'product-detail-content_item product-detail-content_additional-info'}>
 
                 <ExpansionPanel className={'product-detail-content_expansion'}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-detail-content-item_head'}>
@@ -234,7 +249,7 @@ export default class ProductDetail extends Component {
             )
           }
 
-          <div className={'product-detail-content_item'}>
+          <div className={'product-detail-content_item product-detail-content_additional-info'}>
 
             <ExpansionPanel className={'product-detail-content_expansion'}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={'product-detail-content-item_head'}>
@@ -291,9 +306,18 @@ export default class ProductDetail extends Component {
                 </div>
               </DialogTitle>
               <DialogContent className={'product-detail-content-dialog_content'}>
-                <DialogContentText className={'product-detail-content-dialog_text'}>
+
+                <DialogContentText className={'product-detail-content-dialog_text product-detail-content-dialog_text__strong'}>
                   {
-                    !addToError ? `Товар был добавлен в ${addType === 'cart' ? 'корзину' : 'избранное'}!` : addToError
+                    !addToError && (
+                      product.name.length !== 0 ? `Товар ${product.name} ${product.article}` : `Товар ${product.category.name} ${product.article}`
+                    )
+                  }
+                </DialogContentText>
+
+                <DialogContentText className={`product-detail-content-dialog_text${addToError ? ' product-detail-content-dialog_text__strong' : ''}`}>
+                  {
+                    !addToError ? `был добавлен в ${addType === 'cart' ? 'корзину' : 'избранное'}!` : addToError
                   }
                 </DialogContentText>
               </DialogContent>

@@ -219,21 +219,37 @@
   &-dialog {
     &_icon {
       color: $green-color;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size: 10em;
+      width: 60px;
+      height: 60px;
+      border: 0.2rem solid rgba($green-color, 0.2);
+      border-radius: 0.35em;
       svg {
-        font-size: 2.5rem;
+        font-size: 3rem;
       }
       &__warning {
         color: $red-color;
+        border-color: rgba($red-color, 0.2);
       }
     }
     &_content {
       min-width: 320px;
     }
     &_text {
+      cursor: default;
+      text-align: center;
       font-family: $font-regular-serif !important;
+      font-size: 0.9rem !important;
+      color: lighten($gray-color, 10%) !important;
+      &__strong {
+        font-family: $font-semibold !important;
+        font-size: 1.1rem !important;
+        color: lighten($black-color, 10%) !important;
+      }
     }
   }
   &-title {
@@ -289,6 +305,10 @@
     }
     &_item {
       font-family: $font-light-serif !important;
+      margin-top: 0.4rem;
+      &:first-child {
+        margin-top: 0;
+      }
     }
   }
   &-info {
@@ -307,6 +327,27 @@
       margin-left: 2rem;
       font-family: $font-light-serif;
       color: darken($gray-color, 20%);
+    }
+  }
+  &-selects {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &_title {
+      width: 6rem;
+      font-size: 0.8rem;
+      color: darken($gray-color, 10%);
+      font-family: $font-light-serif;
+    }
+    &_content {
+      width: 100%;
+      font-size: 1rem;
+      margin-left: 3.3rem;
+    }
+    &_select {
+      font-family: $font-regular-serif !important;
+      font-size: 0.9rem !important;
+      color: darken($gray-color, 20%) !important;
     }
   }
   &-size {
@@ -368,6 +409,15 @@
         background-color: $lightblue-color !important;
       }
     }
+  }
+  &-item {
+    &_head {
+      padding: 0 !important;
+    }
+  }
+  &_additional-info {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
   &_expansion {
     box-shadow: none !important;

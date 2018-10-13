@@ -46,7 +46,7 @@ export default class Shop extends Component {
 
       </div>
     </div>
-  )
+  );
 
   render() {
     return this.state.ready ? this.renderContent() : this.renderLoader();
