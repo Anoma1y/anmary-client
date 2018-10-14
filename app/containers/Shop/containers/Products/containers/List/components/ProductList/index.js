@@ -37,7 +37,7 @@ export default class ProductList extends Component {
             <div className={'product-card-info'}>
               <Link to={`/product/${id}`} className={'product-card_name'}>
                 {
-                  name.length === 0 ? category.name : name
+                  name.length === 0 ? category.singular : name
                 } {article}
               </Link>
 

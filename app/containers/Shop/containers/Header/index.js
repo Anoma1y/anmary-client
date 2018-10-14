@@ -18,12 +18,15 @@ import {
   changeSearchValue,
   applySearch
 } from 'containers/Shop/store/actions';
+import { setCountItems } from './store/actions';
+import Storage from 'lib/storage';
 import './style.scss';
 
-@connect(({ routing, Shop }) => ({ routing, Shop }), ({
+@connect(({ routing, Shop, Shop_Header }) => ({ routing, Shop, Shop_Header }), ({
   replace,
   changeSearchValue,
-  applySearch
+  applySearch,
+  setCountItems
 }))
 export default class Header extends Component {
 
@@ -33,6 +36,17 @@ export default class Header extends Component {
   };
 
   componentDidMount() {
+
+    const CART_ITEMS = Storage.get('cart');
+    const FAVORITE_ITEMS = Storage.get('favorite');
+
+    const count_items = {
+      cart: CART_ITEMS ? CART_ITEMS.length : 0,
+      favorite: FAVORITE_ITEMS ? FAVORITE_ITEMS.length : 0
+    };
+
+    this.props.setCountItems(count_items);
+
     window.addEventListener('scroll', this.updateDimensions);
     this.updateDimensions();
   }
@@ -139,7 +153,10 @@ export default class Header extends Component {
                 <IconButton
                   onClick={() => this.props.replace('/cart')}
                 >
-                  <Badge badgeContent={0} color={'primary'}>
+                  <Badge
+                    badgeContent={this.props.Shop_Header.count_items.cart}
+                    color={'primary'}
+                  >
                     <ShoppingCartIcon />
                   </Badge>
                 </IconButton>
@@ -150,7 +167,10 @@ export default class Header extends Component {
                 <IconButton
                   onClick={() => this.props.replace('/favorite')}
                 >
-                  <Badge badgeContent={0} color={'primary'}>
+                  <Badge
+                    badgeContent={this.props.Shop_Header.count_items.favorite}
+                    color={'primary'}
+                  >
                     <FavoriteIcon />
                   </Badge>
                 </IconButton>

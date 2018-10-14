@@ -3,7 +3,7 @@ import {
 } from './types';
 
 const INITIAL_STATE = {
-  search: ''
+  search: '',
 };
 
 const HANDLERS = {
