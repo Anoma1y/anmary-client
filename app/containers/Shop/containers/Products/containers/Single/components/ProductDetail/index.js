@@ -114,7 +114,7 @@ export default class ProductDetail extends Component {
           <div className={'product-detail-content_item'}>
 
             <div className={'product-detail-content-title'}>
-              <span className={'product-detail-content_text product-detail-content-title_name'}>{product.name.length !== 0 ? product.name : product.category.name}</span>
+              <span className={'product-detail-content_text product-detail-content-title_name'}>{product.name.length !== 0 ? product.name : product.category.singular}</span>
               <span className={'product-detail-content_text product-detail-content-title_article'}>{product.article}</span>
             </div>
 
