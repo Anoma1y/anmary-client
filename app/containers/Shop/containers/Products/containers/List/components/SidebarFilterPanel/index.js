@@ -61,6 +61,10 @@ export default class SidebarFilterPanel extends Component {
               data.map((item) => {
                 const findItem = _.includes(filterItem, item.id);
 
+                if (item.products_count !== undefined && item.products_count === 0) {
+                  return null;
+                }
+
                 return (
                   <ListItem
                     button
@@ -72,7 +76,7 @@ export default class SidebarFilterPanel extends Component {
                     className={`product-filter-sidebar-list_item${findItem ? ' product-filter-sidebar-list_item__selected' : ''}`}
                   >
                     <ListItemText
-                      primary={alterName ? `${item[alterName.main]} (${item[alterName.additional]})` : item.name}
+                      primary={alterName ? `${item[alterName.main]} (${item[alterName.additional]})` : `${item.name}${item.products_count ? ` (${item.products_count})` : ''}`}
                       className={'product-filter-sidebar-list_text'}
                     />
                   </ListItem>

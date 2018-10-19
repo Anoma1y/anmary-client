@@ -151,7 +151,7 @@ export default class Header extends Component {
               <div className={'header-shopping_item'}>
 
                 <IconButton
-                  onClick={() => this.props.replace('/cart')}
+                  // onClick={() => this.props.replace('/cart')}
                 >
                   <Badge
                     badgeContent={this.props.Shop_Header.count_items.cart}
@@ -165,7 +165,7 @@ export default class Header extends Component {
               <div className={'header-shopping_item'}>
 
                 <IconButton
-                  onClick={() => this.props.replace('/favorite')}
+                  // onClick={() => this.props.replace('/favorite')}
                 >
                   <Badge
                     badgeContent={this.props.Shop_Header.count_items.favorite}
